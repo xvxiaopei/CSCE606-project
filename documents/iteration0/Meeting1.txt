@@ -1,0 +1,23 @@
+Here is the team meeting summary for today.
+1. Select Scrum Master and Product Owner
+    Scrum Master: Wenrui Zhang
+    Product Owner: Xiaopei Xu
+2. Determine team meeting time: Wednesday afternoon
+    Interview time: 4:30pm at CBGSE
+3. Allocate tasks and points for Iteration 0 (3 points scale)
+    Summary: 1  (Wenrui Zhang)
+    User stories, User interface and Video: 5 ( Yinan Zhu, Bowen Li )
+    Pivotal Tracker, including establishing and tutorial  : 1( Lang Feng)
+    GitHub and Cloud9, including establishing and tutorial: 2 (Xiaopei Xu)
+    Legacy project document: 2 (Jianyu Zuo)
+4. Get prepared: 
+    Text book Chapter 2 and Chapter 4
+    Get familiar with Linux and Cloud9
+    Set up and connect to GitHub and Pivotal Tracker, Create accounts on Cloud 9
+5. Iteration 0 due on next Monday noon.
+
+Interview Questions:
+we currently figure out some questions in interview tomorrow:
+1.What are the main functions about the website?
+2.Is there any improvement needed on current functions?
+3.What are the new functions compared with the former version?
