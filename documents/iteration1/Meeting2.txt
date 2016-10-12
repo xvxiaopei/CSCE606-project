@@ -1,0 +1,10 @@
+1. Functions and advantages of Git: breakpoint storage
+	Basic usage Introduction for Git
+2. Introduction to Cloud9:
+	build VM
+    clone projects from GitHub and push projects to GitHub
+    run ruby project on GitHub
+3. Main functions discussion and arrangement for Iteration 1-4
+4. Introduction to Pivotal Tracker:
+    arrange task points for Iteration 1
+    assign 4 tasks to 4 member (2 will keep vacancy this iteration)
