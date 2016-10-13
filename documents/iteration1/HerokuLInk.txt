@@ -3,6 +3,6 @@ https://secret-badlands-46954.herokuapp.com/
 
 PS:
 
-Deploy版本没有seeding
+Deploy version doesn't apply seeding
 
-因In C9 运行rake db:seed 会报错
+For in C9, when executing 'rake db:seed', there's an error
