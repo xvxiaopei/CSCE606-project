@@ -1,0 +1,8 @@
+https://secret-badlands-46954.herokuapp.com/
+
+
+PS:
+
+Deploy版本没有seeding
+
+因In C9 运行rake db:seed 会报错
