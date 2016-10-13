@@ -1,0 +1,27 @@
+<li id="submission-<%= submission.id %>">
+  <!-- <span class="user"><%= link_to submission.user.name, submission.user %></span> -->
+
+
+  <div class = "row">
+    <div class = "col-sm-2">
+      <div class = "col-sm-4">
+        <% if submission.is_related %>
+          <div class="colorbox green"></div>
+        <% else %>
+          <div class="colorbox red"></div>
+        <% end %>
+      </div>
+      <div class = "col-sm-8"><%= (submission.is_related)? "Related" : "Unrelated" %></div>
+    </div>
+    <div class = "col-sm-7">
+      <div class = "col-sm-5"><%= "#{submission.disease.disease}"%></div>
+      <div class = "col-sm-3"><%= link_to submission.disease.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{submission.disease.accession}/?query=#{submission.disease.disease}", :target => '_blank'%></div>
+      <div class = "col-sm-4"><%= "#{index_to_reason submission.reason}"%></div>
+    </div>
+    <div class = "col-sm-3">
+      <div class="timestamp">
+        Submitted <%= time_ago_in_words(submission.created_at) %> ago.
+      </div>
+    </div>
+  </div>
+</li>

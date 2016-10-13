@@ -1,0 +1,71 @@
+<div class = "row">
+  <h3>Admin</h3>
+</div>
+
+
+<div class = "row">
+
+  <div class = "col-sm-2">
+    <%= link_to "Configuration", '/config'%>
+  </div>
+
+  <div class = "col-sm-8"></div>
+
+  <div class = "col-sm-2">
+    <div class = row>
+      <%= form_tag admins_show_path(), :method => :post, :id => "query_form" do%>
+      <%= search_field_tag 'search', nil, :class => 'special_input', :placeholder => 'Query...', :id => 'query' %>
+      <% end %>
+    </div>
+  </div>
+
+</div>
+
+<div class = "row">
+  <div class = "col-sm-12">
+      <div class="table-responsive">
+        <table id="dvData" class = "table">
+          <thead>
+            <tr>
+              <th class = "col-md-1"><%= link_to "ID", admins_show_path(:sort => "id") %></th>
+              <th class = "col-md-1"><%= link_to "Status", admins_show_path(:sort => "closed") %></th>
+              <th class = "col-md-3">Disease</th>
+              <th class = "col-md-3">Accession</th>
+              <th class = "col-md-1"><%= link_to "Submission#", admins_show_path(:sort => "submission") %></th>
+              <th class = "col-md-1"><%= link_to "Related#", admins_show_path(:sort => "related") %></th>
+              <th class = "col-md-1"><%= link_to "Unrelated#", admins_show_path(:sort => "unrelated") %></th>
+              <th class = "col-md-1">Histogram for reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if !@diseases.nil? %>
+              <%= render @diseases %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+
+
+
+<div class = "row">
+  <div class = "col-sm-9">
+
+  </div>
+  <div class = "col-sm-1">
+      <%= link_to "Download", "/admin/getcsv", :class => "btn btn-primary button_wid" %>
+  </div>
+  <div class = "col-sm-1">
+      <%= link_to "Users", "/admin/allusers", :class => "btn btn-primary button_wid" %>
+  </div>
+  <div class = "col-sm-1">
+      <%= link_to "Show All", "/admin", :class => "btn btn-primary button_wid" %>
+  </div>
+</div>
+
+<div class = "row">
+  <% if !@diseases.nil? %>
+    <%= will_paginate @diseases, renderer: BootstrapPagination::Rails %>
+  <% end %>
+</div>

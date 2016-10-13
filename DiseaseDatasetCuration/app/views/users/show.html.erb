@@ -1,0 +1,36 @@
+<% provide(:title, 'Profile') %>
+<div class="row">
+
+  <div class="col-sm-3">
+    <section class="user_info">
+      <h1>Profile</h1>
+      <ul class="list-group">
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span> <%= @user.name %></li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Email</strong></span> <%= @user.email %></li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> <%= @user.created_at %></li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Submissions</strong></span> <%= (@user.submissions.any?)?@user.submissions.count():0%></li>
+      </ul>
+
+
+      <%= link_to "START!", '/diseases', class: "btn btn-primary center-block" %>
+      <% if current_user.admin? %>
+        <%= link_to "Admin", '/admin', class: "btn btn-success center-block" %>
+        <%= link_to "All Users", '/admin/allusers', class: "btn btn-info center-block" %>
+      <% end %>
+
+    </section>
+  </div>
+
+  <div class="col-sm-9">
+    <% if @user.submissions.any? %>
+      <h1>Submissions (<%= @user.submissions.count %>)</h1>
+      <ol class="submissions">
+        <%= render @submissions %>
+      </ol>
+      <%= will_paginate @submissions, renderer: BootstrapPagination::Rails %>
+    <% else %>
+      <h3>You don't have any submissions yet!</h3>
+      <h3>Click <%= link_to "Here", '/diseases'%> to begin</h3>
+    <% end %>
+  </div>
+</div>
