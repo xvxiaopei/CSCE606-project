@@ -1,4 +1,4 @@
-https://secret-badlands-46954.herokuapp.com/
+https://diseasedatasetcurations.herokuapp.com/
 
 
 PS:
