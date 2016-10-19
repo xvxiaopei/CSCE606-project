@@ -5,7 +5,7 @@ class Disease < ActiveRecord::Base
   has_many :submissions
   has_many :users, :through => :submissions
 
-  validates :id, presence: true
+  #validates :id, presence: true
   validates :disease, presence: true
   validates :accession, presence: true
   validates :related, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
