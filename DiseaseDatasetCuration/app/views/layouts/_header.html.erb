@@ -1,6 +1,10 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "Genetic Dataset Curation", root_path, id: "logo" %>
+    <% if logged_in? %> 
+      <%= link_to "Genetic Dataset Curation", '/profile',id: "logo" %>
+    <% else %>
+      <%= link_to "Genetic Dataset Curation", root_path,id: "logo" %>
+    <% end %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <li>
