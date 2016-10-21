@@ -1,0 +1,9 @@
+1. Merging different branches to the master branch on GitHub
+
+2. Integrated function testing on the Facebook and Google login part,
+   and some glitches amended.
+
+3. Add new user stories to pivotaltracker and make assignments to 
+   team members for next week, which are some new functions.
+
+4. Still working on TDD and BDD design
