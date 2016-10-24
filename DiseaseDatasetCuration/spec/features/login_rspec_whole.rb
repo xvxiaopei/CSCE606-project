@@ -67,7 +67,7 @@ describe "On the homepage, users" do
       to eq(DateTime.new(2018,2,3,4,5,6))
   end
 
-  it "can be redirected_to the Log in page if Facebook authenticated failed" do
+  it "can be redirected to the Log in page if Facebook authenticated failed" do
     OmniAuth.config.mock_auth[:facebook] = :invalid_credentials
     visit '/'
     expect(page).to have_content("Sign in with Facebook")
@@ -107,7 +107,7 @@ describe "On the homepage, users" do
       to eq(DateTime.new(2017,2,3,4,5,6))
   end
 
-  it "can be redirected_to the Log in page if Google authenticated failed" do
+  it "can be redirected to the Log in page if Google authenticated failed" do
     OmniAuth.config.mock_auth[:google_oauth2] = :invalid_credentials
     visit '/'
     expect(page).to have_content("Sign in with Google")
