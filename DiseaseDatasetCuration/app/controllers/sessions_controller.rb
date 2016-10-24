@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
   def new
+    
     if logged_in?
       redirect_to '/profile'
     end
@@ -22,6 +23,7 @@ class SessionsController < ApplicationController
       # Log the user in and redirect to the user's show page.
       log_in user
 
+      #debugger
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       # redirect_to user
 

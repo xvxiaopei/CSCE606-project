@@ -31,6 +31,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'chartkick'
 gem "omniauth-google-oauth2"
 
+
+
+
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug',      '3.4.0'
@@ -52,6 +55,8 @@ group :test do
   #TDD
   gem 'rspec-rails'
   
+  #Fixtures & Factories
+  gem "factory_girl_rails", "~> 4.0"
 end
 
 group :production do
