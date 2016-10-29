@@ -6469,3 +6469,54 @@ Processing by SessionsController#new as HTML
   Rendered layouts/_footer.html.erb (0.1ms)
 Completed 200 OK in 6ms (Views: 5.2ms | ActiveRecord: 0.0ms)
   [1m[36m (0.3ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+Started GET "/" for 127.0.0.1 at 2016-10-29 06:38:23 +0000
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (48.4ms)
+  Rendered layouts/_header.html.erb (1.2ms)
+  Rendered layouts/_footer.html.erb (0.3ms)
+Completed 200 OK in 91ms (Views: 78.3ms | ActiveRecord: 0.0ms)
+Started GET "/download_help" for 127.0.0.1 at 2016-10-29 06:38:24 +0000
+Processing by SessionsController#download_help as HTML
+Sent file app/assets/data/Manual_on_Selection.pdf (0.1ms)
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+Started GET "/" for 127.0.0.1 at 2016-10-29 06:38:40 +0000
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (29.6ms)
+  Rendered layouts/_header.html.erb (1.1ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 63ms (Views: 52.2ms | ActiveRecord: 0.0ms)
+Started GET "/download_help" for 127.0.0.1 at 2016-10-29 06:38:40 +0000
+Processing by SessionsController#download_help as HTML
+Sent file app/assets/data/Manual_on_Selection.pdf (0.1ms)
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+Started GET "/" for 127.0.0.1 at 2016-10-29 06:40:54 +0000
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (28.2ms)
+  Rendered layouts/_header.html.erb (1.1ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 59ms (Views: 49.4ms | ActiveRecord: 0.0ms)
+Started GET "/download_help" for 127.0.0.1 at 2016-10-29 06:40:54 +0000
+Processing by SessionsController#download_help as HTML
+Sent file app/assets/data/Manual_on_Selection.pdf (0.1ms)
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+Started GET "/" for 127.0.0.1 at 2016-10-29 06:41:12 +0000
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (28.1ms)
+  Rendered layouts/_header.html.erb (1.0ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 59ms (Views: 49.2ms | ActiveRecord: 0.0ms)
+Started GET "/download_help" for 127.0.0.1 at 2016-10-29 06:41:12 +0000
+Processing by SessionsController#download_help as HTML
+Sent file app/assets/data/Manual_on_Selection.pdf (0.1ms)
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
