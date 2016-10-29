@@ -43,4 +43,10 @@ class SessionsController < ApplicationController
     log_out if logged_in?
     redirect_to root_url
   end
+  
+  def download_help
+    send_file 'app/assets/data/Manual_on_Selection.pdf', :type=>"application/pdf", :x_sendfile=>true
+  end
+  
+  
 end
