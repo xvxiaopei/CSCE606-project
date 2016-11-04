@@ -10,8 +10,23 @@ class DiseasesController < ApplicationController
       return
     end
 
-    @diseases_this_page = Disease.get_questions
-
+    diseases_temp = Disease.get_questions
+    
+    accessionset=[];
+    diseases_temp.each do |dis|
+      accessionset << dis.accession
+    end
+    
+    accessionset=accessionset.uniq
+    @diseases_this_page=[]
+    accessionset.each do |aset|
+      diseases_temp.each do |dis|
+        if dis.accession==aset
+          @diseases_this_page << dis
+        end
+      end
+    end
+    
   end
 
   def import
