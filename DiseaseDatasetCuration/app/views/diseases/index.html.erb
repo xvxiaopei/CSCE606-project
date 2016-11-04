@@ -6,27 +6,52 @@
       <table class='table'>
         <thead>
           <tr>
-            <th class = "col-md-3">Disease</th>
             <th class = "col-md-3">DataSet</th>
-            <th class = "col-md-3">Relevant?</th>
-            <th class = "col-md-3">Reason</th>
+            <th class = "col-md-9"> <div style="word-spacing:300px">Disease Relevant? Reason</th>
           </tr>
         </thead>
         <tbody>
+          
+          <% nowaccession='nil' %>
           <% @diseases_this_page.each do |dis| %>
-            <tr>
-              <td><%= dis.disease %></td>
-              <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
-              <td>
-                <label><%= radio_button_tag("choose[#{dis.id}]", "1", false, class: 'radio_input') %>Yes</label>
-                <label><%= radio_button_tag("choose[#{dis.id}]", "0", false, class: 'radio_input') %>No</label>
-                <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "#{dis.id}"%></label>
-              </td>
-              <td>
-                <%= select_tag "reason[#{dis.id}]", options_for_select([ "Comprehensive", "Irrelevant Study", "Not Enough Experiment", "No health Control", "Micro RNA", "Biomarker", "Others" ]), html_options = {disabled: true, include_blank: true}  %>
+          
+            <% if nowaccession!= dis.accession %>
+              <% if nowaccession!='nil' %>
+                </tbody>
+                  </table>
+                  </div>
+                  </td>
+                    </tr>
+              <% end %>
+              <% nowaccession= dis.accession %>
+              <tr>
+                <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
+                <td>
+                  <div style="overflow-y:scroll;height:100px;">
+                    <table class='table'>
+                    <tbody>
+            <% end %>
+            
+                    <tr>
+                      <td width="150px"><%= dis.disease %></td>
+                      <td width="100px">
+                        <label><%= radio_button_tag("choose[#{dis.id}]", "1", false, class: 'radio_input') %>Yes</label>
+                        <label><%= radio_button_tag("choose[#{dis.id}]", "0", false, class: 'radio_input') %>No</label>
+                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "#{dis.id}"%></label>
+                      </td>
+                      <td width="100px">
+                        <%= select_tag "reason[#{dis.id}]", options_for_select([ "Comprehensive", "Irrelevant Study", "Not Enough Experiment", "No health Control", "Micro RNA", "Biomarker", "Others" ]), html_options = {disabled: true, include_blank: true}  %>
+                      </td>
+                    </tr>
+                    
+          <% end %>
+          
+                  </tbody>
+                </table>
+                </div>
               </td>
             </tr>
-          <% end %>
+            
         </tbody>
       </table>
     <%= link_to 'Submit', "#", :class => "btn btn-success button_wid", :id => "submit"%>
