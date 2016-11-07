@@ -44,9 +44,14 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
   
-  #Offer a manual
+  #Offer a manual download
   def download_help
     send_file 'app/assets/data/Manual_on_Selection.pdf', :type=>"application/pdf", :x_sendfile=>true
+  end
+  
+  #Show the tutorial
+  def tutorial
+    
   end
   
   

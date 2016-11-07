@@ -38,5 +38,6 @@ Rails.application.routes.draw do
   # Dummies
   # get    'dummie'  => 'dummie#index'
   #get 'auth/google_oauth2/callback' =>'sessions#create'
-  get    'download_help'  =>'sessions#download_help'
+  get    'download_help'  => 'sessions#download_help'
+  get    'tutorial' => 'sessions#tutorial'
 end
