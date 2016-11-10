@@ -31,8 +31,8 @@ Rails.application.routes.draw do
   get   'admin/getcsv' => 'admins#getcsv'
 
   # Admin Group Operations
-  
-
+  #get   '/admin/showgroups' => 'admins#showgroups'
+  resources :groups, path: '/admin/groups'
 
   # Sessions
   get    'login'   => 'sessions#new'

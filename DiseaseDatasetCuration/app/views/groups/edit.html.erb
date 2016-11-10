@@ -1,0 +1,28 @@
+<div class = "row">
+  <h2>Edit Group</h2>
+</div>
+<div class="row">
+  <div class = "col-sm-6">
+    <h3>Changes to Commit:</h3>
+    <%= form_for @group, url: {action: "update"}, html: {class: "ffgrp"} do |f| %>
+      <li>
+        <%= f.label "Group Name:" %>
+        <%= f.text_field :name %>
+        <%= f.label "Group Descriptions:" %>
+        <%= f.text_area :description, size: "60x12" %>
+        <%= f.label "Group Level:" %>
+        <%= f.text_field :group_level %>
+        <div><%= submit_tag 'Save' %></div>
+      </li>
+    <% end %>  
+  </div>
+  <div class = "col-sm-6">
+    <h3>Edit Group Users:</h3>
+  </div>
+</div>    
+    
+    
+    
+    
+
+

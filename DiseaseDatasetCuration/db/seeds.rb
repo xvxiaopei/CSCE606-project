@@ -17,9 +17,21 @@ User.create!(name: "666", email: "666@gmail.com", password: "foobar", password_c
 
 # Groups
 # 3 groups
-Group.create!(name: "TestGroup1", description: "Testing...")
-Group.create!(name: "TestGroup2", description: "Still testing...", group_level: "undergraduate")
-Group.create!(name: "TestGroup3")
+_group1=Group.create!(name: "TestGroup1", description: "Testing...")
+_group2=Group.create!(name: "TestGroup2", description: "Still testing...", group_level: "undergraduate")
+_group3=Group.create!(name: "TestGroup3")
+# 3 group admins
+_gadmin1=User.create!(name: "flyer1", email: "flyer1@gmail.com", password: "foobar",
+password_confirmation: "foobar", admin: true, group_admin: true)
+_gadmin2=User.create!(name: "flyer2", email: "flyer2@gmail.com", password: "foobar",
+password_confirmation: "foobar", admin: true, group_admin: true)
+_gadmin3=User.create!(name: "flyer3", email: "flyer3@gmail.com", password: "foobar",
+password_confirmation: "foobar", admin: true, group_admin: true)
+#debugger
+_gadmin1.groups << _group1
+_gadmin2.groups << _group2
+_gadmin3.groups << _group3
+
 
 
 

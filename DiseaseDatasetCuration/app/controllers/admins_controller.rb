@@ -102,4 +102,19 @@ class AdminsController < ApplicationController
     flash[:success] = "Number of entries per page successfully switched from #{old_value} to #{new_value}"
     redirect_to '/config'
   end
+  
+  
+  def showgroups
+    @all_groups = Group.all
+    
+  
+  
+  
+  end
+  
+  
+  
+  
+  
+  
 end
