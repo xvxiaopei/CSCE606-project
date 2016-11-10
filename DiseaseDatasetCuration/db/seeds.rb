@@ -15,9 +15,16 @@ end
 User.create!(name: "666", email: "666@gmail.com", password: "foobar", password_confirmation: "foobar", admin: true)
 (0..100).each {|i| User.create!(name: "mashuo#{i}", email: "mashuo#{i}@gmail.com", password: "19930521", password_confirmation: "19930521", admin: false)}
 
+# Groups
+# 3 groups
+Group.create!(name: "TestGroup1", description: "Testing...")
+Group.create!(name: "TestGroup2", description: "Still testing...", group_level: "undergraduate")
+Group.create!(name: "TestGroup3")
+
+
 
 # Submissions
-(0..5000).each do |i|
+(0..500).each do |i|
   puts i.to_s
   _user = User.find_by_id(rand(0..User.count-1))
   _disease = Disease.where(closed: false).order("RANDOM()").first

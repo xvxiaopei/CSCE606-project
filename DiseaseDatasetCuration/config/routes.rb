@@ -30,6 +30,10 @@ Rails.application.routes.draw do
   post  'admin/allusers', to: 'admins#allusers', as: "admin_all"
   get   'admin/getcsv' => 'admins#getcsv'
 
+  # Admin Group Operations
+  
+
+
   # Sessions
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
