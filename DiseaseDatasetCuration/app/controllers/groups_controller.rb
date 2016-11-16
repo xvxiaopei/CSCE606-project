@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
-    
+    include GroupsHelper
+    before_action :admins?
     
     
     def index
@@ -35,4 +36,5 @@ class GroupsController < ApplicationController
         params.require(:group).permit(:name,:description,:group_level)
     end
     
+
 end
