@@ -1,0 +1,9 @@
+1.  There are some progress on the question system building, but still cannot 
+become fully operational. Thus, we make a deadline for the function of 
+admin questions on 6pm Nov 20.
+
+2.  The functions of admin groups are almost completed except the adding users
+to the group function.
+
+3.  We decide to merge many branches together in this iteration.
+

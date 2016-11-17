@@ -1,0 +1,6 @@
+1. Reassign works due to the delay part of the iteration 2, i.e. the question
+system of admin.
+
+2. Assign the work of admin group to 2 team members as another main work of 
+iteration 3.
+
