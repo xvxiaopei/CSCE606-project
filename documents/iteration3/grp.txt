@@ -1,0 +1,22 @@
+Those things done by me:
+
+1. Created a model Group with basic initialization fields in the database,
+used default routes, and established a has_and_belongs_to_many relationship
+with the User model.
+
+2. Created a field with name "Group_admin" inside the User database,
+to distinguish those group admins from power admin.
+
+3. Created basic CRUD methods for group and views being rendered too.
+
+4. Created a basic user control mechanism to prevent unauthorized, forced 
+requests on the groups.
+
+Things to be done:
+1. Realized the add-to-group function and adapt the views.
+
+2. Allow admins with different powers to choose different groups of users
+
+3. Huge amount of tests on this part.
+
+Good luck!
