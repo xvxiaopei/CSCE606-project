@@ -33,6 +33,12 @@ Rails.application.routes.draw do
   post  'admin/search', to: 'admins#search'
   get   'admin/confirm_search' => 'admins#confirm_search'
   post  'admin/confirm_search', to: 'admins#confirm_search'
+
+  # Admin Group Operations
+  #get   '/admin/showgroups' => 'admins#showgroups'
+  resources :groups, path: '/admin/groups'
+
+  # Sessions
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
