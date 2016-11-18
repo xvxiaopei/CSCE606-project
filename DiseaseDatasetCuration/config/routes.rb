@@ -37,6 +37,10 @@ Rails.application.routes.draw do
   # Admin Group Operations
   #get   '/admin/showgroups' => 'admins#showgroups'
   resources :groups, path: '/admin/groups'
+  
+  # Addquestion
+  resources :addquestions, path: '/admin/addquestions'
+  
 
   # Sessions
   get    'login'   => 'sessions#new'
