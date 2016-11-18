@@ -8,6 +8,7 @@ capybara-*.html
 /DiseaseDatasetCuration/public/system
 /DiseaseDatasetCuration/coverage/
 /DiseaseDatasetCuration/spec/tmp
+/DiseaseDatasetCuration/lib/*.yml
 **.orig
 #rerun.txt
 #pickle-email-*.html

@@ -102,19 +102,47 @@ class AdminsController < ApplicationController
     flash[:success] = "Number of entries per page successfully switched from #{old_value} to #{new_value}"
     redirect_to '/config'
   end
-  
-  
-  def showgroups
-    @all_groups = Group.all
     
-  
-  
-  
+  def search
+    if defined? @@dataset_global
+      @dataset=@@dataset_global
+    end
+    user = User.find_by_id(session[:user_id])
+    if !user || !user.admin?
+      flash[:warning] = "Permission denied!"
+      redirect_to root_path
+    elsif params[:search]
+       @dataset = search_from_arrayexpress(params[:search])
+       @@dataset_global=@dataset
+    end
   end
   
+  def confirm_search
+    if defined? @@dataset_global
+      if File.exist?("lib/dataset.yml")
+       @previous_data = YAML.load_file("lib/dataset.yml")
+       @@dataset_global.each do |k,v|
+         if !@previous_data.has_key?(k)
+           @previous_data[k]=v
+         end
+       end
+      else 
+        @previous_data=@@dataset_global
+      end
+      File.open("lib/dataset.yml","w") do |file|
+       file.write @previous_data.to_yaml
+     end
+    end
+    redirect_to :back
+  end
   
-  
-  
-  
+#  def search_data
+#      if params[:search]
+#        flash[:warning] = "Loading..."
+ #       @dataset = search_from_arrayexpress(params[:search])
+#         @dataset=["1","ok"]
+ #        redirect_to :back
+ #     end
+ # end
   
 end

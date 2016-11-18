@@ -29,12 +29,10 @@ Rails.application.routes.draw do
   get   'admin/allusers' => 'admins#allusers'
   post  'admin/allusers', to: 'admins#allusers', as: "admin_all"
   get   'admin/getcsv' => 'admins#getcsv'
-
-  # Admin Group Operations
-  #get   '/admin/showgroups' => 'admins#showgroups'
-  resources :groups, path: '/admin/groups'
-
-  # Sessions
+  get   'admin/search' => 'admins#search'
+  post  'admin/search', to: 'admins#search'
+  get   'admin/confirm_search' => 'admins#confirm_search'
+  post  'admin/confirm_search', to: 'admins#confirm_search'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'

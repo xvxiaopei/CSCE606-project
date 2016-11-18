@@ -1,7 +1,9 @@
 module AdminsHelper
   include ApplicationHelper
   require 'yaml'
-
+  require 'net/http'
+  require 'json'
+ 
   def get_num_per_page
     data = YAML.load_file parameters_yaml_path
     return data[:num_item_per_page.to_s]
@@ -77,6 +79,19 @@ module AdminsHelper
     return users
   end
 
+  def search_from_arrayexpress(keywords)
+    url = 'https://www.ebi.ac.uk/arrayexpress/json/v3/experiments?keywords='+keywords;
+    p url
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+    data_hash=JSON.parse(response)
+    data_result=Hash.new
+    data_hash["experiments"]["experiment"].each {|value|
+    data_result[value["accession"]]=value["name"]
+    }
+    return data_result
+  end
+  
   def index_to_reason(num)
     case num
     when 0
@@ -98,5 +113,4 @@ module AdminsHelper
     end
 
   end
-
 end
