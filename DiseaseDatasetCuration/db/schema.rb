@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110001628) do
+ActiveRecord::Schema.define(version: 20161016215539) do
 
   create_table "diseases", force: :cascade do |t|
     t.string   "disease"
@@ -22,22 +22,6 @@ ActiveRecord::Schema.define(version: 20161110001628) do
     t.integer  "unrelated",  default: 0
     t.boolean  "closed",     default: false
   end
-
-  create_table "groups", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.string   "group_level", default: "graduate"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-  end
-
-  create_table "groups_users", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "group_id"
-  end
-
-  add_index "groups_users", ["group_id"], name: "index_groups_users_on_group_id"
-  add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id"
 
   create_table "submissions", force: :cascade do |t|
     t.integer  "disease_id"
@@ -65,7 +49,6 @@ ActiveRecord::Schema.define(version: 20161110001628) do
     t.string   "uid"
     t.string   "oauth_token"
     t.datetime "oauth_expires_at"
-    t.boolean  "group_admin",      default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

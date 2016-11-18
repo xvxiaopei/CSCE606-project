@@ -16,6 +16,7 @@
       <% if current_user.admin? %>
         <%= link_to "Admin", '/admin', class: "btn btn-success center-block" %>
         <%= link_to "All Users", '/admin/allusers', class: "btn btn-info center-block" %>
+        <%= link_to "Search", '/admin/search', class: "btn btn-warning center-block" %>
       <% end %>
 
     </section>
