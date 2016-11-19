@@ -4,7 +4,6 @@ class CreateGroups < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.string :group_level, default: 'graduate'
-
       t.timestamps null: false
     end
   end

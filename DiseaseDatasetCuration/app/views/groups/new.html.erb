@@ -15,6 +15,9 @@
         <p><%= f.label "Group Level:" %>
         <%= f.text_field :group_level %></p>
         
+        <%= f.hidden_field :admin_uid, { :value => current_user.id} %>
+
+        
         
         <div class = "row">
           <div class = "col-sm-6">

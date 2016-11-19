@@ -17,7 +17,11 @@
         <%= link_to "Admin", '/admin', class: "btn btn-success center-block" %>
         <%= link_to "All Users", '/admin/allusers', class: "btn btn-info center-block" %>
         <%= link_to "Search", '/admin/search', class: "btn btn-warning center-block" %>
+        <% if !(current_user.group_admin?) %>
+          <%= link_to "Promote", '/admin/search', class: "btn btn-danger center-block" %>
+        <% end %>
       <% end %>
+      
 
     </section>
   </div>

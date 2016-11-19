@@ -5,11 +5,8 @@
   <% if !@all_groups.nil? %>
     <% @all_groups.each do |grp| %>
       <%= render grp %>
-      
       <p>GroupAdmin: 
-      <% grp.get_admins.each do |arr| %>
-        <%= arr %>
-      <% end %>
+      <%= grp.admin_uid %>
       <br>Group Users:</p>
       
       <% if !grp.get_users.nil? %>

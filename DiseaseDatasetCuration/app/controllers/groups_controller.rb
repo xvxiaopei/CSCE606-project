@@ -7,20 +7,26 @@ class GroupsController < ApplicationController
     end
     
     def create
-       @group=Group.new(group_params)
-       if @group.save
-           flash[:success] = "#{@group.name} was successfully created."
+        @group=Group.new(group_params)
+        if @group.save
+            flash[:success] = "#{@group.name} was successfully created."
             redirect_to groups_path
-       else
-           render 'new'
-       end
+        else
+            render 'new'
+        end
     end
     
     
     
     def index
-        
-        @all_groups = Group.all
+        if current_user.admin? 
+                
+            if !current_user.group_admin?      #main admin
+                @all_groups = Group.all
+            else 
+                @all_groups = Group.where("admin_uid = ?", current_user.id)
+            end
+        end
         #debugger
     end
     
@@ -45,10 +51,10 @@ class GroupsController < ApplicationController
       
       
        
-    private
+    public
     
     def group_params
-        params.require(:group).permit(:name,:description,:group_level)
+        params.require(:group).permit(:name,:description,:group_level,:admin_uid)
     end
     
 
