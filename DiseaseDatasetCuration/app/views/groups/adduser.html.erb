@@ -1,5 +1,5 @@
 <div class = "row">
-  <h3>Add User to Group</h3>
+  <h3>Add User to Group: <small><%=@group.name%></small></h3>
 </div>
 
 
@@ -22,10 +22,10 @@
         <table class = "table">
           <thead>
             <tr>
-              <th class = "col-md-1"><%= link_to "ID", admin_promote_path(:order => "id") %></th>
+              <th class = "col-md-1"><%= link_to "ID", group_add_path(:order => "id") %></th>
               <th class = "col-md-4">Email</th>
               <th class = "col-md-3">Name</th>
-              <th class = "col-md-2"><%= link_to "Accuracy#", admin_promote_path(:order => "accuracy") %></th>
+              <th class = "col-md-2"><%= link_to "Accuracy#", group_add_path(:order => "accuracy") %></th>
               <th class = "col-md-3">In Group?</th>
               <th class = "col-md-3">Operate</th>
             </tr>
