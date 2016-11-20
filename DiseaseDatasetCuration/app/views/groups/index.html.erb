@@ -35,13 +35,20 @@
           </div>
         </div>
       <% end %>
+      <p></p>
       <div class="row">
-        <div class = "col-sm-4">
+        <div class = "col-sm-2">
         </div>
-         <div class = "col-sm-2">
+        <div class = "col-sm-2">
+          <%= link_to quick_group_add_path(grp),
+          :class => "btn btn-primary btn-block" do %>
+          <i class="glyphicon glyphicon-plus"></i> Quick Manage Users
+          <% end %>
+        </div>        
+        <div class = "col-sm-2">
           <%= link_to group_add_path(grp),
           :class => "btn btn-primary btn-block" do %>
-          <i class="glyphicon glyphicon-plus"></i> Add/Delete User
+          <i class="glyphicon glyphicon-plus"></i> Manage Users
           <% end %>
         </div>
         <div class = "col-sm-2">

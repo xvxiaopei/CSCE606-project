@@ -8,7 +8,7 @@ describe Group do
         before(:each) do
           User.find_by_id(1).groups << Group.find_by_id(1)
           User.find_by_id(2).groups << Group.find_by_id(2)
-          User.find_by_id(2).groups << Group.find_by_id(3)
+          User.find_by_id(3).groups << Group.find_by_id(3)
         end
         #Test function .get_users
         #Happy Path
@@ -33,7 +33,6 @@ describe Group do
         #Sad Path
         it "returns empty collection set if no user in the group" do
             @grp4=Group.find_by_id(4) 
-            @has_user = false    
             expect(@grp4.get_users.count).to eq(0)   
         end
     end
@@ -44,27 +43,25 @@ describe Group do
         before(:each) do
           User.find_by_id(1).groups << Group.find_by_id(1)
           User.find_by_id(2).groups << Group.find_by_id(2)
-          User.find_by_id(2).groups << Group.find_by_id(3)
+          User.find_by_id(3).groups << Group.find_by_id(3)
         end        
-        
-
-        
+        #Test function .get_admins
+        #Happy Path
+        it "returns the group admins if there are such admins. For now,
+        we assume there's only one group_admin in each group." do        
+            @grp1=Group.find_by_id(1)
+            @has_user = false
+            expect(@grp1.get_admins.count).to eq(1)
+            expect(@grp1.get_admins.first).to eq(User.find_by_id(@grp1.admin_uid).name)
+            #ActiveRecord::Associations::CollectionProxy
+        end
+        #Sad Path
+        it "returns empty collection set if no such admin in the group" do
+            @grp4=Group.find_by_id(4) 
+            expect(@grp4.get_admins.count).to eq(0)   
+        end        
         
         
     end
-    
-    
-    
-    
-    
-    
-    
-    
-    
-end
 
-
-    
-    
-    
-    
+end   

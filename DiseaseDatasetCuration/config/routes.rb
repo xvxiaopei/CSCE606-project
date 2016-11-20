@@ -43,6 +43,9 @@ Rails.application.routes.draw do
   
   get   'groups/adduser/:id' => 'groups#adduser'
   post  'groups/adduser/:id', to: 'groups#adduser', as: "group_add"
+  get   'groups/:id/quickadduser' => 'groups#quickadduser'
+  post  'groups/:id/quickadduser', to: 'groups#quickadduser', as: "quick_group_add"  
+  
   
   # Sessions
   get    'login'   => 'sessions#new'

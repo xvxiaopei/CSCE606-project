@@ -88,6 +88,16 @@ class GroupsController < ApplicationController
         
     end
     
+    def quickadduser
+        @group=Group.find(params[:id])
+        @group_users = @group.get_users    
+    
+    
+    end
+    
+    
+    
+    
        
     public
     

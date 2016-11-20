@@ -12,7 +12,7 @@ class Group < ActiveRecord::Base
   def get_admins
   	groupadmin=self.users.where(group_admin: true).pluck(:name)
   	#debugger
-  	return groupadmin    if groupadmin
+  	return groupadmin    #if groupadmin
   end
    
     
