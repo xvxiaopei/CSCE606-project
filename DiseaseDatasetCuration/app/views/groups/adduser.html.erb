@@ -39,7 +39,11 @@
                   <th><%= user.name -%></th>
                   <th><%= user.accuracy -%></th>
                   <th><%= (@group_users.include?(user))? "Yes":"No" %></th>
-                  <th><%= link_to (@group_users.include?(user))? "Delete":"Add", group_add_path(:operate => user.id,:id => @group.id) %></th>
+                  <% if user.id == @group.admin_uid %>
+                    <th>  </th>
+                  <% else %>
+                    <th><%= link_to (@group_users.include?(user))? "Delete":"Add", group_add_path(:operate => user.id,:id => @group.id) %></th>
+                  <% end %>
                 <tr>
               <% end %>  
             <% end %>
