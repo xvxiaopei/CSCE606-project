@@ -40,7 +40,10 @@ Rails.application.routes.draw do
   # Admin Group Operations
   #get   '/admin/showgroups' => 'admins#showgroups'
   resources :groups, path: '/admin/groups'
-
+  
+  get   'groups/adduser/:id' => 'groups#adduser'
+  post  'groups/adduser/:id', to: 'groups#adduser', as: "group_add"
+  
   # Sessions
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'

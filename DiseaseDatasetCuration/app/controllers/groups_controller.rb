@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
     include GroupsHelper
+    include AdminsHelper
     before_action :admins?
     
     def new
@@ -50,6 +51,43 @@ class GroupsController < ApplicationController
     end  
       
       
+    def adduser
+        @group=Group.find(params[:id])
+        @group_users = @group.get_users
+        
+        if params.has_key?(:operate)
+          user = User.find_by_id(params[:operate])
+          if @group_users.include?(user)
+            @group.users.delete(user)
+            flash[:success] = "#{user.name} was successfully deleted."
+          else 
+            @group.users << user
+            flash[:success] = "#{user.name} was successfully added."
+          end
+          params.delete :operate
+        end
+        
+        @group_users = @group.get_users
+        
+        update_session(:page, :query, :order)
+        
+        @users = find_conditional_users
+    
+        # update user accuracy fields
+        if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
+          @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
+        end
+        # byebug
+    
+        if @users == nil
+          flash[:warning] = "No Results!"
+        else
+          # byebug
+          @users = @users.paginate(per_page: 15, page: params[:page])
+        end
+        
+    end
+    
        
     public
     

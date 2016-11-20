@@ -53,7 +53,7 @@ class AdminsController < ApplicationController
         user.update_attribute(:admin, true)
         flash[:success] = "#{user.name} was successfully promoted."
       end
-
+      params.delete :operate
     end
       
     update_session(:page, :query, :order)
