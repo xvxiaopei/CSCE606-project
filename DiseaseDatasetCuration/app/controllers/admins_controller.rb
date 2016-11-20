@@ -41,6 +41,40 @@ class AdminsController < ApplicationController
   end
 
 
+  def promote
+    if params.has_key?(:operate)
+      user = User.find_by_id(params[:operate])
+      if user.group_admin
+        user.update_attribute(:group_admin, false)
+        user.update_attribute(:admin, false)
+      else 
+        user.update_attribute(:group_admin, true)
+        user.update_attribute(:admin, true)
+      end
+
+    end
+      
+    update_session(:page, :query, :order)
+    
+    
+    @users = find_conditional_users
+
+    # update user accuracy fields
+    if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
+      @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
+    end
+    # byebug
+
+    if @users == nil
+      flash[:warning] = "No Results!"
+    else
+      # byebug
+      @users = @users.paginate(per_page: 15, page: params[:page])
+    end
+    
+    
+  end
+
   def configuration
     user = User.find_by_id(session[:user_id])
     if !user || !user.admin?

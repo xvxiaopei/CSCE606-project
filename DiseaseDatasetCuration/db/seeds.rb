@@ -27,8 +27,8 @@ password_confirmation: "foobar", admin: true, group_admin: true)
 
 # 3 groups
 _group1=Group.create!(name: "TestGroup1", description: "Testing...", admin_uid: 103)
-_group2=Group.create!(name: "TestGroup2", description: "Still testing...", group_level: "undergraduate")
-_group3=Group.create!(name: "TestGroup3")
+_group2=Group.create!(name: "TestGroup2", description: "Still testing...", group_level: "undergraduate",admin_uid:104)
+_group3=Group.create!(name: "TestGroup3",admin_uid:105)
 
 #debugger
 _gadmin1.groups << _group1

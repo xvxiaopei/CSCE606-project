@@ -6,7 +6,7 @@
     <% @all_groups.each do |grp| %>
       <%= render grp %>
       <p>GroupAdmin: 
-      <%= grp.admin_uid %>
+      <%= User.find_by_id(grp.admin_uid).name %>
       <br>Group Users:</p>
       
       <% if !grp.get_users.nil? %>

@@ -49,6 +49,7 @@ module AdminsHelper
   end
 
 
+
   def find_conditional_users
     query = session[:query]
     order = session[:order]
