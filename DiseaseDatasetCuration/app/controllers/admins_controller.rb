@@ -47,9 +47,11 @@ class AdminsController < ApplicationController
       if user.group_admin
         user.update_attribute(:group_admin, false)
         user.update_attribute(:admin, false)
+        flash[:success] = "#{user.name} was successfully demoted."
       else 
         user.update_attribute(:group_admin, true)
         user.update_attribute(:admin, true)
+        flash[:success] = "#{user.name} was successfully promoted."
       end
 
     end

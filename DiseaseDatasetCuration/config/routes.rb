@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   post  'admin/confirm_search', to: 'admins#confirm_search'
   
   get   'admin/promote' => 'admins#promote'
+  post  'admin/promote', to: 'admins#promote', as: "admin_pro"
 
   # Admin Group Operations
   #get   '/admin/showgroups' => 'admins#showgroups'

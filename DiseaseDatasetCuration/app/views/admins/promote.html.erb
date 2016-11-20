@@ -9,7 +9,7 @@
 
   <div class = "col-sm-2">
     <div class = row>
-      <%= form_tag admin_all_path(), :method => :post, :id => "query_user_form" do%>
+      <%= form_tag admin_promote_path(), :method => :post, :id => "query_user_form" do%>
       <%= search_field_tag 'query', nil, :class => 'special_input', :placeholder => 'Search Email...', :id => 'query_user' %>
       <% end %>
     </div>
