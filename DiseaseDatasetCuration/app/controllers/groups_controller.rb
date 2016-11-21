@@ -90,11 +90,34 @@ class GroupsController < ApplicationController
     
     def quickadduser
         @group=Group.find(params[:id])
-        @group_users = @group.get_users    
-    
-    
+        @group_users = @group.get_users.where(:group_admin => false)    
+        @not_group_users = User.get_member_outside_the_group(@group)
+        
     end
-    
+    def performadd
+        #debugger
+        @group=Group.find(params[:id])
+        @group_users=@group.get_users.where(:group_admin => false) 
+        if(params.has_key?(:role_ids))
+            ids=params.require(:role_ids)    
+        elsif params.has_key?(:n_role_ids)
+            ids=params.require(:n_role_ids)
+        else
+            redirect_to quick_group_add_path
+        end
+        
+        ids.each do |id|
+            user = User.find_by_id(id)
+            if @group_users.include?(user)
+                @group.users.delete(user)
+            else
+                @group.users << user
+            end
+        end
+        
+        redirect_to groups_path
+        
+    end
     
     
     

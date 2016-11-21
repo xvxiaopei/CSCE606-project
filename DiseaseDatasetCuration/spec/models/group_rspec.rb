@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Group do
-    
+    #Test function .get_users    
     describe "finding users of the group" do 
         fixtures :users
         fixtures :groups
@@ -10,14 +10,12 @@ describe Group do
           User.find_by_id(2).groups << Group.find_by_id(2)
           User.find_by_id(3).groups << Group.find_by_id(3)
         end
-        #Test function .get_users
         #Happy Path
         it "returns the group users if there are users found." do
             @grp1=Group.find_by_id(1)
             @has_user = false
             @grp1.get_users.each do |user|
-            #The class of user.groups is ActiveRecord::Associations::CollectionProxy
-            #And it will never be nil if correct
+            #ActiveRecord::Associations::CollectionProxy
                 user.groups.to_a.each do |grp|
                     #Test if all the returned user's group name is "G1"
                     #which is desired.
@@ -36,7 +34,7 @@ describe Group do
             expect(@grp4.get_users.count).to eq(0)   
         end
     end
-    
+    #Test function .get_admins    
     describe "finding admins of the group" do
         fixtures :users
         fixtures :groups
@@ -45,7 +43,6 @@ describe Group do
           User.find_by_id(2).groups << Group.find_by_id(2)
           User.find_by_id(3).groups << Group.find_by_id(3)
         end        
-        #Test function .get_admins
         #Happy Path
         it "returns the group admins if there are such admins. For now,
         we assume there's only one group_admin in each group." do        
@@ -60,8 +57,5 @@ describe Group do
             @grp4=Group.find_by_id(4) 
             expect(@grp4.get_admins.count).to eq(0)   
         end        
-        
-        
     end
-
 end   
