@@ -3,16 +3,15 @@
 </div>
 
 <div class = "row">
-  <div class = "col-sm-3">
+  <div class = "col-sm-4">
     <h3>Users in the group:</h3>
     <%= form_for @group, :url=> quick_group_add_path, html: {:method => :post, :class => "ffgrp"} do |f| %>
       <ul>
         <% @group_users.each do |role| %>
-          
           <li>
-            <%= role.email %>
+            Name: <%= h role.name -%>
+            Email: <%= role.email %>
             <%= check_box_tag 'role_ids[]', role.id -%>
-            <%= h role.name %>
           </li>
         <% end %>
       </ul>
@@ -23,7 +22,7 @@
 
    
   </div>
-  <div class = "col-sm-3"></div>
+  <div class = "col-sm-2"></div>
   <div class = "col-sm-4">
     <h3>Users not in the group:</h3>  
     <%= form_for @group, :url=> quick_group_add_path, html: {:method => :post, :class => "ffgrp"} do |f| %>
@@ -31,7 +30,7 @@
         <% @not_group_users.each do |role| %>
           <li>
             Name: <%= h role.name -%>
-            Email:<%= role.email %>
+            Email: <%= role.email %>
             <%= check_box_tag 'n_role_ids[]', role.id -%>
           </li>
         <% end %>
@@ -43,3 +42,6 @@
   </div>
   <div class = "col-sm-2"></div>  
 </div>
+<hr>
+<%= link_to "Cancel Changes", groups_path,
+  :class => "btn btn-block btn-warning "%>

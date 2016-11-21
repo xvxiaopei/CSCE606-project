@@ -76,6 +76,7 @@ class User < ActiveRecord::Base
   end
   
   def User.get_member_outside_the_group(grp)
+    
     user_ids=grp.users.ids
     outusers=User.where.not(id: user_ids)
     return outusers
