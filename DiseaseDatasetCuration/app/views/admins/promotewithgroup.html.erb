@@ -40,7 +40,8 @@
                   <th><%= user.name -%></th>
                   <th><%= (user.group_admin?)? "Admin":"User" %></th>
                   <th>
-                  <%= form_for @poweradmin, :url=> promote_with_group_path, html: {:method => :post, :class => "ffgrp"} do |f| %>
+                  <%if @admin_needed_groups.count != 0 %>
+                  <%= form_for @poweradmin, :url=> promote_with_group_path(:operate => user.id), html: {:method => :post, :class => "ffgrp"} do |f| %>
                     <ul>
                       <% @admin_needed_groups.each do |role| %>
                         <li>
@@ -51,11 +52,13 @@
                     <hr>
                     <%= submit_tag 'Promote', :class => "btn btn-success " %>
                   <% end %>
+                  <% else %>
+                  <% end %>                  
                   </th>
                   
                   <th>
                   <%if user.group_admin %>
-                  <%= form_for @poweradmin, :url=> promote_with_group_path,
+                  <%= form_for @poweradmin, :url=> promote_with_group_path(:operate => user.id),
                   html: {:method => :post, :class => "ffgrp",
                   data: { confirm: "Are you sure you want to demote #{user.name} as a group admin?" }} do |f| %>
                     <ul>
