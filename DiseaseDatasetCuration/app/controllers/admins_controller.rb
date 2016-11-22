@@ -42,6 +42,41 @@ class AdminsController < ApplicationController
     end
   end
 
+  def promotewithgroup
+      #All groups
+      @poweradmin=current_user
+      
+      @all_groups = Group.all
+      #Those are the groups available to add a group admin
+      @admin_needed_groups = Group.where(:admin_uid => nil)
+      #Those are the groups available to remove admin
+      @admin_removable_groups = Group.where.not(:admin_uid => nil)
+      
+      
+      
+        #debugger
+    
+    #This search mechanism is low-ranked. Since there's no contradictories here.
+    #Just leave it.
+    @users = find_conditional_users
+    # update user accuracy fields
+    if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
+      @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
+    end
+    if @users == nil
+      flash[:warning] = "No Results!"
+    else
+      @users = @users.paginate(per_page: 15, page: params[:page])      
+    end
+    
+  end
+
+
+  def performpromotewithgroup
+      
+  end
+
+
 
   def promote
     if params.has_key?(:operate)
