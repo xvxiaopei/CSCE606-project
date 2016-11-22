@@ -12,24 +12,28 @@
         </thead>
         <tbody>
           
-          <% nowaccession='nil' %>
-          <% @diseases_this_page.each do |dis| %>
+          <% nowaccession='nil' %>   <!-- this variable can record what is the accession now -->
+          <% @diseases_this_page.each do |dis| %>  <!-- for every diseases(we have sorted the diseases by accession) -->
           
-            <% if nowaccession!= dis.accession %>
-              <% if nowaccession!='nil' %>
-                </tbody>
-                  </table>
-                  </div>
-                  </td>
-                    </tr>
+            <% if nowaccession!= dis.accession %>  <!-- if the upcomming disease's accession is not what we are processing(we will end the processing and start a new row) -->
+              
+              <% if nowaccession!='nil' %>    <!-- if it is not the first time, we end this row and start a new row(if it is, we skip these end flags)-->
+                </tbody>  <!-- end the sub row-->
+                  </table>  <!-- end the sub row-->
+                  </div>  <!-- end the sub row-->
+                  </td>  <!-- end the column-->
+                    </tr>  <!-- end the row-->
               <% end %>
-              <% nowaccession= dis.accession %>
-              <tr>
+              
+              <% nowaccession= dis.accession %>  <!-- record the new accession -->
+              
+              <tr>         <!-- and start a new row -->
                 <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
                 <td>
                   <div style="overflow-y:scroll;height:100px;">
                     <table class='table'>
                     <tbody>
+                      
             <% end %>
             
                     <tr>
@@ -46,11 +50,11 @@
                     
           <% end %>
           
-                  </tbody>
-                </table>
-                </div>
-              </td>
-            </tr>
+                  </tbody>  <!-- end the sub row(the last time we get out the the loop, we should end the current row)-->
+                </table>  <!-- end the sub row-->
+                </div>  <!-- end the sub row-->
+              </td>  <!-- end the column-->
+            </tr>  <!-- end the row-->
             
         </tbody>
       </table>
