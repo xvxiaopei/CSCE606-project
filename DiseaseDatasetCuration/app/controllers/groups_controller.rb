@@ -28,7 +28,6 @@ class GroupsController < ApplicationController
                 @all_groups = Group.where("admin_uid = ?", current_user.id)
             end
         end
-        #debugger
     end
     
     def edit
@@ -38,12 +37,19 @@ class GroupsController < ApplicationController
     def update
         
         @group=Group.find params[:id]
-        @group.update_attributes!(group_params)
-        flash[:success]="#{@group.name} was successfully updated."
-        redirect_to(groups_path)
+        if @group.update_attributes(group_params)
+            flash[:success]="#{@group.name} was successfully updated."
+            redirect_to(groups_path)
+        else
+            render 'edit'
+        end
+        
     end
       
     def destroy
+        #For has_and_belongs_to_many, 
+        #delete and destroy are the same:
+        #they cause the records in the join table to be removed.
         @group = Group.find(params[:id])
         @group.destroy
         flash[:success] = "Group '#{@group.name}' deleted."
