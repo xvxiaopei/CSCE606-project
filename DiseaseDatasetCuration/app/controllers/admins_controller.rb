@@ -19,7 +19,9 @@ class AdminsController < ApplicationController
     end
   end
 
-
+  def statistics
+    @user = User.find_by_id(1)
+  end
 
   def allusers
     update_session(:page, :query, :order)
