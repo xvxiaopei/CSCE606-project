@@ -20,6 +20,7 @@
         <% if !(current_user.group_admin?) %>
           <%= link_to "Promote/Demote", '/admin/promote', class: "btn btn-danger center-block" %>
           <%= link_to "Assign Groups to Group_Admins", '/admin/promotewithgroup', class: "btn btn-danger center-block" %>
+          <%= link_to "Manage Group Admins' Groups",'/admin/manage_group_admins_groups', class: "btn btn-danger center-block" %>
         <% end %>
       <% end %>
       

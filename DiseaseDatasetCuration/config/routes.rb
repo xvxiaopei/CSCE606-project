@@ -40,6 +40,8 @@ Rails.application.routes.draw do
   post  'admin/promote', to: 'admins#promote', as: "admin_pro"
   get   'admin/promotewithgroup' => 'admins#promotewithgroup'
   post  'admin/assign_admins_to_group/:id', to: 'admins#performassigngroup', as:"assign_group"  
+  get   'admin/manage_group_admins_groups' => 'admins#managegrps'
+  post  'admin/manage_group_admins_groups/:id', to: 'admins#rearrange', as: "rearrange_grpadmin"
 
   # Admin Group Operations
   #get   '/admin/showgroups' => 'admins#showgroups'

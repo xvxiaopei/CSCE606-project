@@ -51,7 +51,6 @@ class AdminsController < ApplicationController
 
 
   def performassigngroup
-      #debugger
       @group=Group.find(params[:id])
       #This action won't influence the identity of admins
       
@@ -80,6 +79,37 @@ class AdminsController < ApplicationController
       flash[:success] = "Group Admin Identity for #{@group.name} Assigned successfully."
       redirect_to '/admin/promotewithgroup'
   end
+
+  def managegrps
+      #All groups
+      @poweradmin=current_user
+      @all_groups = Group.all      
+      @all_grp_admins = User.where(:admin => true, :group_admin => true)
+      #debugger
+  end
+
+  def rearrange
+      #debugger
+      @group=Group.find(params[:id])
+      #This action will change grp admin
+      #Step: Arrange new admin
+      if(params.has_key?(:gadmin_ids))
+        id=params.require(:gadmin_ids)
+      else
+          flash[:warning] = "Please select an admin!"
+          redirect_to '/admin/manage_group_admins_groups'
+          return
+      end
+        
+      @new_admin_4_grp=User.find_by_id(id[0])
+      @group.update_attribute(:admin_uid,id[0])
+      flash[:success] = "Group Admin Identity for #{@group.name} Assigned successfully."
+      redirect_to '/admin/manage_group_admins_groups'      
+  end
+
+
+
+
 
 
 
