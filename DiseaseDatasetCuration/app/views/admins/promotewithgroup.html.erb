@@ -1,106 +1,78 @@
 <div class = "row">
-  <h3>Promote/Demote</h3>
+  <h3>Assign Groups to Group_Admins</h3>
 </div>
-
-
-<div class = "row">
-
-  <div class = "col-sm-10"></div>
-
-  <div class = "col-sm-2">
-    <div class = row>
-      <%= form_tag admin_promote_path(), :method => :post, :id => "query_user_form" do%>
-      <%= search_field_tag 'query', nil, :class => 'special_input', :placeholder => 'Search Email...', :id => 'query_user' %>
+<div>
+  <% if !@all_groups.nil? %>
+    <% @all_groups.each do |grp| %>
+      <%= render grp %>
+      <p>GroupAdmin: 
+      <%= User.find_by_id(grp.admin_uid).name %>
+      <br>Group Users:</p>
+      
+      <% if !grp.get_users.nil? %>
+        <div class = "row">
+          <div class = "col-sm-12">
+            <div class="table-responsive">
+              <%= form_for @poweradmin, :url => assign_group_path(grp),:method => :post do %>                 
+              <table class = "table-bordered">
+                <thead>
+                  <tr>
+                    <th class = "col-md-1">ID</th>
+                    <th class = "col-md-3">Email</th>
+                    <th class = "col-md-2">Name</th>
+                    <th class = "col-md-1">Submission#</th>
+                    <th class = "col-md-1">Closed Submission</th>
+                    <th class = "col-md-1">Correct#</th>
+                    <th class = "col-md-1">Accuracy#</th>
+                    <th class = "col-md-1">GroupAdmin?</th>
+                    <th class = "col-md-1">Select Button</th>
+                  </tr>
+                </thead>
+                <tbody>
+   
+                    <% grp.get_users.each do |user| %>
+                      <tr>
+                        <td class = "col-md-1"><%= user.id %></td>
+                        <td class = "col-md-3"><%= user.email %></td>
+                        <td class = "col-md-2"><%= user.name %></td>
+                        <td class = "col-md-1"><%= user.submissions.count %></td>
+                        <td class = "col-md-1"><%= user.num_closed_submissions %></td>
+                        <td class = "col-md-1"><%= user.num_correct %></td>
+                        <td class = "col-md-1"><%= user.accuracy.round(3) %></td>
+                        <td class = "col-md-1"><%= (user.group_admin?)? "True":"False" %></td>
+                        <td class = "col-md-1"><%= radio_button_tag 'user_ids[]', user.id -%></td>
+                      </tr> 
+                    <% end %>
+                </tbody>
+              </table>
+              <hr>              
+              <%= button_tag(:type => "submit",:class => "btn btn-primary btn-block")do %>
+                <i class="glyphicon glyphicon-refresh"></i>Change Group Admin to Selected
+              <% end %>
+              <% end %> 
+            </div>
+          </div>    
+        </div>
       <% end %>
-    </div>
-  </div>
-</div>
-
-<div class = "row">
-  <div class = "col-sm-12">
-      <div class="table-responsive">
-        <table class = "table">
-          <thead>
-            <tr>
-              <th class = "col-md-1"><%= link_to "ID", promote_with_group_path(:order => "id") %></th>
-              <th class = "col-md-2">Email</th>
-              <th class = "col-md-2">Name</th>
-              <th class = "col-md-1">Level</th>
-              <th class = "col-md-3">Admin-Needed Groups</th>
-              <th class = "col-md-3">Admin-Removable Groups</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if !@users.nil? %>
-              <% @users.each do |user| %>
-                <% next if user.admin ==true && user.group_admin == false %>    
-                <tr>
-                  <th><%= user.id -%></th>
-                  <th><%= user.email -%></th>
-                  <th><%= user.name -%></th>
-                  <th><%= (user.group_admin?)? "Admin":"User" %></th>
-                  <th>
-                  <%if @admin_needed_groups.count != 0 %>
-                  <%= form_for @poweradmin, :url=> promote_with_group_path(:operate => user.id), html: {:method => :post, :class => "ffgrp"} do |f| %>
-                    <ul>
-                      <% @admin_needed_groups.each do |role| %>
-                        <li>
-                          <%= check_box_tag 'promote_role_ids[]', role.id -%>
-                        </li>
-                      <% end %>
-                    </ul>
-                    <hr>
-                    <%= submit_tag 'Promote', :class => "btn btn-success " %>
-                  <% end %>
-                  <% else %>
-                  <% end %>                  
-                  </th>
-                  
-                  <th>
-                  <%if user.group_admin %>
-                  <%= form_for @poweradmin, :url=> promote_with_group_path(:operate => user.id),
-                  html: {:method => :post, :class => "ffgrp",
-                  data: { confirm: "Are you sure you want to demote #{user.name} as a group admin?" }} do |f| %>
-                    <ul>
-                      <% @admin_removable_groups.each do |role| %>
-                        <li>
-                          <%if role.admin_uid == user.id %>    
-                            Group Name: <%= h role.name -%>
-                            <%= check_box_tag 'demote_role_ids[]', role.id -%>
-                          <% else %>
-                          <% end %>
-                        </li>
-                      <% end %>
-                    </ul>
-                    <hr>
-                    <%= submit_tag 'Demote', :class => "btn btn-success " %>
-                  <% end %>
-                  <% else %>
-                  <% end %>
-                  </th>    
-                  
-                <tr>
-              <% end %>  
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-  </div>
-</div>
+      <p></p>
+      <hr>
+    <% end %>    
+  <% else %>
+    <h3>There's no groups yet!</h3>
+    <h3>Click <%= link_to "Here", '/group_create_path'%> to create a group</h3>
+  <% end %>
+</div>      
+      
+<div>
+    <%= link_to "Back to profile page...",'/profile' %>
+</div>   
+      
+      
+      
+      
+      
+      
+      
+      
 
 
-<div class = "row">
-  <div class = "col-sm-10">
-  </div>
-  <div class = "col-sm-2">
-    <div class = "row">
-      <%= link_to "Show All", "/admin/promote", :class => "btn btn-primary center-block" %>
-    </div>
-  </div>
-</div>
-
-<div class = "row">
-  <% if !@users.nil? %>
-    <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
-  <% end  %>
-</div>

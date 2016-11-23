@@ -19,7 +19,7 @@
         <%= link_to "Search", '/admin/search', class: "btn btn-warning center-block" %>
         <% if !(current_user.group_admin?) %>
           <%= link_to "Promote/Demote", '/admin/promote', class: "btn btn-danger center-block" %>
-          <%= link_to "Promote/Demote2", '/admin/promotewithgroup', class: "btn btn-danger center-block" %>
+          <%= link_to "Assign Groups to Group_Admins", '/admin/promotewithgroup', class: "btn btn-danger center-block" %>
         <% end %>
       <% end %>
       

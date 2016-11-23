@@ -3,6 +3,7 @@ class Group < ActiveRecord::Base
   
   
   validates :name,  presence: true, length: { maximum: 50 }
+  validates :admin_uid,  presence: true
   
   def get_users
   	groupusers=self.users
@@ -10,9 +11,9 @@ class Group < ActiveRecord::Base
   end
   
   def get_admins
-  	groupadmin=self.users.where(group_admin: true).pluck(:name)
+  	#groupadmin=self.users.where(group_admin: true).pluck(:name)
   	#debugger
-  	return groupadmin    #if groupadmin
+  	#return groupadmin    #if groupadmin
   end
    
     

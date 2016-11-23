@@ -45,35 +45,40 @@ class AdminsController < ApplicationController
   def promotewithgroup
       #All groups
       @poweradmin=current_user
-      
       @all_groups = Group.all
-      #Those are the groups available to add a group admin
-      @admin_needed_groups = Group.where(:admin_uid => nil)
-      #Those are the groups available to remove admin
-      @admin_removable_groups = Group.where.not(:admin_uid => nil)
-      
-      
-      
-        #debugger
-    
-    #This search mechanism is low-ranked. Since there's no contradictories here.
-    #Just leave it.
-    @users = find_conditional_users
-    # update user accuracy fields
-    if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
-      @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
-    end
-    if @users == nil
-      flash[:warning] = "No Results!"
-    else
-      @users = @users.paginate(per_page: 15, page: params[:page])      
-    end
-    
+      #debugger
   end
 
 
-  def performpromotewithgroup
+  def performassigngroup
+      #debugger
+      @group=Group.find(params[:id])
+      #This action won't influence the identity of admins
       
+      #Step: Arrange new admin
+      if(params.has_key?(:user_ids))
+        id=params.require(:user_ids)
+      else
+          flash[:warning] = "Please select a user!"
+          redirect_to '/admin/promotewithgroup'
+          return
+      end
+        
+      @new_grp_admin=User.find_by_id(id[0])
+      
+      #3 situations: normal user; already grpadmin but in other grp; poweradmin
+      if(@new_grp_admin.admin == true && @new_grp_admin.group_admin == false)
+          #power admin -- do nothing
+      elsif (@new_grp_admin.admin == true && @new_grp_admin.group_admin == true)
+          #group admin -- do nothing
+      else
+          #User -- promote to be a group admin and assign him this group
+          @new_grp_admin.update_attribute(:group_admin,true)
+          @new_grp_admin.update_attribute(:admin,true)
+      end
+      @group.update_attribute(:admin_uid,id[0])
+      flash[:success] = "Group Admin Identity for #{@group.name} Assigned successfully."
+      redirect_to '/admin/promotewithgroup'
   end
 
 
