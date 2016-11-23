@@ -6,9 +6,7 @@
     <% @all_groups.each do |grp| %>
       <%= render grp %>
       <p>GroupAdmin: 
-      <% grp.get_admins.each do |grpadmin_name| %>
-        <%= grpadmin_name %>
-      <% end %>    
+      <%= User.find_by_id(grp.admin_uid).name %>
       <br>Group Users:</p>
       
       <% if !grp.get_users.nil? %>
@@ -58,19 +56,12 @@
           <% end %>
         </div>
         <div class = "col-sm-2">
-          <% if current_user.group_admin == true %>
-            <%= link_to group_path(grp),disabled: true,
-            method: :delete, data: { confirm: "Are you sure?" },
-            :class => "btn btn-primary btn-block" do %>
-            <i class="glyphicon glyphicon-trash"></i> Delete Group
-            <% end %>          
-          <% else %>
             <%= link_to group_path(grp),
             method: :delete, data: { confirm: "Are you sure?" },
             :class => "btn btn-primary btn-block" do %>
             <i class="glyphicon glyphicon-trash"></i> Delete Group
             <% end %>
-          <% end %>
+          
         </div>
         <div  class = "col-sm-2">
           <%= link_to admin_all_path,

@@ -8,8 +8,10 @@ class GroupsController < ApplicationController
     end
     
     def create
+        #debugger
         @group=Group.new(group_params)
         if @group.save
+            @group.users << User.find_by_id(group_params.fetch(:admin_uid))
             flash[:success] = "#{@group.name} was successfully created."
             redirect_to groups_path
         else
@@ -96,14 +98,14 @@ class GroupsController < ApplicationController
     
     def quickadduser
         @group=Group.find(params[:id])
-        @group_users = @group.get_users.where(:group_admin => false)    
+        @group_users = @group.get_users.where.not(:id => @group.admin_uid)    
         @not_group_users = User.get_member_outside_the_group(@group)
         
     end
     def performadd
         #debugger
         @group=Group.find(params[:id])
-        @group_users=@group.get_users.where(:group_admin => false) 
+        @group_users=@group.get_users.where.not(:id => @group.admin_uid) 
         if(params.has_key?(:role_ids))
             ids=params.require(:role_ids)    
         elsif params.has_key?(:n_role_ids)
