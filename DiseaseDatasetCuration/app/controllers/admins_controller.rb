@@ -103,6 +103,7 @@ class AdminsController < ApplicationController
         
       @new_admin_4_grp=User.find_by_id(id[0])
       @group.update_attribute(:admin_uid,id[0])
+      @group.users << @new_admin_4_grp
       flash[:success] = "Group Admin Identity for #{@group.name} Assigned successfully."
       redirect_to '/admin/manage_group_admins_groups'      
   end
