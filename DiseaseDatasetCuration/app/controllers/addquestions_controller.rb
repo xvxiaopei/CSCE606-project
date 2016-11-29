@@ -17,8 +17,15 @@ class AddquestionsController < ApplicationController
     
     
     def index
-        
-        @all_addquestions = Addquestion.all
+        if !defined? @@group
+            @all_groups = Group.all
+            @all_addquestions = Addquestion.all
+            @@group=Array.new
+            @all_groups.each do |grp|
+                @@group << grp["name"]
+            end
+        end
+        @all_groups=@@group
         #debugger
     end
     
@@ -87,10 +94,35 @@ class AddquestionsController < ApplicationController
     redirect_to '/index'
   end
   
+  def submit_search
+    @@group.each do |grp|
+        @GRP=Group.find_by_name(grp)
+        @datahash=Hash.new
+        @@dataset_global.each do |k,v|
+            datahash[k]=@addquestion
+        end
+        @GRP.save
+    end
+#    @@dataset_global.each do |k,v|
+#      if v[1]<0
+#          @@dataset_global[k]=v
+#      end
+#    end
+    redirect_to '/profile'
+      
+  end
+  
   def delete_dataset
     @@dataset_global.delete(params[:key])
     redirect_to :back
   end
+  
+  def delete_group
+    @@group.delete(params[:key])
+    redirect_to :back
+  end
+  
+  
    
        
     private
