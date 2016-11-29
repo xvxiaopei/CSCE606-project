@@ -1,0 +1,39 @@
+<div class = "row">
+  <h2>Creating a New Question:</h2>
+</div>
+<div class="row">
+  <div class = "col-sm-6">
+    <h3>Properties:</h3>
+    <p>
+    <%= form_for @addquestion, url: {action: "create"}, html: {class: "ffgrp"} do |f| %>
+      <li>
+        <p><%= f.label "Question:" %>
+        <%= f.text_field :content %> </p>
+        <p><%= f.label "Answer:" %>
+        <%= f.text_area :answer, size: "15x6" %></p>
+        
+        
+        <div class = "row">
+          <div class = "col-sm-6">
+            <%= submit_tag 'Save', :class => "btn btn-success " %>
+          </div>
+          <div class = "col-sm-6">
+            <%= link_to "Cancel Changes", addquestions_path,
+              :class => "btn btn-block btn-warning "%>
+          </div>  
+        </div>
+      </li>
+    <% end %> 
+    </p>
+    
+  </div>
+  <div class = "col-sm-6">
+    <h3>Users:</h3>
+  </div>
+</div>    
+    
+    
+    
+    
+
+

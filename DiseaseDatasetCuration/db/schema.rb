@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161119205921) do
+ActiveRecord::Schema.define(version: 20161118071915) do
+
+  create_table "addquestions", force: :cascade do |t|
+    t.text     "content"
+    t.string   "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "addquestions_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "addquestion_id"
+  end
+
+  add_index "addquestions_users", ["addquestion_id"], name: "index_addquestions_users_on_addquestion_id"
+  add_index "addquestions_users", ["user_id"], name: "index_addquestions_users_on_user_id"
 
   create_table "diseases", force: :cascade do |t|
     t.string   "disease"
@@ -61,17 +76,18 @@ ActiveRecord::Schema.define(version: 20161119205921) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "password_digest"
     t.string   "remember_digest"
-    t.boolean  "admin",            default: false
-    t.float    "accuracy",         default: 0.0
+    t.boolean  "admin",             default: false
+    t.float    "accuracy",          default: 0.0
     t.string   "provider"
     t.string   "uid"
     t.string   "oauth_token"
     t.datetime "oauth_expires_at"
-    t.boolean  "group_admin",      default: false
+    t.boolean  "group_admin",       default: false
+    t.boolean  "addquestion_admin", default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -54,6 +54,9 @@ Rails.application.routes.draw do
   post  '/admin/groups/:id/quickadduser', to: 'groups#performadd', as: "quick_group_add"  
   
   
+  # Addquestion
+  resources :addquestions, path: '/admin/addquestions'
+  
   # Sessions
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
