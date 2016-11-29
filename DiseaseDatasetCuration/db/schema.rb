@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 20161118071915) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.integer   "admin_uid"
-    t.text     "data_set"
   end
   
   create_table "datasets", force: :cascade do |t|
@@ -89,7 +88,7 @@ ActiveRecord::Schema.define(version: 20161118071915) do
     t.datetime "oauth_expires_at"
     t.boolean  "group_admin",       default: false
     t.boolean  "addquestion_admin", default: false
-
+    t.text     "data_set"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
