@@ -31,6 +31,11 @@ ActiveRecord::Schema.define(version: 20161119205921) do
     t.datetime "updated_at",                       null: false
     t.integer   "admin_uid"
   end
+  
+  create_table "datasets", force: :cascade do |t|
+    t.string   "name"
+    t.text     "Data_set"
+  end
 
   create_table "groups_users", id: false, force: :cascade do |t|
     t.integer "user_id"
