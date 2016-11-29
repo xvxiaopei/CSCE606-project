@@ -34,7 +34,8 @@ Rails.application.routes.draw do
   post  'admin/search', to: 'admins#search'
   get   'admin/confirm_search' => 'admins#confirm_search'
   post  'admin/confirm_search', to: 'admins#confirm_search'
-  
+  get   'admin/delete_dataset' => 'admins#delete_dataset'
+  post  'admin/delete_dataset', to: 'admins#delete_dataset'
   
   get   'admin/promote' => 'admins#promote'
   post  'admin/promote', to: 'admins#promote', as: "admin_pro"

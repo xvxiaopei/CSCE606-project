@@ -2,7 +2,6 @@ class AdminsController < ApplicationController
   include AdminsHelper
   before_action :admin?
 
-
   def show
     # byebug
 
@@ -222,29 +221,70 @@ class AdminsController < ApplicationController
       redirect_to root_path
     elsif params[:search]
        @dataset = search_from_arrayexpress(params[:search])
-       @@dataset_global=@dataset
-    end
-  end
-  
-  def confirm_search
-    if defined? @@dataset_global
-      if File.exist?("lib/dataset.yml")
-       @previous_data = YAML.load_file("lib/dataset.yml")
-       @@dataset_global.each do |k,v|
-         if !@previous_data.has_key?(k)
-           @previous_data[k]=v
+       @@dataset_global=Hash.new
+       if Dataset.find_by_name(params[:search])==nil
+         Dataset.create(name: params[:search])
+       end
+       @previous_data=Dataset.find_by_name(params[:search])  
+       @dataset.each do |k,v|
+         if !@previous_data.data_has_key(k)
+           @@dataset_global[k]=v
+         end
+         if @@dataset_global.length>=20
+           break
          end
        end
-      else 
-        @previous_data=@@dataset_global
-      end
-      File.open("lib/dataset.yml","w") do |file|
-       file.write @previous_data.to_yaml
-     end
+       if @@dataset_global.length==0
+         flash[:warning] = "Can't find new dataset!"
+       end
+       @@search_id=params[:search]
+       @dataset=@@dataset_global
     end
+  end
+ 
+  def confirm_search
+    @dataset=Dataset.find_by_name(@@search_id)
+    @@dataset_global.each do |k,v|
+#      if !Dataset.data_has_key(k)&&v[1]>0
+        @dataset.data_in(k,v)
+#      end
+    end
+    @dataset.save
+#    @@dataset_global.each do |k,v|
+#      if v[1]<0
+#          @@dataset_global[k]=v
+#      end
+#    end
     redirect_to :back
   end
   
+  def delete_dataset
+    @@dataset_global.delete(params[:key])
+    redirect_to :back
+  end
+  
+#    def confirm_search
+#    if defined? @@dataset_global
+#      if File.exist?("lib/dataset.yml")
+ #      @previous_data = YAML.load_file("lib/dataset.yml")
+#      @@dataset_global.each do |k,v|
+#         if !@previous_data.has_key?(k)&&v[1]>0
+#           @previous_data[k]=v
+#         end
+#       end
+#      else 
+ #       @@dataset_global.each do |k,v|
+ #        if v[1]>0
+ #          @previous_data[k]=v
+#         end
+#       end
+ #     end
+#      File.open("lib/dataset.yml","w") do |file|
+#       file.write @previous_data.to_yaml
+#     end
+ #   end
+ #   redirect_to :back
+#  end
 #  def search_data
 #      if params[:search]
 #        flash[:warning] = "Loading..."
