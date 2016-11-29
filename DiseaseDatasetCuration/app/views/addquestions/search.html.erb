@@ -54,7 +54,7 @@
       <tr>
         <td> <%= k %> </td>
         <td> <%= v %> </td>
-        <td><%= link_to 'Delete', {:controller => "admins", :action => "delete_dataset", :key => k } ,:onclick => "return confirm('Are you sure you want to delete this dataset?')" %></td>
+        <td><%= link_to 'Delete', {:controller => "addquestions", :action => "delete_dataset", :key => k } ,:onclick => "return confirm('Are you sure you want to delete this dataset?')" %></td>
       </tr>
         <%end %> 
       <% end %>

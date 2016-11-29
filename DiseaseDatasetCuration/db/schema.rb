@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20161118071915) do
     t.datetime "oauth_expires_at"
     t.boolean  "group_admin",       default: false
     t.boolean  "addquestion_admin", default: false
+    t.text     "data_set"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

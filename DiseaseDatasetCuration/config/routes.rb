@@ -30,12 +30,7 @@ Rails.application.routes.draw do
   get   'admin/allusers' => 'admins#allusers'
   post  'admin/allusers', to: 'admins#allusers', as: "admin_all"
   get   'admin/getcsv' => 'admins#getcsv'
-  get   'admin/search' => 'admins#search'
-  post  'admin/search', to: 'admins#search'
-  get   'admin/confirm_search' => 'admins#confirm_search'
-  post  'admin/confirm_search', to: 'admins#confirm_search'
-  get   'admin/delete_dataset' => 'admins#delete_dataset'
-  post  'admin/delete_dataset', to: 'admins#delete_dataset'
+
   
   get   'admin/promote' => 'admins#promote'
   post  'admin/promote', to: 'admins#promote', as: "admin_pro"
@@ -53,7 +48,13 @@ Rails.application.routes.draw do
   get   '/admin/groups/:id/quickadduser' => 'groups#quickadduser'
   post  '/admin/groups/:id/quickadduser', to: 'groups#performadd', as: "quick_group_add"  
   
-  
+  get   'addquestion/search' => 'addquestions#search'
+  post  'addquestion/search', to: 'addquestions#search'
+  get   'addquestion/confirm_search' => 'addquestions#confirm_search'
+  post  'addquestion/confirm_search', to: 'addquestions#confirm_search'
+  get   'addquestion/delete_dataset' => 'addquestions#delete_dataset'
+  post  'addquestion/delete_dataset', to: 'addquestions#delete_dataset'
+  get 'index' => 'addquestions#index'
   # Addquestion
   resources :addquestions, path: '/admin/addquestions'
   
