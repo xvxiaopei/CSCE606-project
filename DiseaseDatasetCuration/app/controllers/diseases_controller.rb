@@ -10,48 +10,55 @@ class DiseasesController < ApplicationController
       return
     end
 
-    diseases_temp = Disease.get_questions
-    
-    accessionset=[];
-    diseases_temp.each do |dis|
-      accessionset << dis.accession
-    end
-    
-    accessionset=accessionset.uniq
-    @diseases_this_page=[]
-    accessionset.each do |aset|
-      diseases_temp.each do |dis|
-        if dis.accession==aset
-          @diseases_this_page << dis
+    user = User.find(session[:user_id])
+    group=user.groups
+    if group.any?
+      @dataset=[];
+      group.each do |g|
+        g.data_set.each do |d|
+          @dataset << d
         end
       end
+      @dataset=@dataset.uniq
+      
+      @diseases=[]
+      @dataset.each do |ds|
+        @diseases << Disease.find_by_accession(ds)
+      end
+    else
+      @diseases=[]
     end
-    
+  
   end
 
   def import
     # byebug
     user_id = session[:user_id]
   	choose = params[:choose]
-  	reason = params[:reason]
-    diseases = params[:dis]
-
+    
     if choose == nil
       flash[:warning] = "No answer given!"
       redirect_to '/diseases'
       return
     end
-
-    choose.keys.each do |d_id|
-      # byebug
-      if choose_to_bool(choose[d_id])
-        Submission.insert!({:disease_id => d_id, :user_id => user_id, :is_related => choose_to_bool(choose[d_id]), :reason => 0})
-      else
-        Submission.insert!({:disease_id => d_id, :user_id => user_id, :is_related => choose_to_bool(choose[d_id]), :reason => reason_to_index(reason[d_id])});
+    
+    all_data=Hash.new
+    choose.each do |dandq,answer|
+      dandq=eval dandq
+      dandq.each do |d,q|
+        if all_data.has_key?(d)
+          all_data[d][q]=answer
+        else
+          all_data[d]={q=>answer}
+        end
       end
     end
+    #p 'before submission----------------------------'
+    #p all_data
+    Submission.insert!(user_id,all_data)
+    
+    flash[:success] = "Successfully submitted."
 
-    flash[:success] = "Successfully submitted #{choose.keys.size} questions."
     redirect_to '/diseases'
   end
 

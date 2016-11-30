@@ -2,11 +2,11 @@ require 'csv'
 
 # Diseases
 # first 100 diseases
-csv = CSV.read(Rails.root.join('lib', 'seeds', 'whole_rare_disease_list_result.csv'), { :col_sep => "\t"})
-csv[0..99].each do |row|
-    arr = ["disease",row[0],"accession",row[1]]
-    Disease.create!(Hash[*arr])
-end
+#csv = CSV.read(Rails.root.join('lib', 'seeds', 'whole_rare_disease_list_result.csv'), { :col_sep => "\t"})
+#csv[0..99].each do |row|
+#    arr = ["disease",row[0],"accession",row[1]]
+#    Disease.create!(Hash[*arr])
+#end
 # puts csv.to_s
 
 
@@ -39,6 +39,7 @@ _gadmin3.groups << _group3
 
 
 # Submissions
+=begin
 (0..500).each do |i|
   puts i.to_s
   _user = User.find_by_id(rand(0..User.count-1))
@@ -48,3 +49,4 @@ _gadmin3.groups << _group3
   Submission.insert!(disease_id: _disease.id, user_id: _user.id, is_related: true, reason: 0) if _related
   Submission.insert!(disease_id: _disease.id, user_id: _user.id, is_related: false, reason: rand(1..7)) if !_related
 end
+=end

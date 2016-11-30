@@ -1,0 +1,28 @@
+<div class = "row">
+  <h2>Creating a New Question:</h2>
+</div>
+    <%= form_tag :action => "create" do %>
+      <li>
+        <p><%= "Question:" %>
+        <%= text_field_tag :content, params[:content]%> </p>
+        <p><%= "Answer:" %>
+        <%= text_field_tag :answer, params[:answer], size: "15x6" %></p>
+        
+        
+        <div class = "row">
+          <div class = "col-sm-6">
+            <%= submit_tag 'Save', :class => "btn btn-success " %>
+          </div>
+          <div class = "col-sm-6">
+            <%= link_to "Cancel Changes", addquestions_path,
+              :class => "btn btn-block btn-warning "%>
+          </div>  
+        </div>
+      </li>
+    <% end %> 
+    
+    
+    
+    
+
+

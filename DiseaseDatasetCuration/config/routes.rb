@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   # Users
   get 'signup'  => 'users#new'
   get 'profile' => 'users#show'
+  post 'profile', to: 'users#show'
   resources :users
 
   # Admin
@@ -30,12 +31,6 @@ Rails.application.routes.draw do
   get   'admin/allusers' => 'admins#allusers'
   post  'admin/allusers', to: 'admins#allusers', as: "admin_all"
   get   'admin/getcsv' => 'admins#getcsv'
-  get   'admin/search' => 'admins#search'
-  post  'admin/search', to: 'admins#search'
-  get   'admin/confirm_search' => 'admins#confirm_search'
-  post  'admin/confirm_search', to: 'admins#confirm_search'
-  get   'admin/delete_dataset' => 'admins#delete_dataset'
-  post  'admin/delete_dataset', to: 'admins#delete_dataset'
   
   get   'admin/promote' => 'admins#promote'
   post  'admin/promote', to: 'admins#promote', as: "admin_pro"
@@ -53,6 +48,23 @@ Rails.application.routes.draw do
   get   '/admin/groups/:id/quickadduser' => 'groups#quickadduser'
   post  '/admin/groups/:id/quickadduser', to: 'groups#performadd', as: "quick_group_add"  
   
+  get   'addquestion/search' => 'addquestions#search'
+  post  'addquestion/search', to: 'addquestions#search'
+#  get   'addquestion/confirm_search' => 'addquestions#confirm_search'
+#  post  'addquestion/confirm_search', to: 'addquestions#confirm_search'
+  get   'addquestion/delete_dataset' => 'addquestions#delete_dataset'
+  post  'addquestion/delete_dataset', to: 'addquestions#delete_dataset'
+  get   'addquestion/delete_group' => 'addquestions#delete_group'
+  post  'addquestion/delete_group', to: 'addquestions#delete_group'
+  get   'addquestion/destroy' => 'addquestions#destroy'
+  post  'addquestion/destroy', to: 'addquestions#destroy'
+  get   'addquestion/submit_result' => 'addquestions#submit_result'
+  post  'addquestion/submit_result', to: 'addquestions#submit_result'
+  get   'addquestion/show' => 'addquestions#show'
+  post  'addquestion/show', to: 'addquestions#show'
+  get 'index' => 'addquestions#index'
+  # Addquestion
+  resources :addquestions, path: '/admin/addquestions'
   
   # Sessions
   get    'login'   => 'sessions#new'
