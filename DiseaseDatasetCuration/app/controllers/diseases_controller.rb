@@ -35,9 +35,9 @@ class DiseasesController < ApplicationController
     # byebug
     user_id = session[:user_id]
   	choose = params[:choose]
-  	reason = params[:reason]
     diseases = params[:dis]
-
+    puts choose
+=begin
     if choose == nil
       flash[:warning] = "No answer given!"
       redirect_to '/diseases'
@@ -54,6 +54,7 @@ class DiseasesController < ApplicationController
     end
 
     flash[:success] = "Successfully submitted #{choose.keys.size} questions."
+=end
     redirect_to '/diseases'
   end
 
