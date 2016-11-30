@@ -10,8 +10,36 @@ class DiseasesController < ApplicationController
       return
     end
 
-    diseases_temp = Disease.get_questions
+    user = User.find(session[:user_id])
+    #@user = User.find_by_id(103)
+    group=user.groups
+    @dataset=[];
+    group.each do |g|
+      g.data_set.each do |d|
+        @dataset << d
+      end
+    end
+    @dataset=@dataset.uniq
     
+    @diseases=[]
+    @dataset.each do |ds|
+      @diseases << Disease.find_by_accession(ds)
+    end
+    @diseases.each do |di|
+      di.questions.each do |q|
+        puts q.class
+      end
+    end
+    puts '-------------'
+    puts user.email
+    puts group[0].name
+    puts @dataset.class
+    puts @dataset
+    puts @diseases
+    puts '-------------'
+    
+    #diseases_temp = Disease.get_questions
+=begin    
     accessionset=[];
     diseases_temp.each do |dis|
       accessionset << dis.accession
@@ -26,7 +54,7 @@ class DiseasesController < ApplicationController
         end
       end
     end
-    
+=end    
   end
 
   def import

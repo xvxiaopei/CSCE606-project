@@ -7,55 +7,36 @@
         <thead>
           <tr>
             <th class = "col-md-3">DataSet</th>
-            <th class = "col-md-9"> <div style="word-spacing:22em">Disease Relevant? Reason</th>
+            <th class = "col-md-9">Question</th>
           </tr>
         </thead>
         <tbody>
           
-          <% nowaccession='nil' %>   <!-- this variable can record what is the accession now -->
-          <% @diseases_this_page.each do |dis| %>  <!-- for every diseases(we have sorted the diseases by accession) -->
-          
-            <% if nowaccession!= dis.accession %>  <!-- if the upcomming disease's accession is not what we are processing(we will end the processing and start a new row) -->
-              
-              <% if nowaccession!='nil' %>    <!-- if it is not the first time, we end this row and start a new row(if it is, we skip these end flags)-->
-                </tbody>  <!-- end the sub row-->
-                  </table>  <!-- end the sub row-->
-                  </div>  <!-- end the sub row-->
-                  </td>  <!-- end the column-->
-                    </tr>  <!-- end the row-->
-              <% end %>
-              
-              <% nowaccession= dis.accession %>  <!-- record the new accession -->
-              
-              <tr>         <!-- and start a new row -->
+        <% @diseases.each do |dis| %> 
+              <tr>        
                 <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
                 <td>
                   <div style="overflow-y:scroll;height:100px;">
                     <table class='table'>
                     <tbody>
                       
-            <% end %>
-            
+                    <% dis.questions.each do |q| %> 
                     <tr>
-                      <td width="150px"><%= dis.disease %></td>
+                      <td width="150px"><%= q[0] %></td>
                       <td width="100px">
-                        <label><%= radio_button_tag("choose[#{dis.id}]", "1", false, class: 'radio_input') %>Yes</label>
-                        <label><%= radio_button_tag("choose[#{dis.id}]", "0", false, class: 'radio_input') %>No</label>
-                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "#{dis.id}"%></label>
-                      </td>
-                      <td width="100px">
-                        <%= select_tag "reason[#{dis.id}]", options_for_select([ "Comprehensive", "Irrelevant Study", "Not Enough Experiment", "No health Control", "Micro RNA", "Biomarker", "Others" ]), html_options = {disabled: true, include_blank: true}  %>
+                        <label><%= radio_button_tag("choose[]", "1", false, class: 'radio_input') %>Yes</label>
+                        <label><%= radio_button_tag("choose[]", "0", false, class: 'radio_input') %>No</label>
+                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: ""%></label>
                       </td>
                     </tr>
-                    
-          <% end %>
+                    <% end %>
           
                   </tbody>  <!-- end the sub row(the last time we get out the the loop, we should end the current row)-->
                 </table>  <!-- end the sub row-->
                 </div>  <!-- end the sub row-->
               </td>  <!-- end the column-->
             </tr>  <!-- end the row-->
-            
+        <% end %>
         </tbody>
       </table>
     <%= link_to 'Submit', "#", :class => "btn btn-success button_wid", :id => "submit"%>
