@@ -19,7 +19,15 @@ class AdminsController < ApplicationController
   end
 
   def statistics
-    @user = User.find_by_id(1)
+    @user = User.find_by_id(103)
+    @group=@user.groups
+    @dataset=@group[0].data_set
+    @disease = Disease.find_by_accession(@dataset[0])
+    puts '-------------'
+    puts @dataset
+    puts @disease.questions
+    #puts @dataset.count
+    puts '-------------'
   end
 
   def allusers

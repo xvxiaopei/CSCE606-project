@@ -28,6 +28,11 @@ ActiveRecord::Schema.define(version: 20161118071915) do
   add_index "addquestions_users", ["addquestion_id"], name: "index_addquestions_users_on_addquestion_id"
   add_index "addquestions_users", ["user_id"], name: "index_addquestions_users_on_user_id"
 
+  create_table "datasets", force: :cascade do |t|
+    t.string "name"
+    t.text   "Data_set"
+  end
+
   create_table "diseases", force: :cascade do |t|
     t.text     "questions"
     t.string   "disease"
@@ -45,13 +50,8 @@ ActiveRecord::Schema.define(version: 20161118071915) do
     t.string   "group_level", default: "graduate"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.integer   "admin_uid"
+    t.integer  "admin_uid"
     t.text     "data_set"
-  end
-  
-  create_table "datasets", force: :cascade do |t|
-    t.string   "name"
-    t.text     "Data_set"
   end
 
   create_table "groups_users", id: false, force: :cascade do |t|
@@ -90,7 +90,6 @@ ActiveRecord::Schema.define(version: 20161118071915) do
     t.datetime "oauth_expires_at"
     t.boolean  "group_admin",       default: false
     t.boolean  "addquestion_admin", default: false
-
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
