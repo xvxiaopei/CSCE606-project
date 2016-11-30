@@ -139,9 +139,34 @@ class AddquestionsController < ApplicationController
     redirect_to :back
   end
   
+  def show
+    @groups=Group.all
+    @dataset=Dataset.find_by_name("dataset").Data_set
+    @diseases=Hash.new
+    @dataset.each do |k,v|
+        @dis=Disease.find_by_accession(k)
+        if @dis!=nil
+           @diseases[k]=@dis.questions 
+        end
+    end
+  end
   
+  def delete_in_show
+      @disease=Disease.find_by_accession(params[:key])
+      if @disease!=nil
+        @disease.destroy
+      end
+      @dataset=Dataset.find_by_name("dataset")
+      @dataset.data_delete(params[:key])
+      @dataset.save
+      @group=Group.all
+      @group.each do |grp|
+          grp.data_set.delete(params[:key])
+          grp.save
+      end
+      redirect_to :back
+  end
    
-       
     private
     
     def addquestion_params

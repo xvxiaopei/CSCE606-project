@@ -1,0 +1,56 @@
+<h1> Manage Dataset </h1>
+
+<div class="row">
+<% @groups.each do |grp| %>
+<div class = "col-sm-8">
+    <strong><%= grp.name%></strong>
+      <table class='table'>
+        <thead>
+          <tr>
+            <th class = "col-md-3">Accession</th>
+            <th class = "col-md-3">Name</th>
+            <th class = "col-md-3">Questions</th>
+            <th class = "col-md-3">Answers</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <% grp.data_set.each do |dis| %>  <!-- for every diseases(we have sorted the diseases by accession) -->
+              
+              <tr>         <!-- and start a new row -->
+                <td><%= dis%></td>
+                <td>
+                  <div style="overflow-y:scroll;height:100px;">
+                    <table class='table'>
+                    <tbody>
+                <% @diseases[dis].each do |k,v| %>
+                    <tr>
+                      <td width="150px">k</td>
+                      <%if v==1%>
+                      <td width="100px">Yes</td>
+                      <%elsif v==-1%>
+                      <td width="100px">No</td>
+                      <%else%>
+                      <td width="100px">No standard answer</td>
+                      <%end%>
+                    </tr>
+                 <%end %> 
+                  </tbody>  <!-- end the sub row(the last time we get out the the loop, we should end the current row)-->
+                </table>  <!-- end the sub row-->
+                </div>  <!-- end the sub row-->
+              </td>  <!-- end the column-->
+              <td><%= link_to 'Delete', {:controller => "addquestions", :action => "delete_in_show", :key => dis} ,:onclick => "return confirm('Are you sure you want to delete this dataset?')" %></td>
+            </tr>  <!-- end the row-->
+        <% end %>    
+        </tbody>
+      </table>
+    </div>
+    <%end%>
+</div>
+
+
+<div class = "row">
+  <div class = "col-sm-12">
+    <p><%= button_to "Back", '/profile', class: "btn btn-warning center-block"%></p>
+  </div>
+</div>

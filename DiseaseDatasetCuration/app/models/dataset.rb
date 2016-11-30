@@ -24,5 +24,9 @@ class Dataset < ActiveRecord::Base
      end
   end
   
+  def data_delete(key)
+    self.Data_set.delete(key)
+  end
+      
   
 end
