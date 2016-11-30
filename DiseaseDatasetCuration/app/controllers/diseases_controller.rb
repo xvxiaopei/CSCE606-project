@@ -35,26 +35,30 @@ class DiseasesController < ApplicationController
     # byebug
     user_id = session[:user_id]
   	choose = params[:choose]
-    diseases = params[:dis]
-    puts choose
-=begin
+    
     if choose == nil
       flash[:warning] = "No answer given!"
       redirect_to '/diseases'
       return
     end
-
-    choose.keys.each do |d_id|
-      # byebug
-      if choose_to_bool(choose[d_id])
-        Submission.insert!({:disease_id => d_id, :user_id => user_id, :is_related => choose_to_bool(choose[d_id]), :reason => 0})
-      else
-        Submission.insert!({:disease_id => d_id, :user_id => user_id, :is_related => choose_to_bool(choose[d_id]), :reason => reason_to_index(reason[d_id])});
+    
+    all_data=Hash.new
+    choose.each do |dandq,answer|
+      dandq=eval dandq
+      dandq.each do |d,q|
+        if all_data.has_key?(d)
+          all_data[d][q]=answer
+        else
+          all_data[d]={q=>answer}
+        end
       end
     end
+    #p 'before submission----------------------------'
+    #p all_data
+    Submission.insert!(user_id,all_data)
+    
+    flash[:success] = "Successfully submitted."
 
-    flash[:success] = "Successfully submitted #{choose.keys.size} questions."
-=end
     redirect_to '/diseases'
   end
 

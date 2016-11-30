@@ -20,13 +20,13 @@
                     <table class='table'>
                     <tbody>
                       
-                    <% dis.questions.each do |q| %> 
+                    <% dis.questions.each do |kq,q| %> 
                     <tr>
-                      <td width="150px"><%= q[0] %></td>
+                      <td width="150px"><%= kq %></td>
                       <td width="100px">
-                        <label><%= radio_button_tag("choose[#{[dis.id,q]}]", "1", false, class: 'radio_input') %>Yes</label>
-                        <label><%= radio_button_tag("choose[#{[dis.id,q]}]", "0", false, class: 'radio_input') %>No</label>
-                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "#{[dis.id,q]}"%></label>
+                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", false, class: 'radio_input') %>Yes</label>
+                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", false, class: 'radio_input') %>No</label>
+                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "#{[dis.accession=>kq]}"%></label>
                       </td>
                     </tr>
                     <% end %>

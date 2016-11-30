@@ -63,15 +63,13 @@ ActiveRecord::Schema.define(version: 20161118071915) do
   add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id"
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "disease_id"
+    t.text "all_data"
     t.integer  "user_id"
-    t.boolean  "is_related"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "reason"
   end
 
-  add_index "submissions", ["disease_id"], name: "index_submissions_on_disease_id"
+  #add_index "submissions", ["disease_id"], name: "index_submissions_on_disease_id"
   add_index "submissions", ["user_id", "created_at"], name: "index_submissions_on_user_id_and_created_at"
   add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
 
