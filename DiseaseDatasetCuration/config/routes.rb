@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   # Users
   get 'signup'  => 'users#new'
   get 'profile' => 'users#show'
+  post 'profile', to: 'users#show'
   resources :users
 
   # Admin
@@ -60,6 +61,8 @@ Rails.application.routes.draw do
   post  'addquestion/destroy', to: 'addquestions#destroy'
   get   'addquestion/submit_result' => 'addquestions#submit_result'
   post  'addquestion/submit_result', to: 'addquestions#submit_result'
+  get   'addquestion/show' => 'addquestions#show'
+  post  'addquestion/show', to: 'addquestions#show'
   get 'index' => 'addquestions#index'
   # Addquestion
   resources :addquestions, path: '/admin/addquestions'
