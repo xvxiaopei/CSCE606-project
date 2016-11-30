@@ -2,7 +2,7 @@
 
 <h1> Questions </h1>
 <div class="row">
-  <%= form_tag diseases_import_path(:dis => @diseases_this_page), :method => :post, :id => "questions" do%>
+  <%= form_tag diseases_import_path(:dis => @diseases), :method => :post, :id => "questions" do%>
       <table class='table'>
         <thead>
           <tr>
@@ -24,18 +24,18 @@
                     <tr>
                       <td width="150px"><%= q[0] %></td>
                       <td width="100px">
-                        <label><%= radio_button_tag("choose[]", "1", false, class: 'radio_input') %>Yes</label>
-                        <label><%= radio_button_tag("choose[]", "0", false, class: 'radio_input') %>No</label>
-                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: ""%></label>
+                        <label><%= radio_button_tag("choose[#{[dis.id,q]}]", "1", false, class: 'radio_input') %>Yes</label>
+                        <label><%= radio_button_tag("choose[#{[dis.id,q]}]", "0", false, class: 'radio_input') %>No</label>
+                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "#{[dis.id,q]}"%></label>
                       </td>
                     </tr>
                     <% end %>
           
-                  </tbody>  <!-- end the sub row(the last time we get out the the loop, we should end the current row)-->
-                </table>  <!-- end the sub row-->
-                </div>  <!-- end the sub row-->
-              </td>  <!-- end the column-->
-            </tr>  <!-- end the row-->
+                  </tbody>
+                </table> 
+                </div> 
+              </td> 
+            </tr> 
         <% end %>
         </tbody>
       </table>
