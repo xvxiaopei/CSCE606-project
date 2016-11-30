@@ -12,7 +12,7 @@ class AddquestionsController < ApplicationController
 #       else
 #           render 'new'
 #       end
-        if defined? @@all_addquestions
+        if (defined? @@all_addquestions)&&@@all_addquestions!=nil
             if params[:answer]!=""
               if params[:answer]=="yes"
                   @@all_addquestions[params[:content]]=1
@@ -29,10 +29,10 @@ class AddquestionsController < ApplicationController
     
     
     def index
-        if !defined? @@all_addquestions
+        if (!defined? @@all_addquestions)||@@all_addquestions==nil
             @@all_addquestions=Hash.new
         end
-        if !defined? @@group
+        if (!defined? @@group)||@@group==nil
             @all_groups = Group.all
             @@group=Array.new
             @all_groups.each do |grp|
@@ -66,7 +66,7 @@ class AddquestionsController < ApplicationController
     end  
       
   def search
-     if defined? @@dataset_global
+     if (defined? @@dataset_global)&&@@dataset_global!=nil
       @dataset=@@dataset_global
      end
         user = User.find_by_id(session[:user_id])
@@ -99,7 +99,9 @@ class AddquestionsController < ApplicationController
   def submit_result
     @dataset=Dataset.find_by_name("dataset")
     @@dataset_global.each do |k,v|
-        @dataset.data_in(k,v)
+        if !@dataset.data_has_key(k)
+             @dataset.data_in(k,v)
+        end
     end
     @dataset.save
     @datahash=Hash.new
@@ -116,12 +118,14 @@ class AddquestionsController < ApplicationController
         @GRP=Group.find_by_name(grp)
         @GRP.data_set=@dataarray
         @GRP.save
-        p @GRP.name
     end
-#    @disease_all=Disease.all
-#    @disease_all.each do |d|
-#        p d.accession
-#    end
+    @disease_all=Disease.all
+    @disease_all.each do |d|
+        p d.questions
+    end
+    @@dataset_global=nil
+    @@all_addquestions=nil
+    @@group=nil
     redirect_to '/profile'
   end
   
