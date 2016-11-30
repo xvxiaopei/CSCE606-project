@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  serialize:data_set,Hash
+  serialize:data_set,Array
   has_and_belongs_to_many :users
   
   

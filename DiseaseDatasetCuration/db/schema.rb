@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20161118071915) do
   add_index "addquestions_users", ["user_id"], name: "index_addquestions_users_on_user_id"
 
   create_table "diseases", force: :cascade do |t|
+    t.text     "questions"
     t.string   "disease"
     t.string   "accession"
     t.datetime "created_at",                 null: false

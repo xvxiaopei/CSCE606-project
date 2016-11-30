@@ -1,16 +1,12 @@
 <div class = "row">
   <h2>Creating a New Question:</h2>
 </div>
-<div class="row">
-  <div class = "col-sm-6">
-    <h3>Properties:</h3>
-    <p>
-    <%= form_for @addquestion, url: {action: "create"}, html: {class: "ffgrp"} do |f| %>
+    <%= form_tag :action => "create" do %>
       <li>
-        <p><%= f.label "Question:" %>
-        <%= f.text_field :content %> </p>
-        <p><%= f.label "Answer:" %>
-        <%= f.text_area :answer, size: "15x6" %></p>
+        <p><%= "Question:" %>
+        <%= text_field_tag :content, params[:content]%> </p>
+        <p><%= "Answer:" %>
+        <%= text_field_tag :answer, params[:answer], size: "15x6" %></p>
         
         
         <div class = "row">
@@ -24,13 +20,6 @@
         </div>
       </li>
     <% end %> 
-    </p>
-    
-  </div>
-  <div class = "col-sm-6">
-    <h3>Users:</h3>
-  </div>
-</div>    
     
     
     

@@ -50,12 +50,16 @@ Rails.application.routes.draw do
   
   get   'addquestion/search' => 'addquestions#search'
   post  'addquestion/search', to: 'addquestions#search'
-  get   'addquestion/confirm_search' => 'addquestions#confirm_search'
-  post  'addquestion/confirm_search', to: 'addquestions#confirm_search'
+#  get   'addquestion/confirm_search' => 'addquestions#confirm_search'
+#  post  'addquestion/confirm_search', to: 'addquestions#confirm_search'
   get   'addquestion/delete_dataset' => 'addquestions#delete_dataset'
   post  'addquestion/delete_dataset', to: 'addquestions#delete_dataset'
   get   'addquestion/delete_group' => 'addquestions#delete_group'
   post  'addquestion/delete_group', to: 'addquestions#delete_group'
+  get   'addquestion/destroy' => 'addquestions#destroy'
+  post  'addquestion/destroy', to: 'addquestions#destroy'
+  get   'addquestion/submit_result' => 'addquestions#submit_result'
+  post  'addquestion/submit_result', to: 'addquestions#submit_result'
   get 'index' => 'addquestions#index'
   # Addquestion
   resources :addquestions, path: '/admin/addquestions'

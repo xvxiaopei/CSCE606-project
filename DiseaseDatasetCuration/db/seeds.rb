@@ -2,11 +2,11 @@ require 'csv'
 
 # Diseases
 # first 100 diseases
-csv = CSV.read(Rails.root.join('lib', 'seeds', 'whole_rare_disease_list_result.csv'), { :col_sep => "\t"})
-csv[0..99].each do |row|
-    arr = ["disease",row[0],"accession",row[1]]
-    Disease.create!(Hash[*arr])
-end
+#csv = CSV.read(Rails.root.join('lib', 'seeds', 'whole_rare_disease_list_result.csv'), { :col_sep => "\t"})
+#csv[0..99].each do |row|
+#    arr = ["disease",row[0],"accession",row[1]]
+#    Disease.create!(Hash[*arr])
+#end
 # puts csv.to_s
 
 

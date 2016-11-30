@@ -2,6 +2,8 @@ class Disease < ActiveRecord::Base
   require 'yaml'
   require 'csv'
 
+  serialize:questions, Hash
+
   has_many :submissions
   has_many :users, :through => :submissions
 
