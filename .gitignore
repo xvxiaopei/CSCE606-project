@@ -3,8 +3,6 @@ capybara-*.html
 /DiseaseDatasetCuration/.rspec
 /DiseaseDatasetCuration/log
 /DiseaseDatasetCuration/tmp
-/DiseaseDatasetCuration/db/*.sqlite3
-/DiseaseDatasetCuration/db/*.sqlite3-journal
 /DiseaseDatasetCuration/public/system
 /DiseaseDatasetCuration/coverage/
 /DiseaseDatasetCuration/spec/tmp
