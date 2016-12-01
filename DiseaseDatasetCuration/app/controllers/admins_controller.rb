@@ -20,11 +20,6 @@ class AdminsController < ApplicationController
 =end
   end
 
-  def statistics
-
-    @users=User.all
-    
-  end
 
   def allusers
     update_session(:page, :query, :order)
@@ -169,9 +164,11 @@ class AdminsController < ApplicationController
 
     correct_answers=Hash.new
     questions.each do |k,a|
-      correct_answers[k]=0
+      p k
+      correct_answers[k+' correct']=0
+      correct_answers[k+' total']=0
     end
-
+    
     @histogram=Hash.new
     
     submission=Submission.all
@@ -180,8 +177,9 @@ class AdminsController < ApplicationController
         if sub.all_data.has_key?(accession)
           answer=sub.all_data[accession]
           answer.each do |q,a|
+            correct_answers[q+' total']=correct_answers[q+' total']+1
             if (questions[q].to_i>0 and a.to_i>0)or(questions[q].to_i<0 and a.to_i<0)
-              correct_answers[q]=correct_answers[q]+1
+              correct_answers[q+' correct']=correct_answers[q+' correct']+1
             end
           end
         end
