@@ -7,19 +7,23 @@ class AdminsController < ApplicationController
 
     update_session(:page, :search, :sort)
 
-    @diseases = find_conditional_diseases
+    @diseases = Disease.all
     # byebug
 
+=begin
     if @diseases == nil
       flash[:warning] = "No Results!"
     else
       # byebug
       @diseases = @diseases.paginate(per_page: 15, page: params[:page])
     end
+=end
   end
 
   def statistics
 
+    @users=User.all
+    
   end
 
   def allusers
@@ -160,13 +164,30 @@ class AdminsController < ApplicationController
 
   def histogram
 
-    @dis_id = params[:sort]
-    @histogram_data = {}
+    accession=params[:accession]
+    questions=params[:questions]
 
-    for i in 0..7
-      @histogram_data[index_to_reason(i)] = Submission.where("disease_id = '#{@dis_id}'").where("reason = #{i}").count
+    correct_answers=Hash.new
+    questions.each do |k,a|
+      correct_answers[k]=0
     end
 
+    @histogram=Hash.new
+    
+    submission=Submission.all
+    if !submission.empty?
+      submission.each do |sub|
+        if sub.all_data.has_key?(accession)
+          answer=sub.all_data[accession]
+          answer.each do |q,a|
+            if (questions[q].to_i>0 and a.to_i>0)or(questions[q].to_i<0 and a.to_i<0)
+              correct_answers[q]=correct_answers[q]+1
+            end
+          end
+        end
+      end
+      @histogram=correct_answers
+    end
   end
 
 

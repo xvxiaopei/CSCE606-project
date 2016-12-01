@@ -2,4 +2,32 @@
   <h3>Statistics</h3>
 </div>
 <div class = "row">
+  <div class = "col-sm-2">
+    <%= link_to "Back", '/admin'%>
+  </div>
+</div>
+
+<div class = "row">
+  <div class = "col-sm-12">
+      <div class="table-responsive">
+        <table id="dvData" class = "table">
+          <thead>
+            <tr>
+              <th class = "col-md-1"><%= link_to "ID", admins_show_path(:sort => "id") %></th>
+              <th class = "col-md-3">Name</th>
+              <th class = "col-md-3">Correct</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %> 
+              <tr>  
+                <td><%= user.id %>
+                <td><%= user.name %>
+                <td><%= 'asda' %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+  </div>
 </div>

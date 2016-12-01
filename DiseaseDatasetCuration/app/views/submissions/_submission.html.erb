@@ -5,18 +5,18 @@
   <div class = "row">
     <div class = "col-sm-2">
       <div class = "col-sm-4">
-        <% if submission.is_related %>
+        <% if 1 %>
           <div class="colorbox green"></div>
         <% else %>
           <div class="colorbox red"></div>
         <% end %>
       </div>
-      <div class = "col-sm-8"><%= (submission.is_related)? "Related" : "Unrelated" %></div>
+      <div class = "col-sm-8"><%= (1)? "Related" : "Unrelated" %></div>
     </div>
     <div class = "col-sm-7">
-      <div class = "col-sm-5"><%= "#{submission.disease.disease}"%></div>
-      <div class = "col-sm-3"><%= link_to submission.disease.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{submission.disease.accession}/?query=#{submission.disease.disease}", :target => '_blank'%></div>
-      <div class = "col-sm-4"><%= "#{index_to_reason submission.reason}"%></div>
+      <div class = "col-sm-5"><%= "disease"%></div>
+      <div class = "col-sm-3"><%= 'accession'%></div>
+      <div class = "col-sm-4"><%= "reason"%></div>
     </div>
     <div class = "col-sm-3">
       <div class="timestamp">
