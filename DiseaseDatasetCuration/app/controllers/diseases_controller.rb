@@ -28,7 +28,11 @@ class DiseasesController < ApplicationController
     else
       @diseases=[]
     end
-  
+    if Submission.find_by_user_id(session[:user_id])!=nil
+      @submission=Submission.find_by_user_id(session[:user_id]).all_data
+    else 
+      @submission=Hash.new
+    end
   end
 
   def import
@@ -55,11 +59,10 @@ class DiseasesController < ApplicationController
     end
     #p 'before submission----------------------------'
     #p all_data
-    Submission.insert!(user_id,all_data)
-    
+    insert!(user_id,all_data)
     flash[:success] = "Successfully submitted."
 
-    redirect_to '/diseases'
+    redirect_to '/profile'
   end
 
 end

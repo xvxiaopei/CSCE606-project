@@ -5,17 +5,17 @@
 <table class = "table">
   <thead>
   <% if @addquestions.length!=0 %>
-    <% @addquestions.each do |q| %>
+    <% @addquestions.each do |k,q| %>
             <tr>
-              <th class = "col-md-3"><%= q[0] %></th>
-                <% if q[1]==1%>
+              <th class = "col-md-3"><%= k %></th>
+                <% if q>0 %>
                    <th class = "col-md-3"> YES </th>
-                <% elsif q[1]==-1 %>
+                <% elsif q<0 %>
                     <th class = "col-md-3"> NO </th>
                 <% else %>
                     <th class = "col-md-3"> No standard answer </th>
                 <% end %>
-              <th class = "col-md-3"><%= button_to 'Delete', {:controller => "addquestions", :action => "destroy", :key => q[0] } ,:onclick => "return confirm('Are you sure you want to delete this question?')", class: "btn btn-warning center-block" %></th>
+              <th class = "col-md-3"><%= button_to 'Delete', {:controller => "addquestions", :action => "destroy", :key => k } ,:onclick => "return confirm('Are you sure you want to delete this question?')", class: "btn btn-warning center-block" %></th>
             </tr>
     <% end %> 
     </thead>

@@ -2,8 +2,8 @@ class Disease < ActiveRecord::Base
   require 'yaml'
   require 'csv'
 
-  serialize:questions, Hash
-
+  serialize :questions, Hash
+  serialize :all_users, Array
   has_many :submissions
   has_many :users, :through => :submissions
 
@@ -44,5 +44,6 @@ class Disease < ActiveRecord::Base
 
     return diseases
   end
+
 
 end

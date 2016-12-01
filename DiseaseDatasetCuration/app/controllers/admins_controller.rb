@@ -26,13 +26,15 @@ class AdminsController < ApplicationController
     update_session(:page, :query, :order)
 
     @users = find_conditional_users
-
+#    @users.each do |u|
+#      u.renew_data
+#    end
     # update user accuracy fields
-    if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
-      @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
-    end
+#    if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
+      get_answer
+      @users.each { |user| user.get_accuracy }
+#    end
     # byebug
-
     if @users == nil
       flash[:warning] = "No Results!"
     else
@@ -105,11 +107,6 @@ class AdminsController < ApplicationController
       flash[:success] = "Group Admin Identity for #{@group.name} Assigned successfully."
       redirect_to '/admin/manage_group_admins_groups'      
   end
-
-
-
-
-
 
 
   def promote
@@ -210,36 +207,5 @@ class AdminsController < ApplicationController
     redirect_to '/config'
   end
     
-
-#    def confirm_search
-#    if defined? @@dataset_global
-#      if File.exist?("lib/dataset.yml")
- #      @previous_data = YAML.load_file("lib/dataset.yml")
-#      @@dataset_global.each do |k,v|
-#         if !@previous_data.has_key?(k)&&v[1]>0
-#           @previous_data[k]=v
-#         end
-#       end
-#      else 
- #       @@dataset_global.each do |k,v|
- #        if v[1]>0
- #          @previous_data[k]=v
-#         end
-#       end
- #     end
-#      File.open("lib/dataset.yml","w") do |file|
-#       file.write @previous_data.to_yaml
-#     end
- #   end
- #   redirect_to :back
-#  end
-#  def search_data
-#      if params[:search]
-#        flash[:warning] = "Loading..."
- #       @dataset = search_from_arrayexpress(params[:search])
-#         @dataset=["1","ok"]
- #        redirect_to :back
- #     end
- # end
   
 end

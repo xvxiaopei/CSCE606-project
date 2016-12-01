@@ -12,16 +12,14 @@ class AddquestionsController < ApplicationController
 #       else
 #           render 'new'
 #       end
-        if defined? @@all_addquestions
+        if (defined? @@all_addquestions)&&@@all_addquestions!=nil
+          if params[:content]!=""  
             if params[:answer]!=""
-              if params[:answer]=="yes"
-                  @@all_addquestions[params[:content]]=1
-              else
-                 @@all_addquestions[params[:content]]=-1
-              end
+                @@all_addquestions[params[:content]]=params[:answer].to_i
             else
                 @@all_addquestions[params[:content]]=0
             end
+          end
         end
         redirect_to addquestions_path
     end
@@ -29,10 +27,10 @@ class AddquestionsController < ApplicationController
     
     
     def index
-        if !defined? @@all_addquestions
+        if (!defined? @@all_addquestions)||@@all_addquestions==nil
             @@all_addquestions=Hash.new
         end
-        if !defined? @@group
+        if (!defined? @@group)||@@group==nil
             @all_groups = Group.all
             @@group=Array.new
             @all_groups.each do |grp|
@@ -41,6 +39,8 @@ class AddquestionsController < ApplicationController
         end
         @all_groups=@@group
         @addquestions = @@all_addquestions
+        p 'addquestion-------------------------'
+        p @addquestions
         #debugger
     end
     
@@ -66,7 +66,7 @@ class AddquestionsController < ApplicationController
     end  
       
   def search
-     if defined? @@dataset_global
+     if (defined?@@dataset_global)&&@@dataset_global!=nil
       @dataset=@@dataset_global
      end
         user = User.find_by_id(session[:user_id])
@@ -97,6 +97,16 @@ class AddquestionsController < ApplicationController
  
   
   def submit_result
+    if @@all_addquestions.empty?
+        flash[:warning] = "Please add new questions!"
+        redirect_to addquestions_path
+        return
+    end
+    if (!defined?@@dataset_global)||(@@dataset_global==nil)||@@dataset_global.empty?
+        flash[:warning] = "Please choose data_set!"
+        redirect_to '/addquestion/search'
+        return
+    end
     @dataset=Dataset.find_by_name("dataset")
     @@dataset_global.each do |k,v|
         @dataset.data_in(k,v)
@@ -114,14 +124,14 @@ class AddquestionsController < ApplicationController
     end
     @@group.each do |grp|
         @GRP=Group.find_by_name(grp)
-        @GRP.data_set=@dataarray
+        @dataarray.each do |d|
+            @GRP.data_set << d
+        end
         @GRP.save
-        p @GRP.name
     end
-#    @disease_all=Disease.all
-#    @disease_all.each do |d|
-#        p d.accession
-#    end
+    @@all_addquestions=nil
+    @@dataset_global=nil
+    @@group=nil
     redirect_to '/profile'
   end
   
@@ -138,19 +148,7 @@ class AddquestionsController < ApplicationController
   
    def show
     @groups=Group.all
-    if Dataset.find_by_name("dataset")!=nil
-        @dataset=Dataset.find_by_name("dataset").Data_set
-        @diseases=Hash.new
-        @dataset.each do |k,v|
-            @dis=Disease.find_by_accession(k)
-            if @dis!=nil
-                @diseases[k]=@dis.questions 
-            end
-        end
-     else
-        @diseases=nil
-     end
-  end
+   end
   
   def delete_in_show
       @disease=Disease.find_by_accession(params[:key])
@@ -164,6 +162,17 @@ class AddquestionsController < ApplicationController
       @group.each do |grp|
           grp.data_set.delete(params[:key])
           grp.save
+      end
+      @submissions=Submission.all
+      @submissions.each do |submission|
+          if submission.all_data.has_key?(params[:key])
+              submission.all_data.delete(params[:key])
+          end
+          if submission.all_data.empty?
+              submission.destroy
+          else
+              submission.save!
+          end
       end
       redirect_to :back
   end

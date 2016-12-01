@@ -63,6 +63,8 @@ Rails.application.routes.draw do
   post  'addquestion/submit_result', to: 'addquestions#submit_result'
   get   'addquestion/show' => 'addquestions#show'
   post  'addquestion/show', to: 'addquestions#show'
+  get   'addquestion/delete_in_show' => 'addquestions#delete_in_show'
+  post  'addquestion/delete_in_show', to: 'addquestions#delete_in_show'
   get 'index' => 'addquestions#index'
   # Addquestion
   resources :addquestions, path: '/admin/addquestions'

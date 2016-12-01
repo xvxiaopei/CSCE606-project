@@ -5,11 +5,11 @@ class Dataset < ActiveRecord::Base
   
   
   def data_in(key,value)
-      if !self.Data_set.has_key?(key)
+#      if !self.Data_set.has_key?(key)
           self.Data_set[key]=value
-      else
-          self.Data_set[key]=self.Data_set[key].concat(value)
-      end
+#      else
+#          self.Data_set[key]=self.Data_set[key].concat(value)
+#      end
   end
   
   def data_out(key)
@@ -24,5 +24,8 @@ class Dataset < ActiveRecord::Base
      end
   end
   
+  def data_delete(key)
+    self.Data_set.delete(key)
+  end
   
 end
