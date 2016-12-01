@@ -6,7 +6,7 @@ class AdminsController < ApplicationController
     # byebug
 
     update_session(:page, :search, :sort)
-
+    get_answer
     @diseases = Disease.all
     # byebug
 
@@ -155,7 +155,6 @@ class AdminsController < ApplicationController
 
 
   def histogram
-
     accession=params[:accession]
     questions=params[:questions]
 
@@ -167,7 +166,6 @@ class AdminsController < ApplicationController
     end
     
     @histogram=Hash.new
-    
     submission=Submission.all
     if !submission.empty?
       submission.each do |sub|

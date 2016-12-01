@@ -3,7 +3,7 @@ class Disease < ActiveRecord::Base
   require 'csv'
 
   serialize :questions, Hash
-  serialize :all_users, Array
+  serialize :all_users, Array #unused
   has_many :submissions
   has_many :users, :through => :submissions
 
