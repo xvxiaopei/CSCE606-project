@@ -6,18 +6,24 @@ class AdminsController < ApplicationController
     # byebug
 
     update_session(:page, :search, :sort)
-    get_answer
+    #get_answer
     @diseases = Disease.all
     # byebug
-
-=begin
-    if @diseases == nil
-      flash[:warning] = "No Results!"
-    else
-      # byebug
-      @diseases = @diseases.paginate(per_page: 15, page: params[:page])
+    
+    submission=Submission.all
+    submissioncount=Hash.new
+    @diseases.each do |dis|
+      submissioncount[dis.accession]=0
+      if !submission.empty?
+        submission.each do |sub|
+          if sub.all_data.has_key?(dis.accession)
+            submissioncount[dis.accession]=submissioncount[dis.accession]+1
+          end
+        end
+      end
     end
-=end
+    @subcount=submissioncount
+    
   end
 
 
@@ -158,11 +164,11 @@ class AdminsController < ApplicationController
     accession=params[:accession]
     questions=params[:questions]
 
-    correct_answers=Hash.new
+    gram=Hash.new
+    gram=[{"name" => "correct","data" => {}},{"name" => "total","data" => {}},]
     questions.each do |k,a|
-      p k
-      correct_answers[k+' correct']=0
-      correct_answers[k+' total']=0
+      gram[0]['data'][k]=0
+      gram[1]['data'][k]=0
     end
     
     @histogram=Hash.new
@@ -172,14 +178,17 @@ class AdminsController < ApplicationController
         if sub.all_data.has_key?(accession)
           answer=sub.all_data[accession]
           answer.each do |q,a|
-            correct_answers[q+' total']=correct_answers[q+' total']+1
+            gram[1]['data'][q]=gram[1]['data'][q]+1
             if (questions[q].to_i>0 and a.to_i>0)or(questions[q].to_i<0 and a.to_i<0)
-              correct_answers[q+' correct']=correct_answers[q+' correct']+1
+              gram[0]['data'][q]=gram[0]['data'][q]+1
             end
           end
         end
       end
-      @histogram=correct_answers
+      
+      #@histogram=correct_answers
+      @histogram=gram
+      #@histogram=[{"name" => "correct","data" => {"Gender" => 10,"aaa" => 30}},{"name" => "total","data" => {"Gender" => 20,"aaa" => 20}}]
     end
   end
 
