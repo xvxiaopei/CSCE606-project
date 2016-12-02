@@ -39,7 +39,7 @@
               <th class = "col-md-3">Name</th>
               <th class = "col-md-3">Accession</th>
               <th class = "col-md-3"><%= link_to "Submission#", admins_show_path(:sort => "submission") %></th>
-              <th class = "col-md-1">Histogram</th>
+              <th class = "col-md-1">Statistics</th>
             </tr>
           </thead>
           <tbody>
@@ -48,8 +48,8 @@
                 <td><%= dis.id %>
                 <td><%= dis.disease %>
                 <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
-                <td><%= column_chart @histogram, discrete: true %>
-                <td><%= link_to 'Histogram', {:controller => 'admins', :action => 'histogram', :accession => dis.accession, :questions => dis.questions} %>
+                <td><%= @subcount[dis.accession] %>
+                <td><%= link_to 'Dataset Statistic', {:controller => 'admins', :action => 'histogram', :accession => dis.accession, :questions => dis.questions} %>
               </tr>
             <% end %>
           </tbody>
