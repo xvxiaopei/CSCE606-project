@@ -3,7 +3,7 @@ class CreateDiseases < ActiveRecord::Migration
     create_table :diseases do |t|
       t.string :disease
       t.string :accession
-
+      t.text  :questions
       t.timestamps null: false
     end
   end
