@@ -88,7 +88,9 @@ Rails.application.routes.draw do
   #Integrated submissions
   resources :submissions, path: '/admin/submissions'
   
-  
+  #Search
+  get   'admin/fullquestion_addquestion_s' => 'fullquestions#search'
+  post  'admin/fullquestion_addquestion_s', to: 'fullquestions#performsearch', as: 'full_search'  
   
   
   

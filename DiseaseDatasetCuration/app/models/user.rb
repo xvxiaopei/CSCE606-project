@@ -18,8 +18,8 @@ class User < ActiveRecord::Base
 
 
   #New trial
-  has_many fullsubmissions
-  has_many fullquestions, :through => :users
+  has_many :fullsubmissions
+  has_many :fullquestions, :through => :users
 
 
 

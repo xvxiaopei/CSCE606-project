@@ -1,8 +1,8 @@
 class Fullsubmission < ActiveRecord::Base
 
 
-    belongs_to users
-    belongs_to fullquestions
+    belongs_to :users
+    belongs_to :fullquestions
 
 
 

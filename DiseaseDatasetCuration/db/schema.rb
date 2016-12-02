@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161202160917) do
+ActiveRecord::Schema.define(version: 20161202181938) do
 
   create_table "addquestions", force: :cascade do |t|
     t.text     "content"
@@ -88,8 +88,10 @@ ActiveRecord::Schema.define(version: 20161202160917) do
   add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id"
 
   create_table "partsearchresults", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "keyword"
+    t.text     "Data_set_results"
   end
 
   create_table "submissions", force: :cascade do |t|
