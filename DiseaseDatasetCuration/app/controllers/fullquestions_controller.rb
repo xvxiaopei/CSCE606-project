@@ -52,21 +52,23 @@ class FullquestionsController < ApplicationController
     
     
     def groupselect
-        #debugger
+        debugger
         if(!params.has_key?(:selected_keys))
             flash[:warning] = "Please select a Dataset"
             redirect_to full_search_path
             return
         else
             #Receive primary params
-            selected_accession_keys = params[:selected_keys]
+            @selected_accession_keys = params[:selected_keys]
+            
+            
             temp_record_id = params[:user][:temppsr_id]
             @temp_record = Partsearchresult.find(temp_record_id)
             
             #For View Use
             @show_selected_keyword  = @temp_record.keyword
             @show_selected_datasets = Hash.new
-            selected_accession_keys.each do |key|
+            @selected_accession_keys.each do |key|
                 
                 @show_selected_datasets[key] = @temp_record.Data_set_results[key]
             end
@@ -82,15 +84,51 @@ class FullquestionsController < ApplicationController
             #Questions
             @ans = ['Yes','No','Not Given']
             
+            @full_question = Fullquestion.new
             
         end
     end
     
     
+    def create
+        
+        debugger
+        
+        #Two things to do:
+        #First save a fullquestion to the DB
+        
+        #Two fields on question
+        question_desc = params[:qcontent]
+        question_ans  = params[:selected_ans].first
+        #Two on Dataset
+        concerned_dataset_keys = params[:fullquestion][:sakeys].split(' ')
+        partsearchresult = Partsearchresult.find(params[:fullquestion][:temppsr_id])
+        #One about the Group
+        selected_grp_ids = params[:selected_grp_ids]
+        
+        #Now Create them:
+        
+        concerned_dataset_keys.each do |dataset_accession|
+            dataset_name = partsearchresult.Data_set_results[dataset_accession]
+            
+            new_fullquestion = Fullquestion.create!(:qcontent => question_desc,
+                            :qanswer => question_ans, :ds_accession => dataset_accession, 
+                            :ds_name => dataset_name)
+            #Second create submissions and assign them to users of different groups
+            assign_question_to_group_users(new_fullquestion,selected_grp_ids)        
+        end
+        
+        
+        redirect_to fullquestions_path
+        i=1
+        k=2
+        j=3
+    end
     
     
-    
-    
+    def index
+        @fullquestions = Fullquestion.all
+    end
     
     
     
@@ -100,7 +138,11 @@ class FullquestionsController < ApplicationController
         #debugger
     end
     
+    private
+    
+    def assign_question_to_group_users(question,group_ids)
     
     
+    end
     
 end

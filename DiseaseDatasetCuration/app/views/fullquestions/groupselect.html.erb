@@ -49,10 +49,11 @@
 
 
 <div>
-  <%= form_for @poweradmin, :url => full_group_path, :method => :post do |f| %> 
-  <!--% if @new_temp_record %-->
-    <!--%= f.hidden_field :temppsr_id, :value => @new_temp_record.id %-->
-  <!--% end %-->  
+  <%= form_for @full_question, :url => fullquestions_path, :method => :post do |f| %> 
+  <% if @temp_record %>
+    <%= f.hidden_field :temppsr_id, :value => @temp_record.id %>
+    <%= f.hidden_field :sakeys, :value => @selected_accession_keys %>
+  <% end %>  
   <div style="border:1px solid black; width:700px;height:200px; overflow-y:auto;">
     <div>
       <div style="border:1px solid white; width:700px; height:200px; float:left;">
@@ -129,7 +130,7 @@
     </div>
     
     <%= button_tag(:type => "submit",:class => "btn btn-danger")do %>
-      <i class="glyphicon glyphicon-refresh"></i>Add This Question
+      <i class="glyphicon glyphicon-refresh"></i>Save Question and Send to Group
     <% end %>
   <% end %>
 </div>
