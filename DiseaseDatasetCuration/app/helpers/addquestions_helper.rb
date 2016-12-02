@@ -11,11 +11,14 @@ module AddquestionsHelper
     uri = URI(url)
     response = Net::HTTP.get(uri)
     data_hash=JSON.parse(response)
-    data_result=Hash.new
-    data_hash["experiments"]["experiment"].each {|value|
-    data_result[value["accession"]]=value["name"]
-    }
-
+    if data_hash["experiments"]["total"]!=0
+        data_result=Hash.new
+        data_hash["experiments"]["experiment"].each {|value|
+        data_result[value["accession"]]=value["name"]
+        }
+    else  
+        data_result=nil
+    end
 # Use this for debug
 
     # data_result=Hash.new

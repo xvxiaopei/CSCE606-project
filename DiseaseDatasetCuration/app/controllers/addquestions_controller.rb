@@ -90,6 +90,11 @@ class AddquestionsController < ApplicationController
          redirect_to root_path
      elsif params[:search]
        @dataset = search_from_arrayexpress(params[:search])
+       if @dataset==nil
+           flash[:warning] = "No result! Please change another keyword!"
+           redirect_to :back
+           return
+       end
        @@dataset_global=Hash.new
        if Dataset.find_by_name("dataset")==nil
          Dataset.create(name: "dataset")
