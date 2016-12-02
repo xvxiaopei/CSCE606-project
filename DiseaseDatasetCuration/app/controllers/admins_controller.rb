@@ -205,13 +205,15 @@ class AdminsController < ApplicationController
       num+=1
     end
     @users.each do |usr|
-      accuracy=Submission.find_by_user_id(usr.id).accuracy
-      if accuracy==1
-        @accuracies[9]+=1
-      else
-        accuracy*=10
-        accuracy=accuracy.floor
-        @accuracies[accuracy]+=1
+      if Submission.find_by_user_id(usr.id)!=nil
+        accuracy=Submission.find_by_user_id(usr.id).accuracy
+        if accuracy==1
+          @accuracies[9]+=1
+        else
+         accuracy*=10
+         accuracy=accuracy.floor
+         @accuracies[accuracy]+=1
+        end
       end
     end
     @statistic=Hash.new
