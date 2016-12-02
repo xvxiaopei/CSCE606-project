@@ -49,7 +49,13 @@ class AddquestionsController < ApplicationController
             end
         end
         @all_groups=@@group
+        @@all_addquestions.each do |q,a|
+            if q.nil?
+                @@all_addquestions.delete(q)
+            end
+        end
         @addquestions = @@all_addquestions
+        p @addquestions
         #debugger
     end
     
