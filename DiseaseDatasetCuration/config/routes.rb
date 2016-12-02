@@ -38,7 +38,8 @@ Rails.application.routes.draw do
   post  'admin/assign_admins_to_group/:id', to: 'admins#performassigngroup', as:"assign_group"  
   get   'admin/manage_group_admins_groups' => 'admins#managegrps'
   post  'admin/manage_group_admins_groups/:id', to: 'admins#rearrange', as: "rearrange_grpadmin"
-
+  get   'admin/statistics' => 'admins#statistics'
+  post  'admin/statistics', to: 'admins#statistics'
   # Admin Group Operations
   #get   '/admin/showgroups' => 'admins#showgroups'
   resources :groups, path: '/admin/groups'

@@ -22,16 +22,18 @@
                     <tbody>
                       
                     <% dis.questions.each do |kq,q| %> 
+                      
                     <tr>
+                      <%= form_tag do%>
                       <td width="150px"><%= kq %></td>
                       <td width="100px">
                         <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", false, class: 'radio_input') %>Yes</label>
                         <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", false, class: 'radio_input') %>No</label>
-                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "#{[dis.accession=>kq]}"%></label>
+                        <label><%= button_tag "Clear", :type => 'reset', :class => "btn btn-primary btn-c-layout clear_button"%></label>
                       </td>
+                      <% end %>
                     </tr>
                     <% end %>
-          
                   </tbody>
                 </table> 
                 </div> 
@@ -50,6 +52,7 @@
                       
                     <% dis.questions.each do |kq,q| %> 
                     <tr>
+                      <%= form_tag do%>
                       <td width="150px"><%= kq %></td>
                       <td width="100px">
                         <% if @submission[dis.accession][kq].to_f>0 %>
@@ -62,8 +65,9 @@
                         <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", false, class: 'radio_input') %>Yes</label>
                         <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", false, class: 'radio_input') %>No</label>
                         <% end %>
-                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "#{[dis.accession=>kq]}"%></label>
+                        <label><%= button_tag "Clear", :type => 'reset', :class => "btn btn-primary btn-c-layout clear_button"%></label>
                       </td>
+                      <% end %>
                     </tr>
                     <% end %>
           

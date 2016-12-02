@@ -25,19 +25,13 @@ class AdminsController < ApplicationController
     update_session(:page, :query, :order)
 
     @users = find_conditional_users
-#    @users.each do |u|
-#      u.renew_data
-#    end
-    # update user accuracy fields
-#    if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
-      get_answer
-      @users.each { |user| user.get_accuracy }
-#    end
-    # byebug
+        # byebug
     if @users == nil
       flash[:warning] = "No Results!"
     else
       # byebug
+      get_answer
+      @users.each { |user| user.get_accuracy }
       @users = @users.paginate(per_page: 15, page: params[:page])
     end
   end
@@ -183,6 +177,39 @@ class AdminsController < ApplicationController
     end
   end
 
+  def statistics
+    p params[:group_id]
+    @group=Group.find_by_id(params[:group_id])
+    @users=@group.get_users
+    if @users==nil
+      flash[:warning] = "No User in this group!"
+      redirect_to '/profile'
+      return
+    end
+    get_answer
+    @users.each { |user| user.get_accuracy }
+    @accuracies=Hash.new
+    num=0
+    while num.to_f<10 do
+      @accuracies[num]=0;
+      num+=1
+    end
+    @users.each do |usr|
+      accuracy=Submission.find_by_user_id(usr.id).accuracy
+      if accuracy==1
+        @accuracies[9]+=1
+      else
+        accuracy*=10
+        accuracy=accuracy.floor
+        @accuracies[accuracy]+=1
+      end
+    end
+    @statistic=Hash.new
+    @accuracies.each do |a,n|
+      tmp=(a.to_f/10).round(1)
+      @statistic[tmp.to_s+" to "+(tmp+0.1).round(1).to_s]=n
+    end
+  end
 
   def getcsv
     @dis = Disease.where(:closed => true)

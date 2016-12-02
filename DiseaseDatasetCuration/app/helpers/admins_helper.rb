@@ -114,7 +114,9 @@ module AdminsHelper
         if a!=2&&a!=-2
           num=0
           submissions.each do |submission|
-            num=num+submission.all_data[disease.accession][q].to_i
+            if submission.all_data[disease.accession][q]!=nil
+              num=num+submission.all_data[disease.accession][q].to_i
+            end
           end
           if num>=0
             questions[q]=1

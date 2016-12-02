@@ -8,7 +8,7 @@
         <p><%= "Answer:" %>
         <label><%= radio_button_tag("answer", "2", false, class: 'radio_input') %>Yes</label>
         <label><%= radio_button_tag("answer", "-2", false, class: 'radio_input') %>No</label>
-        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "1"%></label>
+        <label><%= button_tag "Clear", :type => 'reset', :class => "btn btn-primary btn-c-layout clear_button"%></label>
         </p>
         
         <div class = "row">

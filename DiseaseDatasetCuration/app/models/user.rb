@@ -63,8 +63,6 @@ class User < ActiveRecord::Base
     submission=Submission.find_by_user_id(self.id)
     if submission!=nil
       accuracy=submission.get_accuracy
-    p 'accuracy----------'
-    p accuracy
       submission.save!
       return accuracy
     else
