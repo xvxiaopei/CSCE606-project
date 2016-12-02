@@ -64,10 +64,17 @@ ActiveRecord::Schema.define(version: 20161118071915) do
 
   create_table "submissions", force: :cascade do |t|
     t.text     "all_data"
-    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "count", default: 0
+    t.integer "num_correct", default: 0
+    t.float "accuracy", default: 0.0
+    t.integer  "user_id", default: 0
   end
+
+  #add_index "submissions", ["disease_id"], name: "index_submissions_on_disease_id"
+  #add_index "submissions", ["user_id", "created_at"], name: "index_submissions_on_user_id_and_created_at"
+  #add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
 
   add_index "submissions", ["user_id", "created_at"], name: "index_submissions_on_user_id_and_created_at"
   add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"

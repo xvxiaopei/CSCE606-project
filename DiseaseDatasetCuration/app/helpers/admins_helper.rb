@@ -60,7 +60,7 @@ module AdminsHelper
     else
       users = User.all
     end
-
+    
     return users if order.nil?
 
     which_way = order[1] ? " DESC" : " ASC"
