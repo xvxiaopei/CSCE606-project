@@ -1,13 +1,30 @@
 <div class = "row">
-  <h3>Admin</h3>
+  <h1>Admin</h1>
 </div>
 <div class = "row">
-  <div class = "col-sm-12">
-    <p><%= link_to "Show Groups",groups_path %></p>
+  <div class = "col-sm-6">
+    <section class="user_info">
+      <h2>Group Operations</h2>
+      <% if current_user.admin? %>
+        <br>
+        <%= link_to "Show Groups",groups_path, class: "btn btn-primary center-block" %>
+        <% if !(current_user.group_admin?) %>
+          <br>
+          <%= link_to "Promote/Demote Group Admin", '/admin/promote', class: "btn btn-danger center-block" %>
+          <%= link_to "Choose Group Admin from Group", '/admin/promotewithgroup', class: "btn btn-info center-block" %>
+          <%= link_to "Manage Group Admins' Groups",'/admin/manage_group_admins_groups', class: "btn btn-info center-block" %>
+        <% end %>
+      <% end %>
+    </section>
+
+    <hr>
   </div>
-  <div class = "col-sm-12">
+  
+  <div class = "col-sm-6">
     <p><%= link_to "Manage Dataset",'addquestion/show' %></p>
+    <hr>
   </div>
+  
 </div>
 
 <div class = "row">
@@ -15,7 +32,7 @@
   <div class = "col-sm-2">
     <%= link_to "Configuration", '/config'%>
   </div>
-
+  
   <div class = "col-sm-8"></div>
 
   <div class = "col-sm-2">
