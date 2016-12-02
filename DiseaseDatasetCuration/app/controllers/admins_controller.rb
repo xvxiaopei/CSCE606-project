@@ -216,7 +216,7 @@ class AdminsController < ApplicationController
     @statistic=Hash.new
     @accuracies.each do |a,n|
       tmp=(a.to_f/10).round(1)
-      @statistic[tmp.to_s+" to "+(tmp+0.1).round(1).to_s]=n
+      @statistic[tmp.to_s+" to "+(tmp+0.1).round(1).to_s]=n.to_i
     end
   end
 

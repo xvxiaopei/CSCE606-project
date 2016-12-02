@@ -48,7 +48,7 @@
                 <td><%= dis.id %>
                 <td><%= dis.disease %>
                 <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
-                <td><%= 'asda' %>
+                <td><%= column_chart @histogram, discrete: true %>
                 <td><%= link_to 'Histogram', {:controller => 'admins', :action => 'histogram', :accession => dis.accession, :questions => dis.questions} %>
               </tr>
             <% end %>
