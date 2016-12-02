@@ -6,7 +6,7 @@ class UsersController < ApplicationController
       return
     end
     @user = User.find(session[:user_id])
-    @submissions = @user.submissions.paginate(page: params[:page])
+    @submissions = Submission.find_by_user_id(session[:user_id])
     # debugger
   end
 

@@ -27,7 +27,6 @@ Rails.application.routes.draw do
   get   'config' => 'admins#configuration'
   post  'config', to: 'admins#config_update', as: "config_update"
   get   'admin/histogram' => 'admins#histogram'
-  get   'admin/statistics' => 'admins#statistics'
   get   'admin/allusers' => 'admins#allusers'
   post  'admin/allusers', to: 'admins#allusers', as: "admin_all"
   get   'admin/getcsv' => 'admins#getcsv'
@@ -38,7 +37,8 @@ Rails.application.routes.draw do
   post  'admin/assign_admins_to_group/:id', to: 'admins#performassigngroup', as:"assign_group"  
   get   'admin/manage_group_admins_groups' => 'admins#managegrps'
   post  'admin/manage_group_admins_groups/:id', to: 'admins#rearrange', as: "rearrange_grpadmin"
-
+  get   'admin/statistics' => 'admins#statistics'
+  post  'admin/statistics', to: 'admins#statistics'
   # Admin Group Operations
   #get   '/admin/showgroups' => 'admins#showgroups'
   resources :groups, path: '/admin/groups'
@@ -62,6 +62,8 @@ Rails.application.routes.draw do
   post  'addquestion/submit_result', to: 'addquestions#submit_result'
   get   'addquestion/show' => 'addquestions#show'
   post  'addquestion/show', to: 'addquestions#show'
+  get   'addquestion/delete_in_show' => 'addquestions#delete_in_show'
+  post  'addquestion/delete_in_show', to: 'addquestions#delete_in_show'
   get 'index' => 'addquestions#index'
   # Addquestion
   resources :addquestions, path: '/admin/addquestions'

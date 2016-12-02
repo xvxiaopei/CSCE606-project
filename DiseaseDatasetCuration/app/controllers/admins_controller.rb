@@ -6,37 +6,38 @@ class AdminsController < ApplicationController
     # byebug
 
     update_session(:page, :search, :sort)
-
-    @diseases = find_conditional_diseases
+    #get_answer
+    @diseases = Disease.all
     # byebug
-
-    if @diseases == nil
-      flash[:warning] = "No Results!"
-    else
-      # byebug
-      @diseases = @diseases.paginate(per_page: 15, page: params[:page])
+    
+    submission=Submission.all
+    submissioncount=Hash.new
+    @diseases.each do |dis|
+      submissioncount[dis.accession]=0
+      if !submission.empty?
+        submission.each do |sub|
+          if sub.all_data.has_key?(dis.accession)
+            submissioncount[dis.accession]=submissioncount[dis.accession]+1
+          end
+        end
+      end
     end
+    @subcount=submissioncount
+    
   end
 
-  def statistics
-
-  end
 
   def allusers
     update_session(:page, :query, :order)
 
     @users = find_conditional_users
-
-    # update user accuracy fields
-    if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
-      @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
-    end
-    # byebug
-
+        # byebug
     if @users == nil
       flash[:warning] = "No Results!"
     else
       # byebug
+      get_answer
+      @users.each { |user| user.get_accuracy }
       @users = @users.paginate(per_page: 15, page: params[:page])
     end
   end
@@ -108,11 +109,6 @@ class AdminsController < ApplicationController
   end
 
 
-
-
-
-
-
   def promote
     if params.has_key?(:operate)
       user = User.find_by_id(params[:operate])
@@ -160,16 +156,70 @@ class AdminsController < ApplicationController
 
 
   def histogram
+    accession=params[:accession]
+    questions=params[:questions]
 
-    @dis_id = params[:sort]
-    @histogram_data = {}
-
-    for i in 0..7
-      @histogram_data[index_to_reason(i)] = Submission.where("disease_id = '#{@dis_id}'").where("reason = #{i}").count
+    gram=Hash.new
+    gram=[{"name" => "correct","data" => {}},{"name" => "total","data" => {}},]
+    questions.each do |k,a|
+      gram[0]['data'][k]=0
+      gram[1]['data'][k]=0
     end
-
+    
+    @histogram=Hash.new
+    submission=Submission.all
+    if !submission.empty?
+      submission.each do |sub|
+        if sub.all_data.has_key?(accession)
+          answer=sub.all_data[accession]
+          answer.each do |q,a|
+            gram[1]['data'][q]=gram[1]['data'][q]+1
+            if (questions[q].to_i>0 and a.to_i>0)or(questions[q].to_i<0 and a.to_i<0)
+              gram[0]['data'][q]=gram[0]['data'][q]+1
+            end
+          end
+        end
+      end
+      
+      #@histogram=correct_answers
+      @histogram=gram
+      #@histogram=[{"name" => "correct","data" => {"Gender" => 10,"aaa" => 30}},{"name" => "total","data" => {"Gender" => 20,"aaa" => 20}}]
+    end
   end
 
+  def statistics
+    p params[:group_id]
+    @group=Group.find_by_id(params[:group_id])
+    @users=@group.get_users
+    if @users==nil
+      flash[:warning] = "No User in this group!"
+      redirect_to '/profile'
+      return
+    end
+    get_answer
+    @users.each { |user| user.get_accuracy }
+    @accuracies=Hash.new
+    num=0
+    while num.to_f<10 do
+      @accuracies[num]=0;
+      num+=1
+    end
+    @users.each do |usr|
+      accuracy=Submission.find_by_user_id(usr.id).accuracy
+      if accuracy==1
+        @accuracies[9]+=1
+      else
+        accuracy*=10
+        accuracy=accuracy.floor
+        @accuracies[accuracy]+=1
+      end
+    end
+    @statistic=Hash.new
+    @accuracies.each do |a,n|
+      tmp=(a.to_f/10).round(1)
+      @statistic[tmp.to_s+" to "+(tmp+0.1).round(1).to_s]=n.to_i
+    end
+  end
 
   def getcsv
     @dis = Disease.where(:closed => true)
@@ -211,36 +261,5 @@ class AdminsController < ApplicationController
     redirect_to '/config'
   end
     
-
-#    def confirm_search
-#    if defined? @@dataset_global
-#      if File.exist?("lib/dataset.yml")
- #      @previous_data = YAML.load_file("lib/dataset.yml")
-#      @@dataset_global.each do |k,v|
-#         if !@previous_data.has_key?(k)&&v[1]>0
-#           @previous_data[k]=v
-#         end
-#       end
-#      else 
- #       @@dataset_global.each do |k,v|
- #        if v[1]>0
- #          @previous_data[k]=v
-#         end
-#       end
- #     end
-#      File.open("lib/dataset.yml","w") do |file|
-#       file.write @previous_data.to_yaml
-#     end
- #   end
- #   redirect_to :back
-#  end
-#  def search_data
-#      if params[:search]
-#        flash[:warning] = "Loading..."
- #       @dataset = search_from_arrayexpress(params[:search])
-#         @dataset=["1","ok"]
- #        redirect_to :back
- #     end
- # end
   
 end

@@ -21,8 +21,9 @@ module AdminsHelper
     if !user || !user.admin?
       flash[:warning] = "Permission denied!"
       redirect_to root_path
-      return
+      return false
     end
+    return true
   end
 
 
@@ -102,5 +103,29 @@ module AdminsHelper
       return "Others"
     end
 
+  end
+  
+  def get_answer
+    diseases=Disease.all
+    submissions=Submission.all
+    diseases.each do |disease|
+      questions=disease.questions
+      questions.each do |q,a|
+        if a!=2&&a!=-2
+          num=0
+          submissions.each do |submission|
+            if submission.all_data[disease.accession][q]!=nil
+              num=num+submission.all_data[disease.accession][q].to_i
+            end
+          end
+          if num>=0
+            questions[q]=1
+          else
+            questions[q]=-1
+          end
+        end
+      end
+      disease.save!
+    end
   end
 end

@@ -2,15 +2,15 @@
 
 <div class="row">
 <% @groups.each do |grp| %>
-<div class = "col-sm-8">
+<div class = "col-sm-10">
     <strong><%= grp.name%></strong>
       <table class='table'>
         <thead>
           <tr>
             <th class = "col-md-3">Accession</th>
             <th class = "col-md-3">Name</th>
-            <th class = "col-md-3">Questions</th>
-            <th class = "col-md-3">Answers</th>
+            <th class = "col-md-3">Q&A</th>
+            <th class = "col-md-3">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -19,19 +19,20 @@
               
               <tr>         <!-- and start a new row -->
                 <td><%= dis%></td>
+                <td><%= Dataset.find_by_name("dataset").Data_set[dis] %></td>
                 <td>
                   <div style="overflow-y:scroll;height:100px;">
                     <table class='table'>
                     <tbody>
-                <% @diseases[dis].each do |k,v| %>
+                <% Disease.find_by_accession(dis).questions.each do |k,v| %>
                     <tr>
-                      <td width="150px">k</td>
-                      <%if v==1%>
-                      <td width="100px">Yes</td>
-                      <%elsif v==-1%>
-                      <td width="100px">No</td>
+                      <td width="300px"><%= k %></td>
+                      <%if v>0 %>
+                      <td width="200px">Yes</td>
+                      <%elsif v<0 %>
+                      <td width="300px">No</td>
                       <%else%>
-                      <td width="100px">No standard answer</td>
+                      <td width="300px">No standard answer</td>
                       <%end%>
                     </tr>
                  <%end %> 

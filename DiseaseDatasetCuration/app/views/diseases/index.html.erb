@@ -12,7 +12,37 @@
         </thead>
         <tbody>
           
-        <% @diseases.each do |dis| %> 
+        <% @diseases.each do |dis| %>
+            <% if !@submission.has_key?(dis.accession) %>
+              <tr>        
+                <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
+                <td>
+                  <div style="overflow-y:scroll;height:100px;">
+                    <table class='table'>
+                    <tbody>
+                      
+                    <% dis.questions.each do |kq,q| %> 
+                      
+                    <tr>
+                      <%= form_tag do%>
+                      <td width="150px"><%= kq %></td>
+                      <td width="100px">
+                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", false, class: 'radio_input') %>Yes</label>
+                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", false, class: 'radio_input') %>No</label>
+                        <label><%= button_tag "Clear", :type => 'reset', :class => "btn btn-primary btn-c-layout clear_button"%></label>
+                      </td>
+                      <% end %>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table> 
+                </div> 
+              </td> 
+            </tr> 
+            <% end %>
+        <% end %>
+        <% @diseases.each do |dis| %>
+            <% if @submission.has_key?(dis.accession) %>
               <tr>        
                 <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
                 <td>
@@ -22,12 +52,22 @@
                       
                     <% dis.questions.each do |kq,q| %> 
                     <tr>
+                      <%= form_tag do%>
                       <td width="150px"><%= kq %></td>
                       <td width="100px">
+                        <% if @submission[dis.accession][kq].to_f>0 %>
+                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", true, class: 'radio_input') %>Yes</label>
+                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", false, class: 'radio_input') %>No</label>
+                        <% elsif @submission[dis.accession][kq].to_f<0 %>
+                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", false, class: 'radio_input') %>Yes</label>
+                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", true, class: 'radio_input') %>No</label>
+                        <% else %>
                         <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", false, class: 'radio_input') %>Yes</label>
                         <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", false, class: 'radio_input') %>No</label>
-                        <label><%= link_to "clear", "#", class: 'btn btn-default btn_clear', id: "#{[dis.accession=>kq]}"%></label>
+                        <% end %>
+                        <label><%= button_tag "Clear", :type => 'reset', :class => "btn btn-primary btn-c-layout clear_button"%></label>
                       </td>
+                      <% end %>
                     </tr>
                     <% end %>
           
@@ -36,6 +76,7 @@
                 </div> 
               </td> 
             </tr> 
+            <% end %>
         <% end %>
         </tbody>
       </table>

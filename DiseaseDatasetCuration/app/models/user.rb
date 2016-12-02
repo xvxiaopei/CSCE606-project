@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   validates_inclusion_of :admin, in: [true, false]
   has_secure_password
 
+
   # Returns the hash digest of the given string.
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -48,17 +49,25 @@ class User < ActiveRecord::Base
 
   # related to user statistics
   def num_closed_submissions
-    self.submissions.joins(:disease).where('diseases.closed =?', true).count
+#    self.submissions.joins(:disease).where('diseases.closed =?', true).count
   end
 
   def num_correct
-    self.submissions.joins(:disease).where('diseases.closed =?', true).where('(submissions.is_related =? and diseases.related > diseases.unrelated) or (submissions.is_related =? and diseases.unrelated > diseases.related)', true, false).count
+#    self.submissions.joins(:disease).where('diseases.closed =?', true).where('(submissions.is_related =? and diseases.related > diseases.unrelated) or (submissions.is_related =? and diseases.unrelated > diseases.related)', true, false).count
   end
 
   def get_accuracy
     # byebug
-    return 0.0 if self.num_closed_submissions == 0
-    return self.num_correct.to_f / self.num_closed_submissions.to_f
+#    return 0.0 if self.num_closed_submissions == 0
+#    return self.num_correct.to_f / self.num_closed_submissions.to_f
+    submission=Submission.find_by_user_id(self.id)
+    if submission!=nil
+      accuracy=submission.get_accuracy
+      submission.save!
+      return accuracy
+    else
+      return 0
+    end
   end
 
   def self.from_omniauth(auth)
@@ -67,7 +76,6 @@ class User < ActiveRecord::Base
       
       user.email =  auth.info.email
       user.password = 'test123123'
-
       user.provider = auth.provider
       user.uid = auth.uid
       user.name = auth.info.name

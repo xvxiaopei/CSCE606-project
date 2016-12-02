@@ -6,8 +6,10 @@
         <p><%= "Question:" %>
         <%= text_field_tag :content, params[:content]%> </p>
         <p><%= "Answer:" %>
-        <%= text_field_tag :answer, params[:answer], size: "15x6" %></p>
-        
+        <label><%= radio_button_tag("answer", "2", false, class: 'radio_input') %>Yes</label>
+        <label><%= radio_button_tag("answer", "-2", false, class: 'radio_input') %>No</label>
+        <label><%= button_tag "Clear", :type => 'reset', :class => "btn btn-primary btn-c-layout clear_button"%></label>
+        </p>
         
         <div class = "row">
           <div class = "col-sm-6">
