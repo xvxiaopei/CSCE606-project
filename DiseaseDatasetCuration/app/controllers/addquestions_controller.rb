@@ -38,7 +38,11 @@ class AddquestionsController < ApplicationController
             @@all_addquestions=Hash.new
         end
         if (!defined? @@group)||@@group==nil
-            @all_groups = Group.all
+            if !current_user.group_admin?      #main admin
+                @all_groups = Group.all
+            else 
+                @all_groups = Group.where("admin_uid = ?", current_user.id)
+            end
             @@group=Array.new
             @all_groups.each do |grp|
                 @@group << grp["name"]
@@ -46,8 +50,6 @@ class AddquestionsController < ApplicationController
         end
         @all_groups=@@group
         @addquestions = @@all_addquestions
-        p 'addquestion-------------------------'
-        p @addquestions
         #debugger
     end
     
@@ -154,18 +156,18 @@ class AddquestionsController < ApplicationController
   
   
    def show
-#------------------------------------------------------------------------------       
+     
 #Then use the following lines in addquestions#show:
-#        if current_user.admin? 
-#                
-#            if !current_user.group_admin?      #main admin
-#                @all_groups = Group.all
-#            else 
-#                @all_groups = Group.where("admin_uid = ?", current_user.id)
-#            end
-#        end  
-#------------------------------------------------------------------------------
-    @groups=Group.all
+        if current_user.admin? 
+            if !current_user.group_admin?      #main admin
+                @all_groups = Group.all
+            else 
+                @all_groups = Group.where("admin_uid = ?", current_user.id)
+            end
+        else
+            flash[:warning] = "Not admin!"
+            redirect_to '/profile'
+        end  
    end
   
 
