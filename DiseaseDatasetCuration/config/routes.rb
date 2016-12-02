@@ -92,6 +92,7 @@ Rails.application.routes.draw do
   get   'admin/fullquestion_addquestion_s' => 'fullquestions#search'
   post  'admin/fullquestion_addquestion_s', to: 'fullquestions#performsearch', as: 'full_search'  
   
+  post  'admin/fullquestion_addquestion_grpselect', to: 'fullquestions#groupselect', as: 'full_group'
   
   
   

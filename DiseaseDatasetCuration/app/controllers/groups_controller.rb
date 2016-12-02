@@ -112,6 +112,7 @@ class GroupsController < ApplicationController
             ids=params.require(:n_role_ids)
         else
             redirect_to quick_group_add_path
+            return
         end
         
         ids.each do |id|
