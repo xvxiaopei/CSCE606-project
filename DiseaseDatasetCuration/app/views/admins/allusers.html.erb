@@ -32,22 +32,7 @@
           </thead>
           <tbody>
             <% if !@users.nil? %>
-              <% @users.each do |usr| %>
-              <tr>
-                <td><%= usr.id %></td>
-                <td><%= usr.email %></td>
-                <td><%= usr.name %></td>
-                <% if Submission.find_by_user_id(usr.id)!=nil %>
-                <td><%= Submission.find_by_user_id(usr.id).count %></td>
-                <td><%= Submission.find_by_user_id(usr.id).num_correct %></td>
-                <td><%= Submission.find_by_user_id(usr.id).accuracy.round(3) %></td>
-                <% else %>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <% end %>
-              </tr>
-              <% end %>
+              <%= render @users %>
             <% end %>
           </tbody>
         </table>
