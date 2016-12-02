@@ -52,7 +52,7 @@ class FullquestionsController < ApplicationController
     
     
     def groupselect
-        debugger
+        #debugger
         if(!params.has_key?(:selected_keys))
             flash[:warning] = "Please select a Dataset"
             redirect_to full_search_path
@@ -100,9 +100,11 @@ class FullquestionsController < ApplicationController
         #Two fields on question
         question_desc = params[:qcontent]
         question_ans  = params[:selected_ans].first
+        
         #Two on Dataset
         concerned_dataset_keys = params[:fullquestion][:sakeys].split(' ')
         partsearchresult = Partsearchresult.find(params[:fullquestion][:temppsr_id])
+        
         #One about the Group
         selected_grp_ids = params[:selected_grp_ids]
         
@@ -115,14 +117,12 @@ class FullquestionsController < ApplicationController
                             :qanswer => question_ans, :ds_accession => dataset_accession, 
                             :ds_name => dataset_name)
             #Second create submissions and assign them to users of different groups
-            assign_question_to_group_users(new_fullquestion,selected_grp_ids)        
+            assign_question_to_group_users(new_fullquestion.id,selected_grp_ids)        
         end
         
         
         redirect_to fullquestions_path
-        i=1
-        k=2
-        j=3
+
     end
     
     
@@ -140,8 +140,22 @@ class FullquestionsController < ApplicationController
     
     private
     
-    def assign_question_to_group_users(question,group_ids)
-    
+    def assign_question_to_group_users(question_id,group_ids)
+        
+        group_ids.each do |grp_id|
+            
+            grp = Group.find(grp_id)
+            grp_users = grp.get_users
+            
+            #user has many fullquestions through submisssions
+            grp_users.each do |user|
+                
+                user.fullquestions << Fullquestion.find(question_id)
+                
+            end
+            
+        end
+        
     
     end
     

@@ -1,7 +1,9 @@
 class Fullquestion < ActiveRecord::Base
-
-  has_many :submissions
-  has_many :users, :through => :submissions
+  require 'yaml'
+  require 'csv'
+  
+  has_many :fullsubmissions
+  has_many :users, :through => :fullsubmissions
 
 
 
