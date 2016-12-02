@@ -1,5 +1,12 @@
 class AddquestionsController < ApplicationController
     include AddquestionsHelper
+    
+#------------------------------------------------------------------------------
+#Add this Module:
+#   include AdminsHelper
+#Add add this filter too, to block unauthorized access:
+#   before_action :admin?
+#------------------------------------------------------------------------------   
     def new
 #       @addquestion=Addquestion.new
     end
@@ -147,8 +154,25 @@ class AddquestionsController < ApplicationController
   
   
    def show
+#------------------------------------------------------------------------------       
+#Then use the following lines in addquestions#show:
+#        if current_user.admin? 
+#                
+#            if !current_user.group_admin?      #main admin
+#                @all_groups = Group.all
+#            else 
+#                @all_groups = Group.where("admin_uid = ?", current_user.id)
+#            end
+#        end  
+#------------------------------------------------------------------------------
     @groups=Group.all
    end
+  
+
+
+  
+  
+  
   
   def delete_in_show
       @disease=Disease.find_by_accession(params[:key])

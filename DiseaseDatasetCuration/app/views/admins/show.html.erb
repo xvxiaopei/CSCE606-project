@@ -2,17 +2,17 @@
   <h1>Admin</h1>
 </div>
 <div class = "row">
-  <div class = "col-sm-6">
-    <section class="user_info">
+  <div class = "col-sm-4 text-center">
+    <section class="group_manage">
       <h2>Group Operations</h2>
       <% if current_user.admin? %>
         <br>
-        <%= link_to "Show Groups",groups_path, class: "btn btn-primary center-block" %>
+        <%= link_to "Show Groups",groups_path, class: "btn btn-primary" %>
         <% if !(current_user.group_admin?) %>
-          <br>
-          <%= link_to "Promote/Demote Group Admin", '/admin/promote', class: "btn btn-danger center-block" %>
-          <%= link_to "Choose Group Admin from Group", '/admin/promotewithgroup', class: "btn btn-info center-block" %>
-          <%= link_to "Manage Group Admins' Groups",'/admin/manage_group_admins_groups', class: "btn btn-info center-block" %>
+          <hr>
+          <%= link_to "Promote/Demote Group Admin", '/admin/promote', class: "btn btn-danger  center-block" %>
+          <%= link_to "Choose Group Admin from Group", '/admin/promotewithgroup', class: "btn btn-info  center-block" %>
+          <%= link_to "Manage Group Admins' Groups",'/admin/manage_group_admins_groups', class: "btn btn-success  center-block" %>
         <% end %>
       <% end %>
     </section>
@@ -20,23 +20,41 @@
     <hr>
   </div>
   
-  <div class = "col-sm-6">
-    <p><%= link_to "Manage Dataset",'addquestion/show' %></p>
+  <div class = "col-sm-4 text-center">
+    <section class="dataset_manage">
+      <h2>Dataset Operations</h2>
+      <% if current_user.admin? %>
+        <br>
+        <%= link_to "Manage Dataset",'addquestion/show', class: "btn btn-primary" %>
+      <% end %>
+    </section>    
     <hr>
   </div>
+
+  <div class = "col-sm-4 text-center">
+    <section class="group_manage">
+      <h2>Result Format Config</h2>
+      <br>
+      <%= link_to "Configuration", '/config', class: "btn btn-primary" %>
+    </section>  
+    <hr>
+  </div>
+
+
   
 </div>
 
-<div class = "row">
 
+
+<div class = "row">
   <div class = "col-sm-2">
-    <%= link_to "Configuration", '/config'%>
   </div>
   
   <div class = "col-sm-8"></div>
 
   <div class = "col-sm-2">
     <div class = row>
+      <h3 style="text-align:left;">Search By ... </h3>
       <%= form_tag admins_show_path(), :method => :post, :id => "query_form" do%>
       <%= search_field_tag 'search', nil, :class => 'special_input', :placeholder => 'Query...', :id => 'query' %>
       <% end %>
