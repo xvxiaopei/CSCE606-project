@@ -17,6 +17,13 @@ class User < ActiveRecord::Base
   has_secure_password
 
 
+  #New trial
+  has_many fullsubmissions
+  has_many fullquestions, :through => :users
+
+
+
+
   # Returns the hash digest of the given string.
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

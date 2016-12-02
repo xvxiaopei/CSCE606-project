@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161118071915) do
+ActiveRecord::Schema.define(version: 20161202160917) do
 
   create_table "addquestions", force: :cascade do |t|
     t.text     "content"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20161118071915) do
   end
 
   create_table "diseases", force: :cascade do |t|
+    t.text     "all_users"
     t.text     "questions"
     t.string   "disease"
     t.string   "accession"
@@ -43,6 +44,30 @@ ActiveRecord::Schema.define(version: 20161118071915) do
     t.integer  "unrelated",  default: 0
     t.boolean  "closed",     default: false
   end
+
+  create_table "fullquestions", force: :cascade do |t|
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.text     "qcontent",     default: "Default question description", null: false
+    t.string   "qanswer"
+    t.string   "ds_name"
+    t.string   "ds_accession"
+    t.boolean  "closed",       default: false
+    t.integer  "yes_users",    default: 0
+    t.integer  "no_users",     default: 0
+  end
+
+  create_table "fullsubmissions", force: :cascade do |t|
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "user_id"
+    t.integer  "fullquestion_id"
+    t.boolean  "choice"
+    t.text     "reason"
+  end
+
+  add_index "fullsubmissions", ["fullquestion_id"], name: "index_fullsubmissions_on_fullquestion_id"
+  add_index "fullsubmissions", ["user_id"], name: "index_fullsubmissions_on_user_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "name"
@@ -62,15 +87,18 @@ ActiveRecord::Schema.define(version: 20161118071915) do
   add_index "groups_users", ["group_id"], name: "index_groups_users_on_group_id"
   add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id"
 
-  create_table "submissions", force: :cascade do |t|
-    t.text     "all_data"
-    t.integer  "user_id"
+  create_table "partsearchresults", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "submissions", ["user_id", "created_at"], name: "index_submissions_on_user_id_and_created_at"
-  add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
+  create_table "submissions", force: :cascade do |t|
+    t.text    "all_data"
+    t.integer "count",       default: 0
+    t.integer "num_correct", default: 0
+    t.float   "accuracy",    default: 0.0
+    t.integer "user_id",     default: 0
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

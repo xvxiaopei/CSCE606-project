@@ -78,4 +78,21 @@ Rails.application.routes.draw do
   #get 'auth/google_oauth2/callback' =>'sessions#create'
   get    'download_help'  => 'sessions#download_help'
   get    'tutorial' => 'sessions#tutorial'
+  
+  
+  
+  
+  #New Stuff
+  #Integrated questions
+  resources :fullquestions, path: '/admin/fullquestions'
+  #Integrated submissions
+  resources :submissions, path: '/admin/submissions'
+  
+  
+  
+  
+  
+  
+  
+  
 end
