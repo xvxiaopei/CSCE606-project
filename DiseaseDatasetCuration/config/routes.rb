@@ -78,4 +78,24 @@ Rails.application.routes.draw do
   #get 'auth/google_oauth2/callback' =>'sessions#create'
   get    'download_help'  => 'sessions#download_help'
   get    'tutorial' => 'sessions#tutorial'
+  
+  
+  
+  
+  #New Stuff
+  #Integrated questions
+  resources :fullquestions, path: '/admin/fullquestions'
+  #Integrated submissions
+  resources :fullsubmissions, path: '/admin/fullsubmissions'
+  
+  #Search
+  get   'admin/fullquestion_addquestion_s' => 'fullquestions#search'
+  post  'admin/fullquestion_addquestion_s', to: 'fullquestions#performsearch', as: 'full_search'  
+  
+  post  'admin/fullquestion_addquestion_grpselect', to: 'fullquestions#groupselect', as: 'full_group'
+  
+  
+  
+  
+  
 end

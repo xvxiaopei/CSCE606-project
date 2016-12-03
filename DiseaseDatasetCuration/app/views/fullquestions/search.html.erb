@@ -1,0 +1,125 @@
+<div class = "row">
+  <div class = "col-sm-1"> </div>
+  <div class = "col-sm-4">
+    <div class = "row">
+      <ul class="list-group">
+        <li class="list-group-item text-right">
+          <span class="pull-left"><strong>search information</strong></span>
+          <p>
+           <%= form_tag :action => 'performsearch'  do %>
+           <%= text_field_tag :search, params[:search], placeholder: "Search dataset" %>
+           <%= submit_tag "search", :name => nil, class: "btn btn-success center-block" %>
+          <% end %>
+          </p>
+      </ul>
+    </div>
+  </div>
+</div>
+          
+
+<div class = "row">
+      <div class = "col-sm-0"> </div>
+      <div class = "col-sm-8">
+        <strong>Dataset Selection</strong>
+         <div class = "row">
+           <div class = "col-sm-12">
+             <div class="table-responsive">
+               <table class = "table">
+                 <thead>
+            <tr>
+              <th class = "col-md-3">Accession</th>
+              <th class = "col-md-3">Name</th>
+            </tr>
+          </thead>
+            </tr>
+          </thead>
+        </table>
+      </div>
+  </div>
+</div>
+      </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+  <%= form_for @poweradmin, :url => full_group_path, :method => :post do |f| %> 
+  <% if @new_temp_record %>
+    <%= f.hidden_field :temppsr_id, :value => @new_temp_record.id %>
+  <% end %>  
+  <div style="border:1px solid black; width:700px;height:200px; overflow-y:auto;">
+    <div>
+  
+      <div style="border:1px solid white; width:700px; height:200px; float:left;">
+        <div class = "row">
+          <div class = "col-sm-11">
+            <div class="table-responsive">
+                
+                <table class = "table-bordered">
+                  <thead>
+                    <tr>
+                      <th class = "col-md-2">Accession</th>
+                      <th class = "col-md-9">Name</th>
+                      <th class = "col-md-1">Select Button</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   <% if @dataset %>            
+                      <% @dataset.each do |k,v| %>            
+                    <tr>
+                      <td class = "col-md-2"> <%= k %> </td>
+                      <td class = "col-md-9"> <%= v %> </td>
+                      <td class = "col-md-1"> <%= check_box_tag 'selected_keys[]', k -%></td>
+                    </tr>
+                      <%end %> 
+                    <% end %>   
+                  </tbody>
+                </table>
+                             
+   
+            </div>        
+          </div>
+        </div>
+      </div>
+      
+      <div style="clear:both"></div>
+  
+    </div>
+  </div>
+  <hr> 
+    <%= button_tag(:type => "submit",:class => "btn btn-primary")do %>
+      <i class="glyphicon glyphicon-refresh"></i>Proceed to Add Question
+    <% end %>
+  <% end %>
+</div>
+
+
+
+
+

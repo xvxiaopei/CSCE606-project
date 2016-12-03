@@ -78,15 +78,15 @@
             </tr>
           </thead>
           <tbody>
-            <% @diseases.each do |dis| %> 
+            <!--<% @diseases.each do |dis| %> 
               <tr>  
-                <td><%= dis.id %>
-                <td><%= dis.disease %>
-                <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
-                <td><%= @subcount[dis.accession] %>
-                <td><%= link_to 'Dataset Statistic', {:controller => 'admins', :action => 'histogram', :accession => dis.accession, :questions => dis.questions} %>
+                <!--<td><%= dis.id %>
+                <!--<td><%= dis.disease %>
+                <!--<td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
+                <!--<td><%= @subcount[dis.accession] %>
+                <!--<td><%= link_to 'Dataset Statistic', {:controller => 'admins', :action => 'histogram', :accession => dis.accession, :questions => dis.questions} %>
               </tr>
-            <% end %>
+            <!--<% end %>-->
           </tbody>
         </table>
       </div>

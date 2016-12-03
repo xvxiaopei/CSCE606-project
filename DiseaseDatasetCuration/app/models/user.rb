@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  #New trial
+  has_many :fullsubmissions
+  has_many :fullquestions, :through => :fullsubmissions
+
+
 
   has_many :submissions
   has_many :diseases, :through => :users
@@ -15,6 +20,11 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }
   validates_inclusion_of :admin, in: [true, false]
   has_secure_password
+
+
+
+
+
 
 
   # Returns the hash digest of the given string.
