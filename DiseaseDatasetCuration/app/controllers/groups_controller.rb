@@ -103,9 +103,11 @@ class GroupsController < ApplicationController
         
     end
     def performadd
-        #debugger
+
         @group=Group.find(params[:id])
-        @group_users=@group.get_users.where.not(:id => @group.admin_uid) 
+        @group_users=@group.get_users.where.not(:id => @group.admin_uid)
+        #debugger
+
         if(params.has_key?(:role_ids))
             ids=params.require(:role_ids)    
         elsif params.has_key?(:n_role_ids)

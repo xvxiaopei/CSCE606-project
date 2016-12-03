@@ -25,4 +25,5 @@ g4:
   id: 4
   name: G4
   description: MyText
-  group_level: MyString  
+  group_level: MyString 
+  admin_uid: 4 
