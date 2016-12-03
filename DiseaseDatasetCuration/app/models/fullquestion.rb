@@ -9,8 +9,15 @@ class Fullquestion < ActiveRecord::Base
 
 
 
+  def Fullquestion.convert_ans(answer)
+    
+    ans = ['Yes','No','Not Given']
+    
+    ret = ans[answer.to_f-1]
+    
+    return ret
 
-
+  end
 
 
 

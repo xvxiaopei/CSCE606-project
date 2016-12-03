@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161202181938) do
+ActiveRecord::Schema.define(version: 20161203033617) do
 
   create_table "addquestions", force: :cascade do |t|
     t.text     "content"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20161202181938) do
     t.datetime "updated_at",      null: false
     t.integer  "user_id"
     t.integer  "fullquestion_id"
-    t.boolean  "choice"
+    t.string   "choice"
     t.text     "reason"
   end
 

@@ -1,14 +1,11 @@
 <tr>
-    <td><%= user.id %></td>
-    <td><%= user.email %></td>
-    <td><%= user.name %></td>
-    <% if Submission.find_by_user_id(user.id)!=nil %>
-    <td><%= Submission.find_by_user_id(user.id).count %></td>
-    <td><%= Submission.find_by_user_id(user.id).num_correct %></td>
-    <td><%= Submission.find_by_user_id(user.id).accuracy.round(3) %></td>
-    <% else %>
-    <td>0</td>
-    <td>0</td>
-    <td>0</td>
-    <% end %>
+    <td class="text-center"><%= fullquestion.id %></td>
+    <td class="text-center"><%= fullquestion.qcontent %></td>
+    <td class="text-center"><%= Fullquestion.convert_ans(fullquestion.qanswer) %></td>
+    <td class="text-center"><%= fullquestion.ds_accession %></td>
+    <td class="text-center"><%= fullquestion.ds_name %></td>
+    <td class="text-center"><%= fullquestion.closed %></td>
+    <td class="text-center"><%= fullquestion.yes_users %></td>
+    <td class="text-center"><%= fullquestion.no_users %></td>
+    <td class="text-center"><%= fullquestion.users.count %></td>
 </tr>

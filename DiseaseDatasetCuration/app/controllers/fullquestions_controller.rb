@@ -65,11 +65,17 @@ class FullquestionsController < ApplicationController
             temp_record_id = params[:user][:temppsr_id]
             @temp_record = Partsearchresult.find(temp_record_id)
             
+            if(!@temp_record)
+                redirect_to full_search_path
+                return
+            end
+            
+            
             #For View Use
             @show_selected_keyword  = @temp_record.keyword
             @show_selected_datasets = Hash.new
+            
             @selected_accession_keys.each do |key|
-                
                 @show_selected_datasets[key] = @temp_record.Data_set_results[key]
             end
             @poweradmin = current_user
@@ -127,10 +133,12 @@ class FullquestionsController < ApplicationController
     
     
     def index
+        #debugger
         @fullquestions = Fullquestion.all
+        
     end
     
-    
+    #Add CRUD methods to fullquestions, easy, omitted.
     
     
     
