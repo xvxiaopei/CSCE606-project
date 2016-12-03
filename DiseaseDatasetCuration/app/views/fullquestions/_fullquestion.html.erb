@@ -1,0 +1,14 @@
+<tr>
+    <td><%= user.id %></td>
+    <td><%= user.email %></td>
+    <td><%= user.name %></td>
+    <% if Submission.find_by_user_id(user.id)!=nil %>
+    <td><%= Submission.find_by_user_id(user.id).count %></td>
+    <td><%= Submission.find_by_user_id(user.id).num_correct %></td>
+    <td><%= Submission.find_by_user_id(user.id).accuracy.round(3) %></td>
+    <% else %>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <% end %>
+</tr>
