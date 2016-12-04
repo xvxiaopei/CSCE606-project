@@ -116,8 +116,8 @@ class AdminsController < ApplicationController
       
       #These lines of codes have hard-to-tell bugs, thus couldn't pass the test
       #The reason is mainly because that if you demote a group admin that he/she
-      #is the admin of one group, then this group's admin_uid doesn't update.
-      #Another case is similar
+      #is the admin of one/more group, then this group's admin_uid doesn't update.
+
       #if user.group_admin
       #  user.update_attribute(:group_admin, false)
       #  user.update_attribute(:admin, false)
@@ -129,7 +129,7 @@ class AdminsController < ApplicationController
       #end
       #params.delete :operate
 
-      #So I substitute it with the following version:
+      #Substitute with the following version:
       #Note that even though a group can only have one admin, doesn't mean a 
       #group admin cannot be admin of more than one groups.
       if user.group_admin
@@ -149,11 +149,12 @@ class AdminsController < ApplicationController
         #Finally update user's group_admin attr
         user.update_attribute(:group_admin, false)
         user.update_attribute(:admin, false)
-        #This flash has bugs too.
+        #This flash has bugs too. 
+        #To solve, add redirect_to right after params.delete
         flash[:success] = "#{user.name} was successfully demoted."         
       else 
-        #This line works well, for updating identity won't influence the grp he/she
-        # is already in
+        #This line works well, for updating identity won't influence 
+        #the grp he/she is already in
         user.update_attribute(:group_admin, true)
         user.update_attribute(:admin, true)
         
@@ -164,12 +165,7 @@ class AdminsController < ApplicationController
       return
     end
     
- 
-    
-    
-      
     update_session(:page, :query, :order)
-    
     
     @users = find_conditional_users
 
