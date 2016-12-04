@@ -231,6 +231,7 @@ class FullquestionsController < ApplicationController
         @fullquestions=Array.new
         Fullquestion.all.each do |question|
             if question.ds_accession==@accession
+                @name=question.ds_name
                 @fullquestions << question
             end
         end

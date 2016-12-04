@@ -11,7 +11,8 @@ class FullsubmissionsController < ApplicationController
         @accession=params[:accession]
         @fullsubmissions=Array.new
         Fullsubmission.all.each do |submission|
-            if submission.fullquestion.ds_accession
+            if submission.fullquestion.ds_accession==@accession
+                @name=submission.fullquestion.ds_name
                 @fullsubmissions << submission
             end
         end
