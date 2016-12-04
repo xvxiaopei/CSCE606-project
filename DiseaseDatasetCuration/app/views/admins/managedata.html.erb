@@ -9,7 +9,7 @@
             <th class = "col-md-3">Name</th>
             <th class = "col-md-3">Submission Detail</th>
             <th class = "col-md-3">Questions Detail</th>
-            <th class = "col-md-3">Edit Questions</th>
+            <th class = "col-md-3">Add Questions</th>
             <th class = "col-md-3">Delete</th>
           </tr>
         </thead>
@@ -19,7 +19,7 @@
                 <td><%= link_to v[0], "http://www.ebi.ac.uk/arrayexpress/experiments/#{k}", :target => '_blank' %></td>
                 <td><%= link_to v[1], {:controller => 'fullsubmissions', :action => 'index', :accession => k}%></td>
                 <td><%= link_to v[2], {:controller => 'fullquestions', :action => 'index', :accession => k}%></td>
-                <td><%= link_to 'Edit', {:controller => 'fullquestions', :action => 'groupselect', :accession => k, :selected_keys => 'from_managedata'}%></td>
+                <td><%= link_to 'Add', {:controller => 'fullquestions', :action => 'groupselect', :accession => k, :selected_keys => 'from_managedata'}%></td>
               <td><%= link_to 'Delete', {:controller => "admins", :action => "delete_in_managedata", :key => k} ,:onclick => "return confirm('Are you sure you want to delete this dataset?')" %></td>
             </tr>  <!-- end the row-->
           <% end %>

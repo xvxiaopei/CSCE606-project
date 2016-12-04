@@ -80,7 +80,7 @@
             <% @data.each do |ds,q| %> 
               <tr>  
                 <td><%= ds[0] %>
-                <td><%= link_to ds[1], "http://www.ebi.ac.uk/arrayexpress/experiments/#{ds[1]}/?query=#{ds[0]}", :target => '_blank' %></td>
+                <td><%= link_to ds[1], "http://www.ebi.ac.uk/arrayexpress/experiments/#{ds[1]}", :target => '_blank' %></td>
                 <td><%= @count[ds[1]] %>
                 <td><%= link_to 'Dataset Statistic', {:controller => 'admins', :action => 'dsstatistics', :qdata => q} %>
               </tr>
