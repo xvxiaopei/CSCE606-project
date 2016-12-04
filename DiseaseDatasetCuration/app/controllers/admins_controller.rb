@@ -52,14 +52,34 @@ class AdminsController < ApplicationController
 
     @users = find_conditional_users
         # byebug
+    all_user=Hash.new
+    @users.each do |user|
+      submission=user.fullsubmissions
+      all_user[[user.id,user.email,user.name]]=[0,0,0]
+      submission.each do |sub|
+        if sub.choice!=nil
+          all_user[[user.id,user.email,user.name]][0]+=1
+          qanswer=sub.fullquestion.qanswer
+          answer=sub.choice
+          if answer==qanswer
+            all_user[[user.id,user.email,user.name]][1]+=1
+          end
+        end
+      end
+      all_user[[user.id,user.email,user.name]][2]=all_user[[user.id,user.email,user.name]][1]/all_user[[user.id,user.email,user.name]][0]
+    end
+    p '+++++++++++++++'
+    p all_user
+=begin
     if @users == nil
       flash[:warning] = "No Results!"
     else
       # byebug
-      get_answer
+      #get_answer
       @users.each { |user| user.get_accuracy }
       @users = @users.paginate(per_page: 15, page: params[:page])
     end
+=end
   end
 
   def promotewithgroup
