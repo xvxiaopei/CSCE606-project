@@ -80,17 +80,6 @@ ActiveRecord::Schema.define(version: 20161203033617) do
     t.text     "Data_set_results"
   end
 
-  create_table "submissions", force: :cascade do |t|
-    t.text     "all_data"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "count",       default: 0
-    t.integer  "num_correct", default: 0
-    t.float    "accuracy",    default: 0.0
-    t.integer  "user_id",     default: 0
-    t.integer  "reason"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
