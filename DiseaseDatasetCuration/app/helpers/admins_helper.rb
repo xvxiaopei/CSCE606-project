@@ -106,6 +106,8 @@ module AdminsHelper
   end
   
   def get_answer
+    
+=begin
     diseases=Disease.all
     submissions=Submission.all
     diseases.each do |disease|
@@ -127,5 +129,7 @@ module AdminsHelper
       end
       disease.save!
     end
+=end
   end
+
 end

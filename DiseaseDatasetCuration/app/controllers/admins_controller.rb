@@ -28,7 +28,7 @@ class AdminsController < ApplicationController
         count[t_ds_accession]+=1
         answer=submission.choice
         t_ques=submission.fullquestion.qcontent
-        t_answer=submission.fullquestion.qanswer
+        t_answer=submission.fullquestion.get_answer
         if !data[[t_ds_name,t_ds_accession]].has_key?(t_ques)
           data[[t_ds_name,t_ds_accession]][t_ques]=[0,0]
         end
@@ -49,24 +49,9 @@ class AdminsController < ApplicationController
 
     @users = find_conditional_users
         # byebug
-    all_user=Hash.new
+    all_user=Array.new
     @users.each do |user|
-      submission=user.fullsubmissions
-      all_user[[user.id,user.email,user.name]]=[0,0,0]
-      submission.each do |sub|
-        if sub.choice!=nil
-          all_user[[user.id,user.email,user.name]][0]+=1
-          qanswer=sub.fullquestion.qanswer
-          answer=sub.choice
-          if answer==qanswer
-            all_user[[user.id,user.email,user.name]][1]+=1
-          end
-        end
-      end
-      if all_user[[user.id,user.email,user.name]][0]>0
-        all_user[[user.id,user.email,user.name]][2]=all_user[[user.id,user.email,user.name]][1].to_f/all_user[[user.id,user.email,user.name]][0].to_f
-        all_user[[user.id,user.email,user.name]][2]=all_user[[user.id,user.email,user.name]][2].round(2)
-      end
+      all_user << user.get_submission_info
     end
     @data=all_user
 =begin
@@ -240,9 +225,11 @@ class AdminsController < ApplicationController
     p questions
     gram=Hash.new
     gram=[{"name" => "correct","data" => {}},{"name" => "total","data" => {}},]
-    questions.each do |k,a|
-      gram[0]['data'][k]=a[0]
-      gram[1]['data'][k]=a[1]
+    if questions!=nil
+      questions.each do |k,a|
+        gram[0]['data'][k]=a[0]
+        gram[1]['data'][k]=a[1]
+      end
     end
     @histogram=Hash.new
     @histogram=gram
