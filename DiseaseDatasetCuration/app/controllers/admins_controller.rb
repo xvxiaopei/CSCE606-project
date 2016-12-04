@@ -66,8 +66,12 @@ class AdminsController < ApplicationController
           end
         end
       end
-      all_user[[user.id,user.email,user.name]][2]=all_user[[user.id,user.email,user.name]][1]/all_user[[user.id,user.email,user.name]][0]
+      if all_user[[user.id,user.email,user.name]][0]>0
+        all_user[[user.id,user.email,user.name]][2]=all_user[[user.id,user.email,user.name]][1].to_f/all_user[[user.id,user.email,user.name]][0].to_f
+        all_user[[user.id,user.email,user.name]][2]=all_user[[user.id,user.email,user.name]][2].round(2)
+      end
     end
+    @data=all_user
     p '+++++++++++++++'
     p all_user
 =begin

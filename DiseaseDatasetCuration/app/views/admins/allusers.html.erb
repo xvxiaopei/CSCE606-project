@@ -31,12 +31,14 @@
             </tr>
           </thead>
           <tbody>
-            <% @data.each do |ds,q| %> 
+            <% @data.each do |u,d| %> 
               <tr>  
-                <td><%= ds[0] %>
-                <td><%= link_to ds[1], "http://www.ebi.ac.uk/arrayexpress/experiments/#{ds[1]}/?query=#{ds[0]}", :target => '_blank' %></td>
-                <td><%= @count[ds[1]] %>
-                <td><%= link_to 'Dataset Statistic', {:controller => 'admins', :action => 'dsstatistics', :qdata => q} %>
+                <td><%= u[0] %></td>
+                <td><%= u[1] %></td>
+                <td><%= u[2] %></td>
+                <td><%= d[0] %></td>
+                <td><%= d[1] %></td>
+                <td><%= d[2] %></td>
               </tr>
             <% end %>
           </tbody>
@@ -56,8 +58,4 @@
   </div>
 </div>
 
-<div class = "row">
-  <% if !@users.nil? %>
-    <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
-  <% end  %>
-</div>
+
