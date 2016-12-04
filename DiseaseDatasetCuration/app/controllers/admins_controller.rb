@@ -263,5 +263,58 @@ class AdminsController < ApplicationController
     redirect_to '/config'
   end
     
+    
+    
+  def managedata
+     
+#Then use the following lines in addquestions#show:
+    if (!current_user.admin?)||(current_user.group_admin?)      #main admin
+        flash[:warning] = "Not admin!"
+        redirect_to '/profile'
+    end
+    @fullquestions = Fullquestion.all
+    if @fullquestions!=nil
+      @all_data=Hash.new
+      @fullquestions.each do |q|
+        if !@all_data.has_key?(q.ds_accession)
+          @all_data[q.ds_accession]=[q.ds_name,q.yes_users+q.no_users,1]
+        else
+          @all_data[q.ds_accession][1]+=(q.yes_users+q.no_users)
+          @all_data[q.ds_accession][2]+=1
+        end
+      end
+    else
+      @all_data=nil
+    end
+    p '--------managedata'
+    p @all_data
+  end
+  
+  def delete_in_managedata
+      @disease=Disease.find_by_accession(params[:key])
+      if @disease!=nil
+        @disease.destroy
+      end
+      @dataset=Dataset.find_by_name("dataset")
+      @dataset.data_delete(params[:key])
+      @dataset.save
+      @group=Group.all
+      @group.each do |grp|
+          grp.data_set.delete(params[:key])
+          grp.save
+      end
+      @submissions=Submission.all
+      @submissions.each do |submission|
+          if submission.all_data.has_key?(params[:key])
+              submission.all_data.delete(params[:key])
+          end
+          if submission.all_data.empty?
+              submission.destroy
+          else
+              submission.save!
+          end
+      end
+      redirect_to :back
+  end
   
 end

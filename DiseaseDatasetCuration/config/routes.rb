@@ -39,6 +39,10 @@ Rails.application.routes.draw do
   post  'admin/manage_group_admins_groups/:id', to: 'admins#rearrange', as: "rearrange_grpadmin"
   get   'admin/statistics' => 'admins#statistics'
   post  'admin/statistics', to: 'admins#statistics'
+  get   'admin/managedata' => 'admins#managedata'
+  post  'admin/managedata', to: 'admins#managedata'
+  get   'admin/delete_in_managedata' => 'admins#delete_in_managedata'
+  post  'admin/delete_in_managedata', to: 'admins#delete_in_managedata'
   # Admin Group Operations
   #get   '/admin/showgroups' => 'admins#showgroups'
   resources :groups, path: '/admin/groups'
@@ -48,25 +52,6 @@ Rails.application.routes.draw do
   get   '/admin/groups/:id/quickadduser' => 'groups#quickadduser'
   post  '/admin/groups/:id/quickadduser', to: 'groups#performadd', as: "quick_group_add"  
   
-  get   'addquestion/search' => 'addquestions#search'
-  post  'addquestion/search', to: 'addquestions#search'
-#  get   'addquestion/confirm_search' => 'addquestions#confirm_search'
-#  post  'addquestion/confirm_search', to: 'addquestions#confirm_search'
-  get   'addquestion/delete_dataset' => 'addquestions#delete_dataset'
-  post  'addquestion/delete_dataset', to: 'addquestions#delete_dataset'
-  get   'addquestion/delete_group' => 'addquestions#delete_group'
-  post  'addquestion/delete_group', to: 'addquestions#delete_group'
-  get   'addquestion/destroy' => 'addquestions#destroy'
-  post  'addquestion/destroy', to: 'addquestions#destroy'
-  get   'addquestion/submit_result' => 'addquestions#submit_result'
-  post  'addquestion/submit_result', to: 'addquestions#submit_result'
-  get   'addquestion/show' => 'addquestions#show'
-  post  'addquestion/show', to: 'addquestions#show'
-  get   'addquestion/delete_in_show' => 'addquestions#delete_in_show'
-  post  'addquestion/delete_in_show', to: 'addquestions#delete_in_show'
-  get 'index' => 'addquestions#index'
-  # Addquestion
-  resources :addquestions, path: '/admin/addquestions'
   
   # Sessions
   get    'login'   => 'sessions#new'
@@ -91,7 +76,7 @@ Rails.application.routes.draw do
   #Search
   get   'admin/fullquestion_addquestion_s' => 'fullquestions#search'
   post  'admin/fullquestion_addquestion_s', to: 'fullquestions#performsearch', as: 'full_search'  
-  
+  get  'admin/fullquestion_addquestion_grpselect' => 'fullquestions#groupselect'
   post  'admin/fullquestion_addquestion_grpselect', to: 'fullquestions#groupselect', as: 'full_group'
   
   

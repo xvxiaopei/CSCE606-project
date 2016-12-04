@@ -8,7 +8,13 @@ class FullsubmissionsController < ApplicationController
     def index
         
         #debugger
-        @fullsubmissions = Fullsubmission.all
+        @accession=params[:accession]
+        @fullsubmissions=Array.new
+        Fullsubmission.all.each do |submission|
+            if submission.fullquestion.ds_accession
+                @fullsubmissions << submission
+            end
+        end
         
     end
     

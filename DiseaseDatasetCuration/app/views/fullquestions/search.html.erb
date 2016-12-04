@@ -15,58 +15,6 @@
     </div>
   </div>
 </div>
-          
-
-<div class = "row">
-      <div class = "col-sm-0"> </div>
-      <div class = "col-sm-8">
-        <strong>Dataset Selection</strong>
-         <div class = "row">
-           <div class = "col-sm-12">
-             <div class="table-responsive">
-               <table class = "table">
-                 <thead>
-            <tr>
-              <th class = "col-md-3">Accession</th>
-              <th class = "col-md-3">Name</th>
-            </tr>
-          </thead>
-            </tr>
-          </thead>
-        </table>
-      </div>
-  </div>
-</div>
-      </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <div>
   <%= form_for @poweradmin, :url => full_group_path, :method => :post do |f| %> 
@@ -113,8 +61,11 @@
     </div>
   </div>
   <hr> 
-    <%= button_tag(:type => "submit",:class => "btn btn-primary")do %>
+    <%= button_tag(:type => "submit",:class => "btn btn-primary", :value => 'add_q')do %>
       <i class="glyphicon glyphicon-refresh"></i>Proceed to Add Question
+    <% end %>
+    <%= button_tag(:type => "submit",:class => "btn btn-primary", :name => "commit", :value => 'save_back')do %>
+      <i class="glyphicon glyphicon-refresh"></i>Save and Back
     <% end %>
   <% end %>
 </div>

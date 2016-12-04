@@ -4,8 +4,7 @@
 <div class = "row">
   <div class = "col-sm-8">
   <h2>Selected Information:</h2><hr>
-  <p><h3 style="text-align:left;">Keyword: <small><%=@show_selected_keyword %></small></h3>
-     <hr><h3 style="text-align:left;">Dataset Selected:</h3>
+     <h3 style="text-align:left;">Dataset Selected:</h3>
   </p>
   
     <div class="table-responsive">
@@ -49,9 +48,9 @@
 
 
 <div>
-  <%= form_for @full_question, :url => fullquestions_path, :method => :post do |f| %> 
+  <%= form_for @full_question, :url => '/profile', :method => :post do |f| %> 
   <% if @temp_record %>
-    <%= f.hidden_field :temppsr_id, :value => @temp_record.id %>
+    <%= f.hidden_field :temppsr_id, :value => @temp_record %>
     <%= f.hidden_field :sakeys, :value => @selected_accession_keys %>
   <% end %>  
   <div style="border:1px solid black; width:700px;height:200px; overflow-y:auto;">
@@ -96,8 +95,39 @@
 
   <p></p>
   <div class = "row">
-    <div class = "col-sm-8">
+    <div class = "col-sm-15">
     <h2>Edit Question:</h2>
+    <% if (@all_questions!=nil)&&!@all_questions.empty? %> 
+    <hr> <h3 style="text-align:left;">Questions:</h3>
+    <div class="table-responsive">
+                
+                <table class = "table-bordered">
+                  <thead>
+                    <tr>
+                      <th class = "col-md-10">Question</th>
+                      <th class = "col-md-5">Answer</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <% @all_questions.each do |k,v| %>            
+                    <tr>
+                      <td class = "col-md-3"> <%= k %> </td>
+                      <% if v=="1" %>
+                      <td class = "col-md-9"> <%= 'Yes' %> </td>
+                      <% elsif v=="2" %>
+                      <td class = "col-md-9"> <%= 'No' %> </td>
+                      <% else %>
+                      <td class = "col-md-9"> <%= 'Not Given' %> </td>
+                      <%end %> 
+                    </tr>
+                      <%end %> 
+  
+                  </tbody>
+                </table>
+          <hr>
+    </div> 
+    <% end %> 
+
     <hr>
       <%= label_tag 'Question Description:' %>
       <%= text_field_tag 'qcontent' %><br />
@@ -128,9 +158,11 @@
       <div class = "col-sm-8"> 
       </div>
     </div>
-    
-    <%= button_tag(:type => "submit",:class => "btn btn-danger")do %>
-      <i class="glyphicon glyphicon-refresh"></i>Save Question and Send to Group
+    <%= button_tag(:type => "submit",:class => "btn btn-primary", :name => "commit", :value => 'add_another')do %>
+      <i class="glyphicon glyphicon-refresh"></i>Add another Question
+    <% end %>
+    <%= button_tag(:type => "submit",:class => "btn btn-danger", :name => "commit", :value => 'complete')do %>
+      <i class="glyphicon glyphicon-refresh"></i>Save Question and Complete
     <% end %>
   <% end %>
 </div>

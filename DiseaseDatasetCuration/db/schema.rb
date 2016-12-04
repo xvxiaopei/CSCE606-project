@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20161203033617) do
   end
 
   create_table "diseases", force: :cascade do |t|
-
     t.string   "disease"
     t.string   "accession"
     t.text     "questions"
@@ -74,6 +73,13 @@ ActiveRecord::Schema.define(version: 20161203033617) do
   add_index "groups_users", ["group_id"], name: "index_groups_users_on_group_id"
   add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id"
 
+  create_table "partsearchresults", force: :cascade do |t|
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "keyword"
+    t.text     "Data_set_results"
+  end
+
   create_table "submissions", force: :cascade do |t|
     t.text     "all_data"
     t.datetime "created_at",                null: false
@@ -83,21 +89,6 @@ ActiveRecord::Schema.define(version: 20161203033617) do
     t.float    "accuracy",    default: 0.0
     t.integer  "user_id",     default: 0
     t.integer  "reason"
-  end
-
-  create_table "partsearchresults", force: :cascade do |t|
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.string   "keyword"
-    t.text     "Data_set_results"
-  end
-
-  create_table "submissions", force: :cascade do |t|
-    t.text    "all_data"
-    t.integer "count",       default: 0
-    t.integer "num_correct", default: 0
-    t.float   "accuracy",    default: 0.0
-    t.integer "user_id",     default: 0
   end
 
   create_table "users", force: :cascade do |t|
