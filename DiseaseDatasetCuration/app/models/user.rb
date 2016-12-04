@@ -102,4 +102,26 @@ class User < ActiveRecord::Base
     return outusers
   end
   
+  def get_submission_info
+      userinfo=Hash.new
+      userinfo={'user_id' => self.id, 'user_email' => self.email, 'user_name' => self.name, 'submission' => 0, 'correct' => 0, 'accuracy' => 0}
+      submission=self.fullsubmissions
+      submission.each do |sub|
+        if sub.choice!=nil
+          userinfo['submission']+=1
+          qanswer=sub.fullquestion.get_answer
+          answer=sub.choice
+          
+          if answer==qanswer
+            userinfo['correct']+=1
+          end
+        end
+      end
+      if userinfo['submission']>0
+        userinfo['accuracy']=userinfo['correct'].to_f/userinfo['submission'].to_f
+        userinfo['accuracy']=userinfo['accuracy'].round(2)
+      end
+      return userinfo
+  end
+  
 end

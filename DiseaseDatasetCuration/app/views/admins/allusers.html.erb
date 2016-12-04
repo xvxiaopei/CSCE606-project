@@ -31,14 +31,14 @@
             </tr>
           </thead>
           <tbody>
-            <% @data.each do |u,d| %> 
+            <% @data.each do |d| %> 
               <tr>  
-                <td><%= u[0] %></td>
-                <td><%= u[1] %></td>
-                <td><%= u[2] %></td>
-                <td><%= d[0] %></td>
-                <td><%= d[1] %></td>
-                <td><%= d[2] %></td>
+                <td><%= d['user_id'] %></td>
+                <td><%= d['user_email'] %></td>
+                <td><%= d['user_name'] %></td>
+                <td><%= d['submission'] %></td>
+                <td><%= d['correct'] %></td>
+                <td><%= d['accuracy'] %></td>
               </tr>
             <% end %>
           </tbody>
