@@ -78,7 +78,8 @@ Rails.application.routes.draw do
   post  'admin/fullquestion_addquestion_s', to: 'fullquestions#performsearch', as: 'full_search'  
   get  'admin/fullquestion_addquestion_grpselect' => 'fullquestions#groupselect'
   post  'admin/fullquestion_addquestion_grpselect', to: 'fullquestions#groupselect', as: 'full_group'
-  
+  get   'fullquestion/modifyquestion' => 'fullquestions#modifyquestion'
+  post  'fullquestion/modifyquestion', to: 'fullquestions#modifyquestion'
   
   
   

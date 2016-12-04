@@ -112,13 +112,7 @@
                       <% @all_questions.each do |k,v| %>            
                     <tr>
                       <td class = "col-md-3"> <%= k %> </td>
-                      <% if v=="1" %>
-                      <td class = "col-md-9"> <%= 'Yes' %> </td>
-                      <% elsif v=="2" %>
-                      <td class = "col-md-9"> <%= 'No' %> </td>
-                      <% else %>
-                      <td class = "col-md-9"> <%= 'Not Given' %> </td>
-                      <%end %> 
+                      <td class = "col-md-9"> <%= Fullquestion.convert_ans(v) %> </td>
                     </tr>
                       <%end %> 
   

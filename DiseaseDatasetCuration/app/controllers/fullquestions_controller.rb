@@ -162,14 +162,14 @@ class FullquestionsController < ApplicationController
     
     def create
         
-        #Two things to do:
-        #First save a fullquestion to the DB
-        #Two fields on question
-        question_desc = params[:qcontent]
-        question_ans  = params[:selected_ans].first
-        #One about the Group
-        selected_grp_ids = params[:selected_grp_ids]
-        
+    #Two things to do:
+    #First save a fullquestion to the DB
+    #Two fields on question
+      question_desc = params[:qcontent]
+      question_ans  = params[:selected_ans].first
+      #One about the Group
+      selected_grp_ids = params[:selected_grp_ids]
+      if question_desc!=""  
         if params[:fullquestion][:temppsr_id]!="0"
             #Two on Dataset
             concerned_dataset_keys = params[:fullquestion][:sakeys].split(' ')
@@ -185,18 +185,18 @@ class FullquestionsController < ApplicationController
                 assign_question_to_group_users(new_fullquestion.id,selected_grp_ids)  
             end
         else # add_another
-            if params[:fullquestion][:sakeys].kind_of?(Array)
-                @accession = params[:fullquestion][:sakeys].split(' ')
+            @accession = params[:fullquestion][:sakeys].split(' ')
+            if @accession.kind_of?(Array)
                 @accession.each do |dataset_accession|
                     Fullquestion.all.each do |q|
-                        if q.ds_accession==@accession
+                        if q.ds_accession==dataset_accession
                             @dataset_name=q.ds_name
                             break
                         end
                     end
                     new_fullquestion = Fullquestion.create!(:qcontent => question_desc,
                             :qanswer => question_ans, :ds_accession => dataset_accession, 
-                            :ds_name => dataset_name)
+                            :ds_name => @dataset_name)
             #Second create submissions and assign them to users of different groups
                     assign_question_to_group_users(new_fullquestion.id,selected_grp_ids)  
                 end
@@ -218,7 +218,10 @@ class FullquestionsController < ApplicationController
             redirect_to full_group_path(:accession => @accession, :selected_keys => 'from_anotherquestion')
             return
         end
-            redirect_to '/profile'
+      else
+        flash[:warning] = "Question should have content"
+      end
+      redirect_to '/profile'
 
     end
     
@@ -242,7 +245,35 @@ class FullquestionsController < ApplicationController
         #debugger
     end
     
-
+    def modifyquestion
+        @question=Fullquestion.find_by_id(params[:key])
+        answer=params[:answer]
+        if answer=="delete"
+            accession=@question.ds_accession
+            @question.fullsubmissions.each do |submission|
+                submission.destroy
+            end
+            @question.destroy
+            Fullquestion.all.each do |question|
+                if @question.ds_accession==accession
+                    redirect_to :back
+                    return
+                end
+            end
+            alldataset=Dataset.all
+            alldataset.each do |datasets|
+                datasets.Data_set.delete(accession)
+                datasets.save!
+            end
+        elsif answer=="yes"
+            @question.qanswer=1
+            @question.save!
+        else
+            @question.qanswer=2
+            @question.save!
+        end
+        redirect_to :back
+    end
         
     
     private
