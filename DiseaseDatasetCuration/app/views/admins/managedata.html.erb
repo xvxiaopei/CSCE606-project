@@ -1,7 +1,7 @@
 <h1> Manage Dataset </h1>
-<h4> Click link below for more control </h4>
+<h4> Click link below for more information </h4>
 <div class="row">
-<div class = "col-sm-10">
+<div class = "col-sm-12">
     <% if @all_data!=nil %>
       <table class='table'>
         <thead>
@@ -33,9 +33,16 @@
     </div>
 </div>
 
-
+<hr>
+<p><br><br><br></p>           
 <div class = "row">
-  <div class = "col-sm-12">
-    <p><%= button_to "Back", '/profile', class: "btn btn-warning center-block"%></p>
-  </div>
-</div>
+  <div class = "col-sm-2">
+
+    <%= link_to admins_show_path,
+    :class => "btn btn-warning btn-block" do %>
+    <i class="glyphicon glyphicon-chevron-left"></i> Back to Admin
+    <% end %>     
+  </div>  
+  <div class = "col-sm-10">
+  </div> 
+</div>  

@@ -2,7 +2,7 @@
   <h1>Admin</h1>
 </div>
 <div class = "row">
-  <div class = "col-sm-4 text-center">
+  <div class = "col-sm-6 text-center">
     <section class="group_manage">
       <h2>Group Operations</h2>
       <% if current_user.admin? %>
@@ -20,9 +20,9 @@
     <hr>
   </div>
   
-  <div class = "col-sm-4 text-center">
+  <div class = "col-sm-6 text-center">
     <section class="dataset_manage">
-      <h2>Dataset Operations</h2>
+      <h2>Datasets and Questions</h2>
       <% if current_user.admin? %>
         <br>
         <%= link_to "Manage Dataset",'admin/managedata', class: "btn btn-primary" %>
@@ -31,14 +31,6 @@
     <hr>
   </div>
 
-  <div class = "col-sm-4 text-center">
-    <section class="group_manage">
-      <h2>Result Format Config</h2>
-      <br>
-      <%= link_to "Configuration", '/config', class: "btn btn-primary" %>
-    </section>  
-    <hr>
-  </div>
 
 
   
@@ -47,21 +39,29 @@
 
 
 <div class = "row">
-  <div class = "col-sm-2">
-  </div>
-  
-  <div class = "col-sm-8"></div>
+  <div class = "col-sm-4">
+    <section class="group_manage">
+      <h3 style="text-align:left;">Result Format Config</h3>
+      <%= link_to "Configuration", '/config', class: "btn btn-primary" %>
+    </section>  
+    <hr>
+  </div>  
+  <div class = "col-sm-6"></div>
 
   <div class = "col-sm-2">
     <div class = row>
-      <h3 style="text-align:left;">Search By ... </h3>
+      <h3 style="text-align:left;">Search By Email </h3>
       <%= form_tag admins_show_path(), :method => :post, :id => "query_form" do%>
       <%= search_field_tag 'search', nil, :class => 'special_input', :placeholder => 'Query...', :id => 'query' %>
       <% end %>
     </div>
   </div>
-
 </div>
+
+
+
+
+
 
 
 <div class = "row">
