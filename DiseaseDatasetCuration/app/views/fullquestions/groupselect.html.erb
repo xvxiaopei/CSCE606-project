@@ -48,7 +48,7 @@
 
 
 <div>
-  <%= form_for @full_question, :url => '/profile', :method => :post do |f| %> 
+  <%= form_for @full_question, :url => fullquestions_path, :method => :post do |f| %> 
   <% if @temp_record %>
     <%= f.hidden_field :temppsr_id, :value => @temp_record %>
     <%= f.hidden_field :sakeys, :value => @selected_accession_keys %>

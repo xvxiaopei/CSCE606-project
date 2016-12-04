@@ -7,23 +7,43 @@ class AdminsController < ApplicationController
 
     update_session(:page, :search, :sort)
     #get_answer
-    @diseases = Disease.all
-    # byebug
-    
-    submission=Submission.all
-    submissioncount=Hash.new
-    @diseases.each do |dis|
-      submissioncount[dis.accession]=0
-      if !submission.empty?
-        submission.each do |sub|
-          if sub.all_data.has_key?(dis.accession)
-            submissioncount[dis.accession]=submissioncount[dis.accession]+1
-          end
+    data=Hash.new
+    count=Hash.new
+    all_submittion=Fullsubmission.all
+    all_submittion.each do |submission|
+      p '............................'
+      p submission
+      p submission.fullquestion
+      
+      t_ds_name=submission.fullquestion.ds_name
+      t_ds_accession=submission.fullquestion.ds_accession
+      if !data.has_key?([t_ds_name,t_ds_accession])
+        data[[t_ds_name,t_ds_accession]]=Hash.new
+      end
+      if !count.has_key?(t_ds_accession)
+        count[t_ds_accession]=0
+      end
+      
+      if submission.choice!=nil
+        count[t_ds_accession]+=1
+        answer=submission.choice
+        t_ques=submission.fullquestion.qcontent
+        t_answer=submission.fullquestion.qanswer
+        if !data[[t_ds_name,t_ds_accession]].has_key?(t_ques)
+          data[[t_ds_name,t_ds_accession]][t_ques]=[0,0]
+        end
+        data[[t_ds_name,t_ds_accession]][t_ques][1]+=1
+        if answer==t_answer
+          data[[t_ds_name,t_ds_accession]][t_ques][0]+=1
         end
       end
+      
     end
-    @subcount=submissioncount
-    
+      p '++++++++++++++++++'
+      p count 
+      p data
+      @data=data
+      @count=count
   end
 
 
@@ -32,14 +52,38 @@ class AdminsController < ApplicationController
 
     @users = find_conditional_users
         # byebug
+    all_user=Hash.new
+    @users.each do |user|
+      submission=user.fullsubmissions
+      all_user[[user.id,user.email,user.name]]=[0,0,0]
+      submission.each do |sub|
+        if sub.choice!=nil
+          all_user[[user.id,user.email,user.name]][0]+=1
+          qanswer=sub.fullquestion.qanswer
+          answer=sub.choice
+          if answer==qanswer
+            all_user[[user.id,user.email,user.name]][1]+=1
+          end
+        end
+      end
+      if all_user[[user.id,user.email,user.name]][0]>0
+        all_user[[user.id,user.email,user.name]][2]=all_user[[user.id,user.email,user.name]][1].to_f/all_user[[user.id,user.email,user.name]][0].to_f
+        all_user[[user.id,user.email,user.name]][2]=all_user[[user.id,user.email,user.name]][2].round(2)
+      end
+    end
+    @data=all_user
+    p '+++++++++++++++'
+    p all_user
+=begin
     if @users == nil
       flash[:warning] = "No Results!"
     else
       # byebug
-      get_answer
+      #get_answer
       @users.each { |user| user.get_accuracy }
       @users = @users.paginate(per_page: 15, page: params[:page])
     end
+=end
   end
 
   def promotewithgroup
@@ -155,36 +199,18 @@ class AdminsController < ApplicationController
   end
 
 
-  def histogram
-    accession=params[:accession]
-    questions=params[:questions]
-
+  def dsstatistics
+    #@histogram=[{"name" => "correct","data" => {"Gender" => 10,"aaa" => 30}},{"name" => "total","data" => {"Gender" => 20,"aaa" => 20}}]
+    questions=params[:qdata]
+    p questions
     gram=Hash.new
     gram=[{"name" => "correct","data" => {}},{"name" => "total","data" => {}},]
     questions.each do |k,a|
-      gram[0]['data'][k]=0
-      gram[1]['data'][k]=0
+      gram[0]['data'][k]=a[0]
+      gram[1]['data'][k]=a[1]
     end
-    
     @histogram=Hash.new
-    submission=Submission.all
-    if !submission.empty?
-      submission.each do |sub|
-        if sub.all_data.has_key?(accession)
-          answer=sub.all_data[accession]
-          answer.each do |q,a|
-            gram[1]['data'][q]=gram[1]['data'][q]+1
-            if (questions[q].to_i>0 and a.to_i>0)or(questions[q].to_i<0 and a.to_i<0)
-              gram[0]['data'][q]=gram[0]['data'][q]+1
-            end
-          end
-        end
-      end
-      
-      #@histogram=correct_answers
-      @histogram=gram
-      #@histogram=[{"name" => "correct","data" => {"Gender" => 10,"aaa" => 30}},{"name" => "total","data" => {"Gender" => 20,"aaa" => 20}}]
-    end
+    @histogram=gram
   end
 
   def statistics

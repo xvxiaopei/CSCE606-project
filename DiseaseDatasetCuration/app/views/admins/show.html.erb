@@ -67,10 +67,9 @@
 <div class = "row">
   <div class = "col-sm-12">
       <div class="table-responsive">
-        <table id="dvData" class = "table">
+        <table id="dvData" class = "table-bordered">
           <thead>
             <tr>
-              <th class = "col-md-1"><%= link_to "ID", admins_show_path(:sort => "id") %></th>
               <th class = "col-md-3">Name</th>
               <th class = "col-md-3">Accession</th>
               <th class = "col-md-3"><%= link_to "Submission#", admins_show_path(:sort => "submission") %></th>
@@ -78,15 +77,14 @@
             </tr>
           </thead>
           <tbody>
-            <!--<% @diseases.each do |dis| %> 
+            <% @data.each do |ds,q| %> 
               <tr>  
-                <!--<td><%= dis.id %>
-                <!--<td><%= dis.disease %>
-                <!--<td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
-                <!--<td><%= @subcount[dis.accession] %>
-                <!--<td><%= link_to 'Dataset Statistic', {:controller => 'admins', :action => 'histogram', :accession => dis.accession, :questions => dis.questions} %>
+                <td><%= ds[0] %>
+                <td><%= link_to ds[1], "http://www.ebi.ac.uk/arrayexpress/experiments/#{ds[1]}/?query=#{ds[0]}", :target => '_blank' %></td>
+                <td><%= @count[ds[1]] %>
+                <td><%= link_to 'Dataset Statistic', {:controller => 'admins', :action => 'dsstatistics', :qdata => q} %>
               </tr>
-            <!--<% end %>-->
+            <% end %>
           </tbody>
         </table>
       </div>

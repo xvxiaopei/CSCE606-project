@@ -162,7 +162,6 @@ class FullquestionsController < ApplicationController
     
     def create
         
-#        debugger
         #Two things to do:
         #First save a fullquestion to the DB
         #Two fields on question
@@ -219,7 +218,7 @@ class FullquestionsController < ApplicationController
             redirect_to full_group_path(:accession => @accession, :selected_keys => 'from_anotherquestion')
             return
         end
-        redirect_to fullquestions_path
+            redirect_to '/profile'
 
     end
     

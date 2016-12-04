@@ -6,7 +6,20 @@ class UsersController < ApplicationController
       return
     end
     @user = User.find(session[:user_id])
-    @submissions = Submission.find_by_user_id(session[:user_id])
+    @submissions=Array.new
+    @user.fullsubmissions.each do |sub|
+      question=Fullquestion.find_by_id(sub.fullquestion_id)
+      choice=nil
+      if sub.choice=='1'
+        choice='Yes'
+      elsif sub.choice=='2'
+        choice='No'
+      else
+        choice='Not available'
+      end
+      @submissions << {'question' => question.qcontent, 'accession' => question.ds_accession, 'choice' => choice, 'reason' => sub.reason}
+    end
+    p @submissions
     # debugger
   end
 

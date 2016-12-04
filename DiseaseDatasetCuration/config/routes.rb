@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   post  'admin', to: 'admins#show', as: "admins_show"
   get   'config' => 'admins#configuration'
   post  'config', to: 'admins#config_update', as: "config_update"
-  get   'admin/histogram' => 'admins#histogram'
+  get   'admin/dsstatistics' => 'admins#dsstatistics'
   get   'admin/allusers' => 'admins#allusers'
   post  'admin/allusers', to: 'admins#allusers', as: "admin_all"
   get   'admin/getcsv' => 'admins#getcsv'
