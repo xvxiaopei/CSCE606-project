@@ -1,6 +1,22 @@
 require 'rails_helper'
 
 describe Group do
+    #Test associations and validations
+    describe "Associations + Validations" do
+        it "associations" do
+          assc1 = Group.reflect_on_association(:users) 
+          expect(assc1.macro).to eq :has_and_belongs_to_many 
+        end
+        it "validations" do
+          grp1 = Group.new(name: nil)
+          expect(grp1).to_not be_valid
+          grp2 = Group.new(name: 'grp2')
+          expect(grp2).to_not be_valid
+          grp3 = Group.new(name: 'grp3', admin_uid: 1)
+          expect(grp3).to be_valid          
+        end       
+    end
+
     #Test function .get_users    
     describe "finding users of the group" do 
         fixtures :users
