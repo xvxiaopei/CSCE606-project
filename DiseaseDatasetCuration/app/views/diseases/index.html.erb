@@ -13,10 +13,10 @@
         <tbody>
           
         <% @questions.each do |ds,question| %>
-              <tr>        
+              <tr >        
                 <td><%= link_to ds[1], "http://www.ebi.ac.uk/arrayexpress/experiments/#{ds[1]}/?query=#{ds[0]}", :target => '_blank' %></td>
                 <td>
-                  <div style="overflow-y:scroll;height:100px;">
+                  <div style="overflow-y:scroll;height:200px;">
                     <table class='table'>
                     <tbody>
                       
