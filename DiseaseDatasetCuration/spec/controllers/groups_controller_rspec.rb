@@ -208,4 +208,15 @@ describe GroupsController do
         
     end    
     
+    #Test .add
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 end
