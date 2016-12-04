@@ -187,37 +187,6 @@ class AdminsController < ApplicationController
     end
     @histogram=Hash.new
     @histogram=gram
-=begin
-    accession=params[:accession]
-    questions=params[:questions]
-
-    gram=Hash.new
-    gram=[{"name" => "correct","data" => {}},{"name" => "total","data" => {}},]
-    questions.each do |k,a|
-      gram[0]['data'][k]=0
-      gram[1]['data'][k]=0
-    end
-    
-    @histogram=Hash.new
-    submission=Submission.all
-    if !submission.empty?
-      submission.each do |sub|
-        if sub.all_data.has_key?(accession)
-          answer=sub.all_data[accession]
-          answer.each do |q,a|
-            gram[1]['data'][q]=gram[1]['data'][q]+1
-            if (questions[q].to_i>0 and a.to_i>0)or(questions[q].to_i<0 and a.to_i<0)
-              gram[0]['data'][q]=gram[0]['data'][q]+1
-            end
-          end
-        end
-      end
-      
-      #@histogram=correct_answers
-      @histogram=gram
-      #@histogram=[{"name" => "correct","data" => {"Gender" => 10,"aaa" => 30}},{"name" => "total","data" => {"Gender" => 20,"aaa" => 20}}]
-    end
-=end
   end
 
   def statistics
