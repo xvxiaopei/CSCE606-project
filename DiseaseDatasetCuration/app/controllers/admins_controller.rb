@@ -39,9 +39,6 @@ class AdminsController < ApplicationController
       end
       
     end
-      p '++++++++++++++++++'
-      p count 
-      p data
       @data=data
       @count=count
   end
@@ -72,8 +69,6 @@ class AdminsController < ApplicationController
       end
     end
     @data=all_user
-    p '+++++++++++++++'
-    p all_user
 =begin
     if @users == nil
       flash[:warning] = "No Results!"
