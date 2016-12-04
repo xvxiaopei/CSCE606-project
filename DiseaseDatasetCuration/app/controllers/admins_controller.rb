@@ -7,23 +7,43 @@ class AdminsController < ApplicationController
 
     update_session(:page, :search, :sort)
     #get_answer
-    @diseases = Disease.all
-    # byebug
-    
-    submission=Submission.all
-    submissioncount=Hash.new
-    @diseases.each do |dis|
-      submissioncount[dis.accession]=0
-      if !submission.empty?
-        submission.each do |sub|
-          if sub.all_data.has_key?(dis.accession)
-            submissioncount[dis.accession]=submissioncount[dis.accession]+1
-          end
+    data=Hash.new
+    count=Hash.new
+    all_submittion=Fullsubmission.all
+    all_submittion.each do |submission|
+      p '............................'
+      p submission
+      p submission.fullquestion
+      
+      t_ds_name=submission.fullquestion.ds_name
+      t_ds_accession=submission.fullquestion.ds_accession
+      if !data.has_key?([t_ds_name,t_ds_accession])
+        data[[t_ds_name,t_ds_accession]]=Hash.new
+      end
+      if !count.has_key?(t_ds_accession)
+        count[t_ds_accession]=0
+      end
+      
+      if submission.choice!=nil
+        count[t_ds_accession]+=1
+        answer=submission.choice
+        t_ques=submission.fullquestion.qcontent
+        t_answer=submission.fullquestion.qanswer
+        if !data[[t_ds_name,t_ds_accession]].has_key?(t_ques)
+          data[[t_ds_name,t_ds_accession]][t_ques]=[0,0]
+        end
+        data[[t_ds_name,t_ds_accession]][t_ques][1]+=1
+        if answer==t_answer
+          data[[t_ds_name,t_ds_accession]][t_ques][0]+=1
         end
       end
+      
     end
-    @subcount=submissioncount
-    
+      p '++++++++++++++++++'
+      p count 
+      p data
+      @data=data
+      @count=count
   end
 
 
@@ -155,7 +175,19 @@ class AdminsController < ApplicationController
   end
 
 
-  def histogram
+  def dsstatistics
+    #@histogram=[{"name" => "correct","data" => {"Gender" => 10,"aaa" => 30}},{"name" => "total","data" => {"Gender" => 20,"aaa" => 20}}]
+    questions=params[:qdata]
+    p questions
+    gram=Hash.new
+    gram=[{"name" => "correct","data" => {}},{"name" => "total","data" => {}},]
+    questions.each do |k,a|
+      gram[0]['data'][k]=a[0]
+      gram[1]['data'][k]=a[1]
+    end
+    @histogram=Hash.new
+    @histogram=gram
+=begin
     accession=params[:accession]
     questions=params[:questions]
 
@@ -185,6 +217,7 @@ class AdminsController < ApplicationController
       @histogram=gram
       #@histogram=[{"name" => "correct","data" => {"Gender" => 10,"aaa" => 30}},{"name" => "total","data" => {"Gender" => 20,"aaa" => 20}}]
     end
+=end
   end
 
   def statistics

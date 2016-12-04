@@ -11,55 +11,35 @@ class DiseasesController < ApplicationController
     end
 
     user = User.find(session[:user_id])
-    group=user.groups
-    if group.any?
-      @dataset=[];
-      group.each do |g|
-        g.data_set.each do |d|
-          @dataset << d
-        end
+    @questions= Hash.new
+    user.fullquestions.each do |q|
+      if @questions.has_key?([q.ds_name,q.ds_accession])
+        @questions[[q.ds_name,q.ds_accession]] << [q.id, q.qcontent]
+      else
+        @questions[[q.ds_name,q.ds_accession]]=[[q.id, q.qcontent]]
       end
-      @dataset=@dataset.uniq
-      
-      @diseases=[]
-      @dataset.each do |ds|
-        @diseases << Disease.find_by_accession(ds)
-      end
-    else
-      @diseases=[]
     end
-    if Submission.find_by_user_id(session[:user_id])!=nil
-      @submission=Submission.find_by_user_id(session[:user_id]).all_data
-    else 
-      @submission=Hash.new
-    end
+    
   end
 
   def import
     # byebug
     user_id = session[:user_id]
   	choose = params[:choose]
-    
+    reason = params[:reason]
     if choose == nil
       flash[:warning] = "No answer given!"
       redirect_to '/diseases'
       return
     end
     
-    all_data=Hash.new
-    choose.each do |dandq,answer|
-      dandq=eval dandq
-      dandq.each do |d,q|
-        if all_data.has_key?(d)
-          all_data[d][q]=answer
-        else
-          all_data[d]={q=>answer}
-        end
-      end
+    all_data=Array.new
+    choose.each do |qid,answer|
+      all_data << {"user_id" => user_id, "fullquestion_id" => qid, "choice" => answer, "reason" => reason[qid]}
     end
-    #p 'before submission----------------------------'
-    #p all_data
-    insert!(user_id,all_data)
+    p '-------------'
+    p all_data
+    insert!(all_data)
     flash[:success] = "Successfully submitted."
 
     redirect_to '/profile'

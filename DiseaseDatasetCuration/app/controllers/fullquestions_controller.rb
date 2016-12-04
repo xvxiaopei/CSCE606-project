@@ -98,7 +98,7 @@ class FullquestionsController < ApplicationController
     
     def create
         
-        debugger
+        #debugger
         
         #Two things to do:
         #First save a fullquestion to the DB

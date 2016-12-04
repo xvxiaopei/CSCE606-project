@@ -2,7 +2,7 @@
 
 <h1> Questions </h1>
 <div class="row">
-  <%= form_tag diseases_import_path(:dis => @diseases), :method => :post, :id => "questions" do%>
+  <%= form_tag diseases_import_path(), :method => :post, :id => "questions" do%>
       <table class='table'>
         <thead>
           <tr>
@@ -12,26 +12,28 @@
         </thead>
         <tbody>
           
-        <% @diseases.each do |dis| %>
-            <% if !@submission.has_key?(dis.accession) %>
+        <% @questions.each do |ds,question| %>
               <tr>        
-                <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
+                <td><%= link_to ds[1], "http://www.ebi.ac.uk/arrayexpress/experiments/#{ds[1]}/?query=#{ds[0]}", :target => '_blank' %></td>
                 <td>
                   <div style="overflow-y:scroll;height:100px;">
                     <table class='table'>
                     <tbody>
                       
-                    <% dis.questions.each do |kq,q| %> 
+                    <% question.each do |id,q| %> 
                       
                     <tr>
-                      <%= form_tag do%>
-                      <td width="150px"><%= kq %></td>
+                      <td width="150px"><%= q %></td>
+
                       <td width="100px">
-                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", false, class: 'radio_input') %>Yes</label>
-                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", false, class: 'radio_input') %>No</label>
+                        <label><%= radio_button_tag("choose[#{[id]}]", "1", false, class: 'radio_input') %>Yes</label>
+                        <label><%= radio_button_tag("choose[#{[id]}]", "2", false, class: 'radio_input') %>No</label>
+
                         <label><%= button_tag "Clear", :type => 'reset', :class => "btn btn-primary btn-c-layout clear_button"%></label>
+
                       </td>
-                      <% end %>
+                      <td width="200px">Reason<%= text_field_tag "reason[#{[id]}]" %></td>
+
                     </tr>
                     <% end %>
                   </tbody>
@@ -39,44 +41,6 @@
                 </div> 
               </td> 
             </tr> 
-            <% end %>
-        <% end %>
-        <% @diseases.each do |dis| %>
-            <% if @submission.has_key?(dis.accession) %>
-              <tr>        
-                <td><%= link_to dis.accession, "http://www.ebi.ac.uk/arrayexpress/experiments/#{dis.accession}/?query=#{dis.disease}", :target => '_blank' %></td>
-                <td>
-                  <div style="overflow-y:scroll;height:100px;">
-                    <table class='table'>
-                    <tbody>
-                      
-                    <% dis.questions.each do |kq,q| %> 
-                    <tr>
-                      <%= form_tag do%>
-                      <td width="150px"><%= kq %></td>
-                      <td width="100px">
-                        <% if @submission[dis.accession][kq].to_f>0 %>
-                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", true, class: 'radio_input') %>Yes</label>
-                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", false, class: 'radio_input') %>No</label>
-                        <% elsif @submission[dis.accession][kq].to_f<0 %>
-                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", false, class: 'radio_input') %>Yes</label>
-                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", true, class: 'radio_input') %>No</label>
-                        <% else %>
-                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "1", false, class: 'radio_input') %>Yes</label>
-                        <label><%= radio_button_tag("choose[#{[dis.accession => kq]}]", "-1", false, class: 'radio_input') %>No</label>
-                        <% end %>
-                        <label><%= button_tag "Clear", :type => 'reset', :class => "btn btn-primary btn-c-layout clear_button"%></label>
-                      </td>
-                      <% end %>
-                    </tr>
-                    <% end %>
-          
-                  </tbody>
-                </table> 
-                </div> 
-              </td> 
-            </tr> 
-            <% end %>
         <% end %>
         </tbody>
       </table>
