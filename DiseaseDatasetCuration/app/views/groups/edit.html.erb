@@ -2,7 +2,7 @@
   <h2>Editing <%=@group.name %></h2>
 </div>
 <div class="row">
-  <div class = "col-sm-6">
+  <div class = "col-sm-10">
     <h3>Properties:</h3>
     <p>
     <%= form_for @group, url: {action: "update"}, html: {class: "ffgrp"} do |f| %>
@@ -30,8 +30,8 @@
     </p>
     
   </div>
-  <div class = "col-sm-6">
-    <h3>Users:</h3>
+  <div class = "col-sm-2">
+    <h3></h3>
   </div>
 </div>    
     

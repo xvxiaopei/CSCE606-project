@@ -63,16 +63,17 @@
   <% end %>
 </div>      
       
-<div>
-    <%= link_to "Back to profile page...",'/profile' %>
-</div>   
-      
-      
-      
-      
-      
-      
-      
+<p><br><br><br></p>           
+<div class = "row">
+  <div class = "col-sm-2">
+    <%= link_to admins_show_path,
+    :class => "btn btn-warning btn-block" do %>
+    <i class="glyphicon glyphicon-chevron-left"></i> Back to Main Page
+    <% end %>     
+  </div>  
+  <div class = "col-sm-10">
+  </div> 
+</div>      
       
 
 

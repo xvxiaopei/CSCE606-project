@@ -149,22 +149,62 @@ class AdminsController < ApplicationController
 
 
   def promote
+      #debugger
     if params.has_key?(:operate)
       user = User.find_by_id(params[:operate])
+      
+      #These lines of codes have hard-to-tell bugs, thus couldn't pass the test
+      #The reason is mainly because that if you demote a group admin that he/she
+      #is the admin of one/more group, then this group's admin_uid doesn't update.
+
+      #if user.group_admin
+      #  user.update_attribute(:group_admin, false)
+      #  user.update_attribute(:admin, false)
+      #  flash[:success] = "#{user.name} was successfully demoted."
+      #else 
+      #  user.update_attribute(:group_admin, true)
+      #  user.update_attribute(:admin, true)
+      #  flash[:success] = "#{user.name} was successfully promoted."
+      #end
+      #params.delete :operate
+
+      #Substitute with the following version:
+      #Note that even though a group can only have one admin, doesn't mean a 
+      #group admin cannot be admin of more than one groups.
       if user.group_admin
+        #The demoting version:
+        #First find out the groups this admin is in
+        groups = user.groups
+        #Then test if he/she is in charge of this grp, if so, reassign to 
+        #power admin, otherwise leave it.
+        groups.each do |grp|
+            if grp.admin_uid == user.id
+                grp.update_attribute(:admin_uid,
+                User.find_by_admin_and_group_admin(true,false).id)  
+            else
+                ;
+            end
+        end
+        #Finally update user's group_admin attr
         user.update_attribute(:group_admin, false)
         user.update_attribute(:admin, false)
-        flash[:success] = "#{user.name} was successfully demoted."
+        #This flash has bugs too. 
+        #To solve, add redirect_to right after params.delete
+        flash[:success] = "#{user.name} was successfully demoted."         
       else 
+        #This line works well, for updating identity won't influence 
+        #the grp he/she is already in
         user.update_attribute(:group_admin, true)
         user.update_attribute(:admin, true)
+        
         flash[:success] = "#{user.name} was successfully promoted."
       end
-      params.delete :operate
+      params.delete :operate   
+      redirect_to '/admin/promote'
+      return
     end
-      
-    update_session(:page, :query, :order)
     
+    update_session(:page, :query, :order)
     
     @users = find_conditional_users
 
