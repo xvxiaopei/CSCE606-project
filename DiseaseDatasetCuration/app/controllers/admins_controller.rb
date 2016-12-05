@@ -11,10 +11,6 @@ class AdminsController < ApplicationController
     count=Hash.new
     all_submittion=Fullsubmission.all
     all_submittion.each do |submission|
-      p '............................'
-      p submission
-      p submission.fullquestion
-      
       t_ds_name=submission.fullquestion.ds_name
       t_ds_accession=submission.fullquestion.ds_accession
       if !data.has_key?([t_ds_name,t_ds_accession])
@@ -54,16 +50,6 @@ class AdminsController < ApplicationController
       all_user << user.get_submission_info
     end
     @data=all_user
-=begin
-    if @users == nil
-      flash[:warning] = "No Results!"
-    else
-      # byebug
-      #get_answer
-      @users.each { |user| user.get_accuracy }
-      @users = @users.paginate(per_page: 15, page: params[:page])
-    end
-=end
   end
 
   def promotewithgroup
@@ -321,8 +307,8 @@ class AdminsController < ApplicationController
         redirect_to '/profile'
     end
     @fullquestions = Fullquestion.all
+    @all_data=Hash.new
     if @fullquestions!=nil
-      @all_data=Hash.new
       @fullquestions.each do |q|
         if !@all_data.has_key?(q.ds_accession)
           @all_data[q.ds_accession]=[q.ds_name,q.yes_users+q.no_users,1]
@@ -331,8 +317,19 @@ class AdminsController < ApplicationController
           @all_data[q.ds_accession][2]+=1
         end
       end
-    else
-      @all_data=nil
+    end
+    p '-------fullquestion'
+    p Fullquestion.all
+    dataset=Dataset.find_by_name("back")
+    if dataset!=nil
+      dataset.Data_set.each do |k,v|
+        if @all_data.has_key?(k)
+          dataset.Data_set.delete(k)
+        else
+          @all_data[k]=[v,0,0]
+        end
+      end
+      dataset.save!
     end
   end
   
