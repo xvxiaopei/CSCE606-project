@@ -1,4 +1,8 @@
 <div class = "row">
+  <h1>Add Question</h1><hr>    
+</div>
+
+<div class = "row">
   <div class = "col-sm-1"> </div>
   <div class = "col-sm-4">
     <div class = "row">
@@ -61,8 +65,8 @@
     </div>
   </div>
   <hr> 
-    <%= button_tag(:type => "submit",:class => "btn btn-primary", :name => "commit", :value => 'add_q')do %>
-      <i class="glyphicon glyphicon-refresh"></i>Proceed to Add Question
+    <%= button_tag(:type => "submit",:class => "btn btn-primary", :value => 'add_q')do %>
+      <i class="glyphicon glyphicon-chevron-right"></i>Proceed to Add Question
     <% end %>
     <%= button_tag(:type => "submit",:class => "btn btn-primary", :name => "commit", :value => 'save_back')do %>
       <i class="glyphicon glyphicon-refresh"></i>Save and Back
@@ -70,7 +74,17 @@
   <% end %>
 </div>
 
-
+<p><br></p>           
+<div class = "row">
+  <div class = "col-sm-3">
+    <%= link_to admins_show_path,
+    :class => "btn btn-warning btn-block" do %>
+    <i class="glyphicon glyphicon-chevron-left"></i> Discard Changes and Back to Admin
+    <% end %>     
+  </div>  
+  <div class = "col-sm-9">
+  </div> 
+</div> 
 
 
 

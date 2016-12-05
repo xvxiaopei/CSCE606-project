@@ -11,17 +11,18 @@
       
       <% if !grp.get_users.nil? %>
         <div class = "row">
-          <div class = "col-sm-12">
+          <div class = "col-sm-12 text-center">
             <div class="table-responsive">
               <table class = "table-bordered">
                 <thead>
                   <tr>
-                    <th class = "col-md-1">ID</th>
-                    <th class = "col-md-4">Email</th>
-                    <th class = "col-md-3">Name</th>
-                    <th class = "col-md-1">Submission#</th>
-                    <th class = "col-md-1">Correct#</th>
-                    <th class = "col-md-1">Accuracy#</th>
+                    <th class = "col-md-1 text-center">ID</th>
+                    <th class = "col-md-3 text-center">Email</th>
+                    <th class = "col-md-3 text-center">Name</th>
+                    <th class = "col-md-1 text-center">Submissions#</th>
+                    <th class = "col-md-1 text-center">Accuracy#</th>
+                    <th class = "col-md-1 text-center">Admin?</th>
+                    <th class = "col-md-1 text-center">Group Admin?</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -32,7 +33,7 @@
           </div>
         </div>
       <% end %>
-      <p></p>
+      <p><br></p>
       <div class="row">
         <div class = "col-sm-2">
         </div>
@@ -83,9 +84,25 @@
 
 
 
+
+
+<p><br></p>           
 <div class = "row">
-  <div class = "col-sm-12">
-    <p><%= link_to "Create a new Group...", new_group_path%></p>  
-    <p><%= link_to "Back...", '/admin'%></p>
-  </div>
-</div>
+  <div class = "col-sm-3">
+    <%= link_to new_group_path,
+    :class => "btn btn-success btn-block" do %>
+    <i class="glyphicon glyphicon-plus"></i> Create a New Group...
+    <% end %><br>      
+      
+    <%= link_to admins_show_path,
+    :class => "btn btn-warning btn-block" do %>
+    <i class="glyphicon glyphicon-chevron-left"></i> Back to Admin
+    <% end %>
+    
+  </div>  
+  <div class = "col-sm-9">
+  </div> 
+</div>  
+
+
+

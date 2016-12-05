@@ -1,42 +1,72 @@
 <div class = "row">
   <h1>Admin</h1>
+  <hr>
 </div>
 <div class = "row">
   <div class = "col-sm-6 text-center">
-    <section class="group_manage">
-      <h2>Group Operations</h2>
+    <h2>Group Operations</h2>
+
+      <div class = "row">
+        <div class = "col-sm-3 text-center">
+        
+        </div>
+        <div class = "col-sm-6 text-center">
       <% if current_user.admin? %>
         <br>
-        <%= link_to "Show Groups",groups_path, class: "btn btn-primary" %>
+        <%= link_to "Show Groups",groups_path, class: "btn btn-primary btn-block" %>
         <% if !(current_user.group_admin?) %>
           <hr>
-          <%= link_to "Promote/Demote Group Admin", '/admin/promote', class: "btn btn-danger  center-block" %>
-          <%= link_to "Choose Group Admin from Group", '/admin/promotewithgroup', class: "btn btn-info  center-block" %>
-          <%= link_to "Manage Group Admins' Groups",'/admin/manage_group_admins_groups', class: "btn btn-success  center-block" %>
+          <%= link_to "Promote/Demote Group Admin", '/admin/promote', class: "btn btn-danger  center-block" %><br>
+          <%= link_to "Choose Group Admin from Group", '/admin/promotewithgroup', class: "btn btn-success  center-block" %><br>
+          <%= link_to "Reassign Group Admins",'/admin/manage_group_admins_groups', class: "btn btn-success  center-block" %>
         <% end %>
-      <% end %>
-    </section>
-
+      <% end %>        
+        </div>        
+        <div class = "col-sm-3 text-center">
+        </div>        
+      </div>
     <hr>
   </div>
-  
+
+
   <div class = "col-sm-6 text-center">
-    <section class="dataset_manage">
-      <h2>Datasets and Questions</h2>
+    <h2>Datasets and Questions</h2>
+      <div class = "row">
+        <div class = "col-sm-3 text-center">
+        </div>
+        <div class = "col-sm-6 text-center">
       <% if current_user.admin? %>
         <br>
-        <%= link_to "Manage Dataset",'admin/managedata', class: "btn btn-primary" %>
-      <% end %>
-    </section>    
+        <%= link_to "Manage Dataset",'admin/managedata', class: "btn btn-primary btn-block" %>
+        <hr>
+        <%= link_to "Add Question",full_search_path, class: "btn btn-primary btn-block" %>
+      <% end %>    
+        </div>        
+        <div class = "col-sm-3 text-center">
+        </div>        
+      </div>
     <hr>
+    <h2>Users</h2>    
+      <div class = "row">
+        <div class = "col-sm-3 text-center">
+        </div>
+        <div class = "col-sm-6 text-center">
+      <% if (current_user.admin?) && !(current_user.group_admin?) %>
+        <br>
+        <%= link_to "All Users","/admin/allusers", class: "btn btn-info btn-block" %>
+      <% end %>    
+        </div>        
+        <div class = "col-sm-3 text-center">
+        </div>        
+      </div>
+    <hr>    
+    
   </div>
-
-
-
-  
 </div>
 
-
+<div class = "row">
+  <h2>All Submissions</h2>
+</div>
 
 <div class = "row">
   <div class = "col-sm-4">
@@ -54,6 +84,7 @@
       <%= form_tag admins_show_path(), :method => :post, :id => "query_form" do%>
       <%= search_field_tag 'search', nil, :class => 'special_input', :placeholder => 'Query...', :id => 'query' %>
       <% end %>
+      <hr>
     </div>
   </div>
 </div>
@@ -92,19 +123,22 @@
 </div>
 
 
-
+<div class = "row"><hr></div>
 <div class = "row">
-  <div class = "col-sm-9">
+  <div class = "col-sm-3">
+    <%= link_to '/profile',
+    :class => "btn btn-warning btn-block" do %>
+    <i class="glyphicon glyphicon-chevron-left"></i> Back to Profile...
+    <% end %>     
+  </div> 
+  <div class = "col-sm-5">
 
   </div>
-  <div class = "col-sm-1">
-      <%= link_to "Download", "/admin/getcsv", :class => "btn btn-primary button_wid" %>
+  <div class = "col-sm-2">
+      <%= link_to "Download", "/admin/getcsv", :class => "btn btn-success btn-block" %>
   </div>
-  <div class = "col-sm-1">
-      <%= link_to "Users", "/admin/allusers", :class => "btn btn-primary button_wid" %>
-  </div>
-  <div class = "col-sm-1">
-      <%= link_to "Show All", "/admin", :class => "btn btn-primary button_wid" %>
+  <div class = "col-sm-2">
+      <%= link_to "Show All", "/admin", :class => "btn btn-info btn-block" %>
   </div>
 </div>
 
