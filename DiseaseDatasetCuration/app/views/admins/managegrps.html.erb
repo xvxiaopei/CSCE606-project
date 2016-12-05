@@ -38,16 +38,22 @@
               <% end %>
             </tbody>        
           </table>
-          <hr>              
-          <%= button_tag(:type => "submit",:class => "btn btn-primary btn-block")do %>
-            <i class="glyphicon glyphicon-refresh"></i>Change Group Admin to Selected
-          <% end %>
+          <hr>   
+          <div class = "row">
+            <div class = "col-sm-3 text-center">
+            </div>
+            <div class = "col-sm-6 text-center">
+              <%= button_tag(:type => "submit",:class => "btn btn-success btn-block")do %>
+                <i class="glyphicon glyphicon-refresh"></i>Change Group Admin to Selected
+              <% end %>
+            </div>        
+            <div class = "col-sm-3 text-center">
+            </div>        
+          </div>
           <% end %>             
-            
-            
-      </div>
+        </div>
 
-    </div>
+      </div>
     <% end %>
   <% else %>
     <h3>There's no groups yet!</h3>
