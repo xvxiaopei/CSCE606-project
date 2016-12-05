@@ -25,7 +25,7 @@ class FullquestionsController < ApplicationController
                 @previous_dataset= Dataset.find_by_name(params[:search]).Data_set
                 @dataset=Hash.new
                 @all_dataset.each do |k,v|
-                    if !@previous_dataset.include?(k)
+                    if !@previous_dataset.has_key?(k)
                         @dataset[k]=v
                     end
                 end
@@ -84,6 +84,10 @@ class FullquestionsController < ApplicationController
                         end 
                     end
                 end
+                if @show_selected_datasets.empty?
+                    dataset=Dataset.find_by_name("back")
+                    @show_selected_datasets[params[:accession]]=dataset.Data_set[params[:accession]]
+                end
             elsif params[:selected_keys]=='from_anotherquestion'
                 @show_selected_datasets = Hash.new
                 @all_questions = Hash.new
@@ -109,32 +113,35 @@ class FullquestionsController < ApplicationController
                     redirect_to full_search_path
                     return
                 end
-                dataset=Dataset.find_by_id(temp_record_id.to_i)
-                @datasets=dataset.Data_set
-                if (dataset.Data_set==nil)||(dataset.Data_set.empty?)
-                    dataset.Data_set=params[:selected_keys]
-                else
-                    # didn't test this part
-                    dataset.Data_set.concat(params[:selected_keys])
-                    dataset.Data_set=dataset.Data_set.uniq
-                end
-                dataset.save!
-            
                 # save and return back           
                 if params[:commit]=='save_back'
-    ## how to save here
-    
-    
-    
-                    @selected_accession_keys.each do |k|
-                        new_fullquestion = Fullquestion.create!(:qcontent => "",
-                            :qanswer => "", :ds_accession => k, 
-                            :ds_name =>  @temp_record.Data_set_results[k])
-                        assign_question_to_group_users(new_fullquestion.id,nil)
+                    if Dataset.find_by_name("back")==nil
+                        Dataset.create(name: "back")
                     end
+                    dataset=Dataset.find_by_name("back")
+                    params[:selected_keys].each do |k|
+                        foundkey=false
+                        Fullquestion.all.each do |q|
+                            if q.ds_accession==k
+                                foundkey=true
+                                break
+                            end
+                        end
+                        if (!foundkey)&&!dataset.Data_set.has_key?(k)
+                            dataset.Data_set[k]=@temp_record.Data_set_results[k]
+                        end
+                    end
+                    dataset.save!
                     redirect_to '/profile'
                     return
                 end
+                dataset=Dataset.find_by_id(temp_record_id.to_i)
+                params[:selected_keys].each do |k|
+                    if !dataset.Data_set.has_key?(k)
+                        dataset.Data_set[k]=@temp_record.Data_set_results[k]
+                    end
+                end
+                dataset.save!
             
                 #For View Use
   #              @show_selected_keyword  = @temp_record.keyword
@@ -187,31 +194,47 @@ class FullquestionsController < ApplicationController
         else # add_another
             @accession = params[:fullquestion][:sakeys].split(' ')
             if @accession.kind_of?(Array)
+                dataset=Dataset.find_by_name("back")
                 @accession.each do |dataset_accession|
+                    foundkey=false
                     Fullquestion.all.each do |q|
                         if q.ds_accession==dataset_accession
                             @dataset_name=q.ds_name
+                            foundkey=true
                             break
                         end
+                    end
+                    if !foundkey
+                        @dataset_name=dataset.Data_set[dataset_accession]
+                        dataset.Data_set.delete(dataset_accession)
                     end
                     new_fullquestion = Fullquestion.create!(:qcontent => question_desc,
                             :qanswer => question_ans, :ds_accession => dataset_accession, 
                             :ds_name => @dataset_name)
-            #Second create submissions and assign them to users of different groups
+                #Second create submissions and assign them to users of different groups
                     assign_question_to_group_users(new_fullquestion.id,selected_grp_ids)  
                 end
+                dataset.save!
             else
                @accession = params[:fullquestion][:sakeys]
+               dataset=Dataset.find_by_name("back")
+               foundkey=false
                 Fullquestion.all.each do |q|
                     if q.ds_accession==@accession
                         @dataset_name=q.ds_name
+                        foundkey=true
                         break
                     end
+                end
+                if !foundkey
+                    @dataset_name=dataset.Data_set[dataset_accession]
+                    dataset.Data_set.delete(dataset_accession)
                 end
                 new_fullquestion = Fullquestion.create!(:qcontent => question_desc,
                 :qanswer => question_ans, :ds_accession => @accession, :ds_name => @dataset_name)
                 #Second create submissions and assign them to users of different groups
                 assign_question_to_group_users(new_fullquestion.id,selected_grp_ids)
+                dataset.save!
             end
         end
         if params[:commit]=='add_another'
