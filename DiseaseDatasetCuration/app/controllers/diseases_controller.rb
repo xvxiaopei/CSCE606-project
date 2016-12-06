@@ -12,11 +12,24 @@ class DiseasesController < ApplicationController
 
     user = User.find(session[:user_id])
     @questions= Hash.new
-    user.fullquestions.each do |q|
-      if @questions.has_key?([q.ds_name,q.ds_accession])
-        @questions[[q.ds_name,q.ds_accession]] << [q.id, q.qcontent]
-      else
-        @questions[[q.ds_name,q.ds_accession]]=[[q.id, q.qcontent]]
+    user.fullsubmissions.each do |submission|
+      if submission.choice==nil
+        q=Fullquestion.find_by_id(submission.fullquestion_id)
+        if @questions.has_key?([q.ds_name,q.ds_accession])
+          @questions[[q.ds_name,q.ds_accession]] << [q.id, q.qcontent,submission.choice,submission.reason]
+        else
+          @questions[[q.ds_name,q.ds_accession]]=[[q.id, q.qcontent,submission.choice,submission.reason]]
+        end
+      end
+    end
+    user.fullsubmissions.each do |submission|
+      if submission.choice!=nil
+        q=Fullquestion.find_by_id(submission.fullquestion_id)
+        if @questions.has_key?([q.ds_name,q.ds_accession])
+          @questions[[q.ds_name,q.ds_accession]] << [q.id, q.qcontent,submission.choice,submission.reason]
+        else
+          @questions[[q.ds_name,q.ds_accession]]=[[q.id, q.qcontent,submission.choice,submission.reason]]
+        end
       end
     end
     
@@ -35,7 +48,9 @@ class DiseasesController < ApplicationController
     
     all_data=Array.new
     choose.each do |qid,answer|
-      all_data << {"user_id" => user_id, "fullquestion_id" => qid, "choice" => answer, "reason" => reason[qid]}
+      if answer=='1'||answer=='2'
+        all_data << {"user_id" => user_id, "fullquestion_id" => qid, "choice" => answer, "reason" => reason[qid]}
+      end
     end
     p '-------------'
     p all_data

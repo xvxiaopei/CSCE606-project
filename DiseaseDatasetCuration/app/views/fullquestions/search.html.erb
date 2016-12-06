@@ -3,7 +3,7 @@
 </div>
 
 <div class = "row">
-  <div class = "col-sm-1"> </div>
+  <div class = "col-sm-4"> </div>
   <div class = "col-sm-4">
     <div class = "row">
       <ul class="list-group">
@@ -12,14 +12,15 @@
           <p>
            <%= form_tag :action => 'performsearch'  do %>
            <%= text_field_tag :search, params[:search], placeholder: "Search dataset" %>
-           <%= submit_tag "search", :name => nil, class: "btn btn-success center-block" %>
+           <%= submit_tag "Search", :name => "submit", class: "btn btn-success" %>
+           <%= submit_tag "Search for all result", :name => "submit", class: "btn btn-success" %>
           <% end %>
           </p>
       </ul>
     </div>
   </div>
 </div>
-
+<div class = "col-sm-2"> </div>
 <div>
   <%= form_for @poweradmin, :url => full_group_path, :method => :post do |f| %> 
   <% if @new_temp_record %>
@@ -45,9 +46,9 @@
                    <% if @dataset %>            
                       <% @dataset.each do |k,v| %>            
                     <tr>
-                      <td class = "col-md-2"> <%= k %> </td>
+                      <td class = "col-md-2"> <%= link_to k, "http://www.ebi.ac.uk/arrayexpress/experiments/#{k}", :target => '_blank' %></td>
                       <td class = "col-md-9"> <%= v %> </td>
-                      <td class = "col-md-1"> <%= check_box_tag 'selected_keys[]', k -%></td>
+                      <td class = "col-md-1"> <%= check_box_tag 'selected_keys[]', k, true -%></td>
                     </tr>
                       <%end %> 
                     <% end %>   

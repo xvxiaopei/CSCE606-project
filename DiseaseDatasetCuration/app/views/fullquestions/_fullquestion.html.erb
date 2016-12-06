@@ -8,5 +8,5 @@
     <td class="text-center"><%= fullquestion.yes_users %></td>
     <td class="text-center"><%= fullquestion.no_users %></td>
     <td class="text-center"><%= fullquestion.users.count %></td>
-    <td class="text-center"><%= link_to 'Delete', {:controller => "fullquestions", :action => "modifyquestion", :key => fullquestion.id, :answer => "delete"} ,:onclick => "return confirm('Are you sure you want to delete this dataset?')" %></td>
+    <td class="text-center"><%= link_to 'Delete', {:controller => "fullquestions", :action => "modifyquestion", :key => fullquestion.id, :answer => "delete"} ,:onclick => "return confirm('Are you sure you want to delete this question?')" %></td>
 </tr>

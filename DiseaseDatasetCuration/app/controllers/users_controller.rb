@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       end
       @submissions << {'question' => question.qcontent, 'accession' => question.ds_accession, 'choice' => choice, 'reason' => sub.reason}
     end
-    p @submissions
+    @count=@user.get_submission_info['submission']
     # debugger
   end
 
