@@ -64,6 +64,12 @@
     <h3>Click <%= link_to "Here", '/group_create_path'%> to create a group</h3>
   <% end %>
 </div>      
+
+<div class = "row">
+  <% if !@all_groups.nil? %>
+    <%= will_paginate @all_groups, renderer: BootstrapPagination::Rails %>
+  <% end  %>
+</div>
       
 <p><br><br><br></p>           
 <div class = "row">

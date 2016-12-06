@@ -61,6 +61,12 @@
   <% end %>
 </div>
 
+<div class = "row">
+  <% if !@all_groups.nil? %>
+    <%= will_paginate @all_groups, renderer: BootstrapPagination::Rails %>
+  <% end  %>
+</div>
+
 
 <hr>    
 <p><br><br><br></p>           

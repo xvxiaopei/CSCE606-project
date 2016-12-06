@@ -3,8 +3,9 @@
 </div>
 
 <div class = "row">
-  <div class = "col-sm-4">
+  <div class = "col-sm-5">
     <h3>Users in the group:</h3>
+    <hr>
     <%= form_for @group, :url=> quick_group_add_path, html: {:method => :post, :class => "ffgrp"} do |f| %>
       <ul>
         <% @group_users.each do |role| %>
@@ -23,8 +24,9 @@
    
   </div>
   <div class = "col-sm-2"></div>
-  <div class = "col-sm-4">
-    <h3>Users not in the group:</h3>  
+  <div class = "col-sm-5">
+    <h3>Users not in the group:</h3> 
+    <hr>
     <%= form_for @group, :url=> quick_group_add_path, html: {:method => :post, :class => "ffgrp"} do |f| %>
       <ul>
         <% @not_group_users.each do |role| %>
@@ -36,12 +38,27 @@
         <% end %>
       </ul>
       <hr>
+      <% if !@not_group_users.nil? %>
+        <%= will_paginate @not_group_users, renderer: BootstrapPagination::Rails %>
+      <% end  %>       
+      
       <%= submit_tag 'Add selected', :class => "btn btn-success " %>
     <% end %>
 
+
+
   </div>
-  <div class = "col-sm-2"></div>  
 </div>
 <hr>
-<%= link_to "Cancel Changes", groups_path,
-  :class => "btn btn-block btn-warning "%>
+<div class = "row">
+    <div class = "col-sm-4"></div> 
+    <div class = "col-sm-4">
+
+    <%= link_to "Back to Groups", groups_path,
+      :class => "btn btn-block btn-warning "%>       
+    </div> 
+    <div class = "col-sm-4"></div> 
+</div>
+
+
+

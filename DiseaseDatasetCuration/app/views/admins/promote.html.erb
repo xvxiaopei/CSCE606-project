@@ -52,13 +52,9 @@
 
 
 <div class = "row">
-  <div class = "col-sm-10">
-  </div>
-  <div class = "col-sm-2">
-    <div class = "row">
-      <%= link_to "Show All", "/admin/promote", :class => "btn btn-primary center-block" %>
-    </div>
-  </div>
+  <% if !@users.nil? %>
+    <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+  <% end  %>
 </div>
 
 <hr>
@@ -79,8 +75,4 @@
 
 
 
-<div class = "row">
-  <% if !@users.nil? %>
-    <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
-  <% end  %>
-</div>
+

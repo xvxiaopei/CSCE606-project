@@ -51,20 +51,21 @@
         </div>
         <div class = "col-sm-2">
           <%= link_to edit_group_path(grp),
-          :class => "btn btn-primary btn-block" do %>
+          :class => "btn btn-warning btn-block" do %>
           <i class="glyphicon glyphicon-pencil"></i> Edit Group
           <% end %>
         </div>
         <div class = "col-sm-2">
             <%= link_to group_path(grp),
             method: :delete, data: { confirm: "Are you sure?" },
-            :class => "btn btn-primary btn-block" do %>
+            :class => "btn btn-danger btn-block" do %>
             <i class="glyphicon glyphicon-trash"></i> Delete Group
             <% end %>
           
         </div>
         <div  class = "col-sm-2">
-          <%= link_to admin_statistics_path(:group_id => grp.id), :class => "btn btn-primary btn-block" do %>
+          <%= link_to admin_statistics_path(:group_id => grp.id),
+          :class => "btn btn-success btn-block" do %>
           <i class="glyphicon glyphicon-stats"></i> Statistics
           <% end %>
         </div>
@@ -83,7 +84,11 @@
 </div>
 
 
-
+<div class = "row">
+  <% if !@all_groups.nil? %>
+    <%= will_paginate @all_groups, renderer: BootstrapPagination::Rails %>
+  <% end  %>
+</div>
 
 
 <p><br></p>           

@@ -22,6 +22,10 @@ class GroupsController < ApplicationController
     
     
     def index
+        update_session(:page, :query, :order)
+        
+        
+        
         if current_user.admin? 
                 
             if !current_user.group_admin?      #main admin
@@ -30,6 +34,10 @@ class GroupsController < ApplicationController
                 @all_groups = Group.where("admin_uid = ?", current_user.id)
             end
         end
+        
+        @all_groups = @all_groups.paginate(per_page: 2, page: params[:page])
+        
+        
     end
     
     def edit
@@ -97,9 +105,17 @@ class GroupsController < ApplicationController
     end
     
     def quickadduser
+        #update_session(:page, :query, :order)
+        
+        
+        
         @group=Group.find(params[:id])
         @group_users = @group.get_users.where.not(:id => @group.admin_uid)    
         @not_group_users = User.get_member_outside_the_group(@group)
+        
+        
+        
+        @not_group_users = @not_group_users.paginate(per_page: 40, page: params[:page])
         
     end
     def performadd
@@ -116,17 +132,23 @@ class GroupsController < ApplicationController
             redirect_to quick_group_add_path
             return
         end
-        
+        deleting = false
         ids.each do |id|
             user = User.find_by_id(id)
             if @group_users.include?(user)
                 @group.users.delete(user)
+                deleting = true
             else
                 @group.users << user
             end
         end
         
-        redirect_to groups_path
+        if(deleting)
+            flash[:success] = "Successfully deleted #{ids.count} users from Group #{@group.name}!"
+        else
+            flash[:success] = "Successfully added #{ids.count} users to Group #{@group.name}!"
+        end
+        redirect_to quick_group_add_path(@group)
         
     end
     

@@ -44,19 +44,29 @@ class AdminsController < ApplicationController
     update_session(:page, :query, :order)
 
     @users = find_conditional_users
-        # byebug
-    all_user=Array.new
+    # Must Add this line of code here:
+    @users = @users.paginate(per_page: 15, page: params[:page])
+    
+    all_user_data=Array.new
     @users.each do |user|
-      all_user << user.get_submission_info
+      all_user_data << user.get_submission_info
     end
-    @data=all_user
+    @data=all_user_data
+    
+    
+    
   end
 
   def promotewithgroup
+      update_session(:page, :query, :order)      
+      
+      
       #All groups
       @poweradmin=current_user
       @all_groups = Group.all
       #debugger
+      
+      @all_groups = @all_groups.paginate(per_page: 3, page: params[:page])
   end
 
 
@@ -91,10 +101,13 @@ class AdminsController < ApplicationController
   end
 
   def managegrps
+      update_session(:page, :query, :order)
       #All groups
       @poweradmin=current_user
       @all_groups = Group.all      
       @all_grp_admins = User.where(:admin => true, :group_admin => true)
+      
+      @all_groups = @all_groups.paginate(per_page: 4, page: params[:page])
       #debugger
   end
 
@@ -174,7 +187,7 @@ class AdminsController < ApplicationController
       redirect_to '/admin/promote'
       return
     end
-    debugger
+    #debugger
     update_session(:page, :query, :order)
     
     @users = find_conditional_users
