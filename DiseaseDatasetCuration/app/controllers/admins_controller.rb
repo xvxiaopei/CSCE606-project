@@ -174,15 +174,16 @@ class AdminsController < ApplicationController
       redirect_to '/admin/promote'
       return
     end
-    
+    debugger
     update_session(:page, :query, :order)
     
     @users = find_conditional_users
 
+    #Commented by hawkzuo for goood use.
     # update user accuracy fields
-    if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
-      @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
-    end
+    #if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
+    #  @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
+    #end
     # byebug
 
     if @users == nil
