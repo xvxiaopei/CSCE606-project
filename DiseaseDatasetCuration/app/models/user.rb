@@ -3,9 +3,6 @@ class User < ActiveRecord::Base
   has_many :fullsubmissions
   has_many :fullquestions, :through => :fullsubmissions
 
-
-
-  has_many :submissions
   has_many :diseases, :through => :users
   has_and_belongs_to_many :groups
   has_and_belongs_to_many :addquestions
@@ -66,19 +63,6 @@ class User < ActiveRecord::Base
 #    self.submissions.joins(:disease).where('diseases.closed =?', true).where('(submissions.is_related =? and diseases.related > diseases.unrelated) or (submissions.is_related =? and diseases.unrelated > diseases.related)', true, false).count
   end
 
-  def get_accuracy
-    # byebug
-#    return 0.0 if self.num_closed_submissions == 0
-#    return self.num_correct.to_f / self.num_closed_submissions.to_f
-    submission=Submission.find_by_user_id(self.id)
-    if submission!=nil
-      accuracy=submission.get_accuracy
-      submission.save!
-      return accuracy
-    else
-      return 0
-    end
-  end
 
   def self.from_omniauth(auth)
     

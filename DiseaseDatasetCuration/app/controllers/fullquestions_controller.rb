@@ -12,6 +12,7 @@ class FullquestionsController < ApplicationController
     end
     
     def performsearch
+        @dataset=Hash.new
         @poweradmin = current_user
         #This func do two things: get result back from API 
         #+ save result to DB[partsearchresult]
@@ -23,10 +24,12 @@ class FullquestionsController < ApplicationController
                 @new_temp_record = @previous_record.first
                 @all_dataset = @previous_record.first.Data_set_results
                 @previous_dataset= Dataset.find_by_name(params[:search]).Data_set
-                @dataset=Hash.new
                 @all_dataset.each do |k,v|
                     if !@previous_dataset.has_key?(k)
                         @dataset[k]=v
+                    end
+                    if params[:submit]=="Search"&&@dataset.length >= 20
+                        break
                     end
                 end
             else
@@ -43,7 +46,8 @@ class FullquestionsController < ApplicationController
                 dataset_foruse = Hash.new
                 @dataset_raw.each do |k,v|
                     dataset_foruse[k] = v
-                  if dataset_foruse.length >= 20
+                    
+                  if params[:submit]=="Search"&&dataset_foruse.length >= 20
                     break
                   end
                 end                
@@ -194,7 +198,7 @@ class FullquestionsController < ApplicationController
         else # add_another
             @accession = params[:fullquestion][:sakeys].split(' ')
             if @accession.kind_of?(Array)
-                dataset=Dataset.find_by_name("back")
+                @dataset=Dataset.find_by_name("back")
                 @accession.each do |dataset_accession|
                     foundkey=false
                     Fullquestion.all.each do |q|
@@ -205,8 +209,9 @@ class FullquestionsController < ApplicationController
                         end
                     end
                     if !foundkey
-                        @dataset_name=dataset.Data_set[dataset_accession]
-                        dataset.Data_set.delete(dataset_accession)
+                        @dataset_name=@dataset.Data_set[dataset_accession]
+                        @dataset.Data_set.delete(dataset_accession)
+                        @dataset.save!
                     end
                     new_fullquestion = Fullquestion.create!(:qcontent => question_desc,
                             :qanswer => question_ans, :ds_accession => dataset_accession, 
@@ -214,7 +219,6 @@ class FullquestionsController < ApplicationController
                 #Second create submissions and assign them to users of different groups
                     assign_question_to_group_users(new_fullquestion.id,selected_grp_ids)  
                 end
-                dataset.save!
             else
                @accession = params[:fullquestion][:sakeys]
                dataset=Dataset.find_by_name("back")

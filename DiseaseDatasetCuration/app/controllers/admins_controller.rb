@@ -222,7 +222,6 @@ class AdminsController < ApplicationController
   def dsstatistics
     #@histogram=[{"name" => "correct","data" => {"Gender" => 10,"aaa" => 30}},{"name" => "total","data" => {"Gender" => 20,"aaa" => 20}}]
     questions=params[:qdata]
-    p questions
     gram=Hash.new
     gram=[{"name" => "correct","data" => {}},{"name" => "total","data" => {}},]
     if questions!=nil
@@ -236,7 +235,6 @@ class AdminsController < ApplicationController
   end
 
   def statistics
-    p params[:group_id]
     @group=Group.find_by_id(params[:group_id])
     @users=@group.get_users
     if @users==nil
@@ -244,8 +242,6 @@ class AdminsController < ApplicationController
       redirect_to '/profile'
       return
     end
-    get_answer
-    @users.each { |user| user.get_accuracy }
     @accuracies=Hash.new
     num=0
     while num.to_f<10 do
@@ -253,21 +249,21 @@ class AdminsController < ApplicationController
       num+=1
     end
     @users.each do |usr|
-      if Submission.find_by_user_id(usr.id)!=nil
-        accuracy=Submission.find_by_user_id(usr.id).accuracy
-        if accuracy==1
-          @accuracies[9]+=1
-        else
-         accuracy*=10
-         accuracy=accuracy.floor
-         @accuracies[accuracy]+=1
-        end
+
+      accuracy=usr.get_submission_info['accuracy']
+      if accuracy==1
+        @accuracies[9]+=1
+      else
+       accuracy*=10
+       accuracy=accuracy.floor
+       @accuracies[accuracy]+=1
       end
     end
     @statistic=Hash.new
+    @statistic=[{"name" => "Number of user in the accuracy range","data" => {}},]
     @accuracies.each do |a,n|
       tmp=(a.to_f/10).round(1)
-      @statistic[tmp.to_s+" to "+(tmp+0.1).round(1).to_s]=n.to_i
+      @statistic[0]['data'][tmp.to_s+" to "+(tmp+0.1).round(1).to_s]=n.to_i
     end
   end
 
