@@ -1,0 +1,28 @@
+Search function:
+Choose add question from admin or profile -> search result(click "search“ button for 20 results and "search for all results" for all results) -> save then back or add question
+
+Add question:
+Add question for selected datasets -> add another question or complete
+
+Manage Dataset:
+Click Manage Dataset in Admin -> 
+1. A link named "Add" for adding questions to certain dataset;
+2. Delete function to delete corresponding dataset; 
+3. Number link for submissions and questions details -> In question details: admin can change answer as well as delete question
+
+Group admin promote and demote:
+Main admin can promote a user to a group admin or demote a group admin to a user:
+1. In Admin page, main admin can click Promote/Demote Group Admin;
+2. Then admin can get into the Promote/Demote page, and there is a list of every user and group admin;
+3. Main admin can simply click demote or promote to manage users' level;
+
+Choose Group Admin and Reassign Group Admins:
+Main admin can choose group admin and reassign group admin for a group:
+1.Main admin can click "Choose Group Admin from Group", then get the group page, and for each group, main admin can select a group member as the admin of this group;
+2. Main admin can click "Reassign Group Admins" to get the Reassign page, and for each group, main admin can select any group admin to be the admin of this a certain group;
+
+Statistics:
+1.Click admin from profile page-> find the dataset you want to check and click Dataset Statistic-> see correct choises from users of all questions of the dataset
+2.Click show groups in admin page-> find the group you want to check and click Statistics->see number of users in multiple accuracy range
+3.Click All Users in profile page-> see submission, correct, accuracy number of all users
+

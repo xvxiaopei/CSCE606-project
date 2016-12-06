@@ -1,0 +1,11 @@
+1. recent work summary
+    group hierarchy
+    dataset search
+    question creation
+    user interface
+2. meet with customer on 12/2
+3. poster and demo presentation on 12/8
+4. upcoming tasks
+1) Xiaopei Xu and Jianyu Zuo: group hierarchy and tdd&bdd
+2) Wenrui Zhang and Lang Feng: question submisson and statistics
+3) Yinan Zhu and Bowen Li: poster design and customer interview

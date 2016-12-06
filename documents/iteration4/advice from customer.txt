@@ -1,0 +1,15 @@
+- Search
+	- to make the search box bigger
+	- one needs to be able to select how many datasets to display per page.
+- User make selections on the questoins (bug fix: clear bottom)
+- Seperate the keywords and datasets (*)
+	- for each keyword -> load all the datasets (optionally, the group admin may select a subset of the datasets to assign to users
+	- For each keyword associated it with one or more questions
+	- Multiple keywords may have the same question.
+
+- For question answers, two modes
+	- multiple choices (select only one, or multiple)
+	- free form (no statistics)
+	- multiple choices & free form
+
+- Based on the free form questions,group admin may design new questions on selected datasets.
