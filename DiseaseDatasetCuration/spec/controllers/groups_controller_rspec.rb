@@ -14,6 +14,7 @@ describe GroupsController do
         
         it "has a 200 response status code if user is admin" do
             #Mock the verifing process
+            
             allow_any_instance_of(GroupsHelper).to receive(:admins?).and_return(true)
             get :adduser, :id => 1
             expect(response.status).to eq(200)            
@@ -203,12 +204,12 @@ describe GroupsController do
         adding process is done." do
             log_in(User.find_by_id(4))         
             post :performadd, {:id => 1, :n_role_ids => [2,3] } 
-            expect(response).to redirect_to groups_path
+            expect(response).to redirect_to quick_group_add_path(Group.find(1))
         end        
         
     end    
     
-    #Test .add
+    #All parts done.
     
     
     

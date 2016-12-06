@@ -66,7 +66,7 @@ class AdminsController < ApplicationController
       @all_groups = Group.all
       #debugger
       
-      @all_groups = @all_groups.paginate(per_page: 3, page: params[:page])
+      @all_groups = @all_groups.paginate(per_page: 2, page: params[:page])
   end
 
 
@@ -107,7 +107,7 @@ class AdminsController < ApplicationController
       @all_groups = Group.all      
       @all_grp_admins = User.where(:admin => true, :group_admin => true)
       
-      @all_groups = @all_groups.paginate(per_page: 4, page: params[:page])
+      @all_groups = @all_groups.paginate(per_page: 3, page: params[:page])
       #debugger
   end
 

@@ -90,9 +90,9 @@ class GroupsController < ApplicationController
         @users = find_conditional_users
     
         # update user accuracy fields
-        if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
-          @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
-        end
+        #if !params.has_key?(:page) && !params.has_key?(:query) && !params.has_key?(:order)
+        #  @users.each { |user| user.update_attribute(:accuracy, user.get_accuracy) }
+        #end
         # byebug
     
         if @users == nil
