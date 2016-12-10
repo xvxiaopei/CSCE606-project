@@ -145,7 +145,7 @@ describe GroupsController do
             log_in(User.find_by_id(4))           
             get :quickadduser, {:id => 1}
             
-            expect(assigns(:group)).to eql(Group.find(1))
+            expect(assigns(:accession)).to eql(Group.find(1))
             
         end
     

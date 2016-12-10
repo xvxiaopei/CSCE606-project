@@ -31,3 +31,11 @@ u4:
   password_digest: <%= User.digest('password') %>  
   admin: true
   group_admin: false  
+
+u5:
+  id: 5
+  name: u5
+  email: test5@gmail.com
+  password_digest: <%= User.digest('password') %>  
+  admin: false
+  group_admin: false 
