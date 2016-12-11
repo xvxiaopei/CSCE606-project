@@ -52,7 +52,7 @@ group :test do
   gem 'guard-minitest',     '2.3.1'
   
   
-  
+  gem 'simplecov', :require => false
    #BDD
   gem 'cucumber-rails', :require =>false
   gem 'cucumber-rails-training-wheels'

@@ -60,26 +60,54 @@ describe Fullquestion do
             expect(Fullquestion.find_by_id(2).get_answer).to eq('1')
             #User operate submissions
             User.find_by_id(1).fullsubmissions.each do |submit|
-               if(submit.fullquestion_id == Fullquestion.find_by_id(3)) 
-                   submit.update_attribute(choice => '2')
-                   submit.update_attribute(reason => 'Not Connected')
+               if(submit.fullquestion_id == 3) 
+                   submit.update_attribute(:choice , '2')
+                   submit.update_attribute(:reason , 'Not Connected')
                end
             end
             User.find_by_id(2).fullsubmissions.each do |submit|
-               if(submit.fullquestion_id == Fullquestion.find_by_id(3)) 
-                   submit.update_attribute(choice => '2')
-                   submit.update_attribute(reason => 'Not Connected')
+               if(submit.fullquestion_id == 3) 
+                   submit.update_attribute(:choice , '2')
+                   submit.update_attribute(:reason , 'Not Connected')
                end
             end            
             User.find_by_id(3).fullsubmissions.each do |submit|
-               if(submit.fullquestion_id == Fullquestion.find_by_id(3)) 
-                   submit.update_attribute(choice => '2')
-                   submit.update_attribute(reason => 'Not Connected')
+               if(submit.fullquestion_id == 3) 
+                   submit.update_attribute(:choice , '2')
+                   submit.update_attribute(:reason , 'Not Connected')
                end
             end                
             #Now call get_ans should return '2'---'No'
             @not_given_answer_question = Fullquestion.find_by_id(3)
             expect(Fullquestion.find_by_id(3).get_answer).to eq('2')
+            
+            
+            #User operate submissions again
+            User.find_by_id(1).fullsubmissions.each do |submit|
+               if(submit.fullquestion_id == 3) 
+                   submit.update_attribute(:choice , '1')
+                   submit.update_attribute(:reason , 'Not Connected')
+               end
+            end
+            User.find_by_id(2).fullsubmissions.each do |submit|
+               if(submit.fullquestion_id == 3) 
+                   submit.update_attribute(:choice , '1')
+                   submit.update_attribute(:reason , 'Not Connected')
+               end
+            end            
+            User.find_by_id(3).fullsubmissions.each do |submit|
+               if(submit.fullquestion_id == 3) 
+                   submit.update_attribute(:choice , '1')
+                   submit.update_attribute(:reason , 'Not Connected')
+               end
+            end            
+            @not_given_answer_question = Fullquestion.find_by_id(3)
+            #debugger
+            expect(Fullquestion.find_by_id(3).get_answer).to eq('1')           
+            
+            
+            
+            
         end
     end
 end
