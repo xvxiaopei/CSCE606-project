@@ -66,7 +66,7 @@ describe FullquestionsController do
         include SessionsHelper
         it "offer the admin a form to fill in " do
             #Mock the verifing process
-            
+            #debugger
             log_in(User.find_by_id(4))
             get :search
             expect(assigns(:poweradmin)).to eq(User.find_by_id(4))

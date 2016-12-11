@@ -8,7 +8,7 @@ module ApplicationHelper
     end
   end
 
-  def parameters_yaml_path
-    return "./config/parameters.yml"
-  end
+#  def parameters_yaml_path
+#    return "./config/parameters.yml"
+#  end
 end

@@ -32,6 +32,23 @@ describe User do
        it 'sad path' do
            expect(User.find_by_id(1).authenticated?(111)).to eq(false)
        end
+       it 'happy path' do
+           allow(User).to receive(:new_token).and_return(1)
+           allow(User).to receive(:digest).and_return(10)
+
+           User.find_by_id(4).remember
+           
+            dbcp = double("BCrypt::Password")
+            allow(BCrypt::Password).to receive(:new).and_return(dbcp)
+            allow(dbcp).to receive(:is_password?).and_return(true)           
+           
+           #debugger
+           expect(User.find_by_id(4).authenticated?(1)).to eq(true)
+           p  ' '
+       end
+       
+       
+       
     end    
     #test .forget
     describe ".forget" do

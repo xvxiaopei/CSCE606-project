@@ -1,6 +1,7 @@
 class FullquestionsController < ApplicationController
     include FullquestionsHelper
     include AdminsHelper
+    include ApplicationHelper    
     before_action :admin?
     
     def search

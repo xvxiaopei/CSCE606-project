@@ -10,13 +10,13 @@ module GroupsHelper
     end
   end    
 
-  def groupadmins?
-    user = User.find_by_id(session[:user_id])
-    if !user || !user.admin? || !user.group_admin
-        return false
-    else
-        return true
-    end
-  end
+#  def groupadmins?
+#    user = User.find_by_id(session[:user_id])
+#    if !user || !user.admin? || !user.group_admin
+ #       return false
+#    else
+#        return true
+#    end
+#  end
     
 end

@@ -1,5 +1,5 @@
 module FullquestionsHelper
-  include ApplicationHelper
+
   require 'yaml'
   require 'net/http'
   require 'json'
@@ -12,6 +12,11 @@ module FullquestionsHelper
     uri = URI(url)
     response = Net::HTTP.get(uri)
     data_hash=JSON.parse(response)
+    debugger
+    if(data_hash["experiments"]["total"] == 0)
+        return nil
+    end
+    
     data_result=Hash.new
     data_hash["experiments"]["experiment"].each {|value|
     data_result[value["accession"]]=value["name"]
